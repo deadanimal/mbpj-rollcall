@@ -8,7 +8,7 @@
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
     <meta name="author" content="Creative Tim">
     <title>Sistem Pengurusan Roll Call
-</title>
+    </title>
     <!-- Extra details for Live View on GitHub Pages -->
     <!-- Canonical SEO -->
     <link rel="canonical" href="https://www.creative-tim.com/product/argon-dashboard-pro" />
@@ -53,9 +53,12 @@
     <link rel="stylesheet" href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/argon.min.css?v=1.2.1"
         type="text/css">
     <!-- Google Tag Manager -->
-    <link rel="stylesheet" href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+    <link rel="stylesheet"
+        href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet"
+        href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet"
+        href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
 
     {{--  --}}
     <script>
@@ -119,24 +122,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/faqs">
+                            <a class="nav-link" href="/rollcalls">
                                 <i class="ni ni-chat-round text-red"></i>
-                                <span class="nav-link-text">Bantuan</span>
+                                <span class="nav-link-text">Pengurusan Roll Call</span>
                             </a>
-                            <div class="collapse show" id="navbar-dashboards">
-                                <ul class="nav nav-sm flex-column">
-                                  <li class="nav-item">
-                                    <a href="/aduans" class="nav-link">
-                                      <span class="sidenav-mini-icon"> D </span>
-                                      <span class="sidenav-normal"> Aduan Sistem </span>
-                                    </a>
-                                  </li>
-                                </ul>
-                            </div>
                         </li>
 
                         <!-- Nav items lain-lain custom -->
-                    @elseif(auth()->user()->role == 'datuk_bandar'or auth()->user()->role =='kerani_semakan'or auth()->user()->role =='kerani_pemeriksa' or auth()->user()->role == 'pelulus_pindaan')
+                        @elseif(auth()->user()->role == 'naziran')
                         <ul class="navbar-nav">
                             <li class="nav-item">
                                 <a class="nav-link" href="/dashboard">
@@ -145,15 +138,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/tuntutans">
+                                <a class="nav-link" href="/rollcalls">
                                     <i class="ni ni-calendar-grid-58 text-red"></i>
-                                    <span class="nav-link-text">Tuntutan</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/faqs">
-                                    <i class="ni ni-chat-round text-red"></i>
-                                    <span class="nav-link-text">Bantuan</span>
+                                    <span class="nav-link-text">Pengurusan Roll Call</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -172,32 +159,10 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/permohonans">
+                                    <a class="nav-link" href="/rollcalls">
                                         <i class="ni ni-chart-pie-35 text-info"></i>
-                                        <span class="nav-link-text">Permohonan</span>
+                                        <span class="nav-link-text"> Roll Call</span>
                                     </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/tuntutans">
-                                        <i class="ni ni-calendar-grid-58 text-red"></i>
-                                        <span class="nav-link-text">Tuntutan</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/faqs">
-                                        <i class="ni ni-chat-round text-red"></i>
-                                        <span class="nav-link-text">Bantuan</span>
-                                    </a>
-                                    <div class="collapse show" id="navbar-dashboards">
-                                        <ul class="nav nav-sm flex-column">
-                                          <li class="nav-item">
-                                            <a href="/aduans" class="nav-link">
-                                              <span class="sidenav-mini-icon"> D </span>
-                                              <span class="sidenav-normal"> Aduan </span>
-                                            </a>
-                                          </li>
-                                        </ul>
-                                    </div>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/laporans">
@@ -205,7 +170,7 @@
                                         <span class="nav-link-text">Laporan</span>
                                     </a>
                                 </li>
-                        @endif
+                            @endif
                 </div>
             </div>
         </div>
@@ -255,34 +220,7 @@
             </div>
         </nav>
 
-        {{-- Modified user dashboard ---------}}
-        {{-- @if (Auth::user()->role == 'kakitangan')
-        <div class="header bg-primary pb-3">
-        <div class="container-fluid">
-              <div class="col-lg-6 col-7">
-                <h1 class="h2 text-black "> Selamat Datang {{Auth()->user()->name}} ke Modul kakitangan </h1>
-    </div>
-    </div>
-    </div>
-    @elseif (Auth::user()->role == 'pentadbir_sistem')
-    <div class="header bg-primary pb-3">
-        <div class="container-fluid">
-            <div class="col-lg-6 col-7">
-                <h1 class="h2 text-black "> Selamat Datang {{Auth()->user()->name}} ke Modul kakitangan </h1>
-            </div>
-        </div>
-    </div>
-    @elseif (Auth::user()->role == 'penyelia')
-    Penyelia
-    @elseif (Auth::user()->role == 'ketua_bahagian')
-    Ketua bahagian
-    @elseif (Auth::user()->role == 'ketua_jabatan')
-    Ketua jabatan
-    @else
-
-    @endif --}}
-
-    @yield('content')
+        @yield('content')
     </div>
     <!-- Argon Scripts -->
     <!-- Core -->
@@ -305,14 +243,30 @@
     <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/js/argon.min.js?v=1.2.1"></script>
     <!-- Demo JS - remove this in your project -->
     <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/js/demo.min.js"></script>
-    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+    <script
+        src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net/js/jquery.dataTables.min.js">
+    </script>
+    <script
+        src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js">
+    </script>
+    <script
+        src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js">
+    </script>
+    <script
+        src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js">
+    </script>
+    <script
+        src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js">
+    </script>
+    <script
+        src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js">
+    </script>
+    <script
+        src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons/js/buttons.print.min.js">
+    </script>
+    <script
+        src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-select/js/dataTables.select.min.js">
+    </script>
 
     <script>
         // Facebook Pixel Code Don't Delete
