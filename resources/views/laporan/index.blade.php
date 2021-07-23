@@ -28,7 +28,7 @@
   // Title
 
   var title = chart.titles.create();
-  title.text = "Laporan Permohonan Kerja Lebih Masa dan Tuntutan Elaun lebih Masa";
+  title.text = "Laporan Kehadiran Roll Call";
   title.fontSize = 20;
   title.marginBottom = 20;
   
@@ -98,7 +98,7 @@
   series1.columns.template.width = am4core.percent(80);
   series1.columns.template.tooltipText =
     "{name}: {valueY.totalPercent.formatNumber('#.00')}%";
-  series1.name = "Permohonan Kerja Lebih Masa";
+  series1.name = "Kehadiran Roll Call Ditolak";
   series1.dataFields.categoryX = "category";
   series1.dataFields.valueY = "value1";
   series1.dataFields.valueYShow = "totalPercent";
@@ -116,7 +116,7 @@
   series2.columns.template.width = am4core.percent(80);
   series2.columns.template.tooltipText =
     "{name}: {valueY.totalPercent.formatNumber('#.00')}%";
-  series2.name = "Pengesahan Kerja Lebih Masa";
+  series2.name = "Kehadiran Roll Call";
   series2.dataFields.categoryX = "category";
   series2.dataFields.valueY = "value2";
   series2.dataFields.valueYShow = "totalPercent";
@@ -134,7 +134,7 @@
   series3.columns.template.width = am4core.percent(80);
   series3.columns.template.tooltipText =
     "{name}: {valueY.totalPercent.formatNumber('#.00')}%";
-  series3.name = "Tuntutan Elaun Lebih Masa";
+  series3.name = "Ketidakhadiran Roll Call ";
   series3.dataFields.categoryX = "category";
   series3.dataFields.valueY = "value3";
   series3.dataFields.valueYShow = "totalPercent";
@@ -171,7 +171,7 @@
 
             </div>
             <!-- Card stats -->
-     
+{{--      
             <div class="row">
               <div class="col-xl-3 col-md-6">
                 <div class="card card-stats">
@@ -249,7 +249,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> --}}
           </div>
         </div>
       </div>
@@ -274,7 +274,7 @@
           <div class="row align-items-center justify-content-lg-between">
             <div class="col-lg-6">
               <div class="copyright text-center  text-lg-left  text-muted">
-                &copy; 2021 <a href="" class="font-weight-bold ml-1" target="">Sistem Pengurusan Elaun Lebih Masa
+                &copy; 2021 <a href="" class="font-weight-bold ml-1" target="">Sistem Pengurusan Roll Call
 </a>
               </div>
             </div>

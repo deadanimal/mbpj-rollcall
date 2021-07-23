@@ -27,24 +27,24 @@
       // Add data
       chart.data = [{
           "year": 2005,
-          "Permohonan": 23.5,
-          "Tuntutan": 18.1
+          "HADIR": 23.5,
+          "TIDAK HADIR": 18.1
       }, {
           "year": 2006,
-          "Permohonan": 26.2,
-          "Tuntutan": 22.8
+          "HADIR": 26.2,
+          "TIDAK HADIR": 22.8
       }, {
           "year": 2007,
-          "Permohonan": 30.1,
-          "Tuntutan": 23.9
+          "HADIR": 30.1,
+          "TIDAK HADIR": 23.9
       }, {
           "year": 2008,
-          "Permohonan": 29.5,
-          "Tuntutan": 25.1
+          "HADIR": 29.5,
+          "TIDAK HADIR": 25.1
       }, {
           "year": 2009,
-          "Permohonan": 24.6,
-          "Tuntutan": 25
+          "HADIR": 24.6,
+          "TIDAK HADIR": 25
       }];
 
       // Create axes
@@ -98,8 +98,8 @@
           categoryLabel.label.truncate = false;
       }
 
-      createSeries("Permohonan", "Permohonan");
-      createSeries("Tuntutan", "Tuntutan");
+      createSeries("HADIR", "HADIR");
+      createSeries("TIDAK HADIR", "TIDAK HADIR");
 
   }); // end am4core.ready()
 
@@ -139,15 +139,13 @@
                 </div>
                 <!-- Card stats -->
                 <div class="row">
-                    <div class="col-xl-3 col-md-6">
+                    <div class="col-xl-4 col-md-6">
                         <div class="card card-stats">
                             <!-- Card body -->
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h5 class="card-title text-uppercase text-muted mb-0">JUMLAH PERMOHONAN LEBIH
-                                            MASA
-                                        </h5>
+                                        <h5 class="card-title text-uppercase text-muted mb-0">JUMLAH KEHADIRAN ROLL CALL </h5>
                                         <span class="h2 font-weight-bold mb-0">350,897</span>
                                     </div>
                                     <div class="col-auto">
@@ -159,14 +157,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-6">
+                    <div class="col-xl-4 col-md-6">
                         <div class="card card-stats">
                             <!-- Card body -->
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h5 class="card-title text-uppercase text-muted mb-0"> PERMOHONAN KERJA LEBIH
-                                            MASA LULUS
+                                        <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH ROLL CALL TIDAK HADIR
                                         </h5>
                                         <span class="h2 font-weight-bold mb-0">2,356</span>
                                     </div>
@@ -181,40 +178,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-6">
+                    <div class="col-xl-4 col-md-6">
                         <div class="card card-stats">
                             <!-- Card body -->
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h5 class="card-title text-uppercase text-muted mb-0"> TUNTUTAN ELAUN LEBIH MASA
+                                        <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH KEHADIRAN ROLL CALL DITOLAK
                                         </h5>
                                         <span class="h2 font-weight-bold mb-0">924</span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
                                             <i class="ni ni-money-coins"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card card-stats">
-                            <!-- Card body -->
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <h5 class="card-title text-uppercase text-muted mb-0"> TUNTUTAN ELAUN LEBIH MASA
-                                            (RM)
-                                        </h5>
-                                        <span class="h2 font-weight-bold mb-0">RM 49,65</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-                                            <i class="ni ni-chart-bar-32"></i>
                                         </div>
                                     </div>
                                 </div>

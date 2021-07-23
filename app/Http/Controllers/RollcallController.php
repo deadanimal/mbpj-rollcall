@@ -7,77 +7,83 @@ use Illuminate\Http\Request;
 
 class RollcallController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function index()
     {
-        return view ('rollcall.index');
+        $rollcalls = Rollcall::all();
+        return view ('rollcall.index',['rollcalls'=>$rollcalls]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+        return view('rollcall.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $rollcall = new Rollcall;
+
+        $mula_rollcall = date("Y-m-d H:i:s", strtotime($request->mula_rollcall));  
+        $akhir_rollcall = date("Y-m-d H:i:s", strtotime($request->akhir_rollcall));  
+        // $rollcall->staffno = $request-> $staffno;
+        $rollcall->mula_rollcall = $mula_rollcall;
+        $rollcall->akhir_rollcall = $akhir_rollcall;
+        $rollcall->tajuk_rollcall = $request-> tajuk_rollcall; 
+        $rollcall->lokasi = $request-> lokasi;
+        $rollcall->catatan = $request-> catatan;
+        $rollcall->status = $request-> status;
+        $rollcall->pegawai_sokong_id = $request-> pegawai_sokong_id;
+        $rollcall->pegawai_lulus_id = $request-> pegawai_lulus_id;
+
+        $rollcall->save();
+
+        $redirected_url= '/rollcalls/';
+        return redirect($redirected_url);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Rollcall  $rollcall
-     * @return \Illuminate\Http\Response
-     */
+
+  
     public function show(Rollcall $rollcall)
     {
-        //
+        return view('rollcall.edit',[
+            'rollcall'=> $rollcall,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Rollcall  $rollcall
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Rollcall $rollcall)
     {
-        //
+        return view('rollcall.edit',[
+            'rollcall'=> $rollcall,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Rollcall  $rollcall
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Rollcall $rollcall)
     {
-        //
+        if($request->mula_rollcall) {
+            $mula_rollcall = $request->mula_rollcall;    
+            $rollcall->mula_rollcall = date("Y-m-d H:i:s", strtotime($request->mula_rollcall));  
+        }
+
+        if($request->akhir_rollcall) {
+            $akhir_rollcall = $request->akhir_rollcall;    
+            $rollcall->akhir_rollcall = date("Y-m-d H:i:s", strtotime($request->akhir_rollcall));  
+        }        
+        // $rollcall->staffno = $request-> staffno;
+        $rollcall->tajuk_rollcall = $request-> tajuk_rollcall;
+        $rollcall->lokasi = $request-> lokasi;
+        $rollcall->catatan = $request-> catatan;
+        $rollcall->status = $request-> status;
+        $rollcall->pegawai_sokong_id = $request-> pegawai_sokong_id;
+        $rollcall->pegawai_lulus_id = $request-> pegawai_lulus_id;
+
+        $rollcall->save();
+
+        $redirected_url= '/rollcalls/';
+        return redirect($redirected_url);        
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Rollcall  $rollcall
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Rollcall $rollcall)
     {
         //

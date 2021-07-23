@@ -20,112 +20,91 @@
   am4core.useTheme(am4themes_animated);
   // Themes end
   
+  var chart = am4core.create("chartdiv", am4charts.XYChart);
   
+  chart.data = [{
+   "country": "USA",
+   "visits": 2025
+  }, {
+   "country": "China",
+   "visits": 1882
+  }, {
+   "country": "Japan",
+   "visits": 1809
+  }, {
+   "country": "Germany",
+   "visits": 1322
+  }, {
+   "country": "UK",
+   "visits": 1122
+  }, {
+   "country": "France",
+   "visits": 1114
+  }, {
+   "country": "India",
+   "visits": 984
+  }, {
+   "country": "Spain",
+   "visits": 711
+  }, {
+   "country": "Netherlands",
+   "visits": 665
+  }, {
+   "country": "Russia",
+   "visits": 580
+  }, {
+   "country": "South Korea",
+   "visits": 443
+  }, {
+   "country": "Canada",
+   "visits": 441
+  }];
   
-  var chart = am4core.create('chartdiv', am4charts.XYChart)
-  chart.colors.step = 2;
+  chart.padding(40, 40, 40, 40);
   
-  chart.legend = new am4charts.Legend()
-  chart.legend.position = 'top'
-  chart.legend.paddingBottom = 20
-  chart.legend.labels.template.maxWidth = 95
+  var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+  categoryAxis.renderer.grid.template.location = 0;
+  categoryAxis.dataFields.category = "country";
+  categoryAxis.renderer.minGridDistance = 60;
+  categoryAxis.renderer.inversed = true;
+  categoryAxis.renderer.grid.template.disabled = true;
   
-  var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
-  xAxis.dataFields.category = 'category'
-  xAxis.renderer.cellStartLocation = 0.1
-  xAxis.renderer.cellEndLocation = 0.9
-  xAxis.renderer.grid.template.location = 0;
+  var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+  valueAxis.min = 0;
+  valueAxis.extraMax = 0.1;
+  //valueAxis.rangeChangeEasing = am4core.ease.linear;
+  //valueAxis.rangeChangeDuration = 1500;
   
-  var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
-  yAxis.min = 0;
+  var series = chart.series.push(new am4charts.ColumnSeries());
+  series.dataFields.categoryX = "country";
+  series.dataFields.valueY = "visits";
+  series.tooltipText = "{valueY.value}"
+  series.columns.template.strokeOpacity = 0;
+  series.columns.template.column.cornerRadiusTopRight = 10;
+  series.columns.template.column.cornerRadiusTopLeft = 10;
+  //series.interpolationDuration = 1500;
+  //series.interpolationEasing = am4core.ease.linear;
+  var labelBullet = series.bullets.push(new am4charts.LabelBullet());
+  labelBullet.label.verticalCenter = "bottom";
+  labelBullet.label.dy = -10;
+  labelBullet.label.text = "{values.valueY.workingValue.formatNumber('#.')}";
   
-  function createSeries(value, name) {
-      var series = chart.series.push(new am4charts.ColumnSeries())
-      series.dataFields.valueY = value
-      series.dataFields.categoryX = 'category'
-      series.name = name
+  chart.zoomOutButton.disabled = true;
   
-      series.events.on("hidden", arrangeColumns);
-      series.events.on("shown", arrangeColumns);
+  // as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
+  series.columns.template.adapter.add("fill", function (fill, target) {
+   return chart.colors.getIndex(target.dataItem.index);
+  });
   
-      var bullet = series.bullets.push(new am4charts.LabelBullet())
-      bullet.interactionsEnabled = false
-      bullet.dy = 30;
-      bullet.label.text = '{valueY}'
-      bullet.label.fill = am4core.color('#ffffff')
+  setInterval(function () {
+   am4core.array.each(chart.data, function (item) {
+     item.visits += Math.round(Math.random() * 200 - 100);
+     item.visits = Math.abs(item.visits);
+   })
+   chart.invalidateRawData();
+  }, 2000)
   
-      return series;
-  }
-  
-  chart.data = [
-      {
-          category: 'Place #1',
-          first: 40,
-          second: 55,
-          third: 60
-      },
-      {
-          category: 'Place #2',
-          first: 30,
-          second: 78,
-          third: 69
-      },
-      {
-          category: 'Place #3',
-          first: 27,
-          second: 40,
-          third: 45
-      },
-      {
-          category: 'Place #4',
-          first: 50,
-          second: 33,
-          third: 22
-      }
-  ]
-  
-  
-  createSeries('first', 'PERMOHONAN');
-  createSeries('second', 'PENGESAHAN');
-  createSeries('third', 'TUNTUTAN');
-  
-  function arrangeColumns() {
-  
-      var series = chart.series.getIndex(0);
-  
-      var w = 1 - xAxis.renderer.cellStartLocation - (1 - xAxis.renderer.cellEndLocation);
-      if (series.dataItems.length > 1) {
-          var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
-          var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
-          var delta = ((x1 - x0) / chart.series.length) * w;
-          if (am4core.isNumber(delta)) {
-              var middle = chart.series.length / 2;
-  
-              var newIndex = 0;
-              chart.series.each(function(series) {
-                  if (!series.isHidden && !series.isHiding) {
-                      series.dummyData = newIndex;
-                      newIndex++;
-                  }
-                  else {
-                      series.dummyData = chart.series.indexOf(series);
-                  }
-              })
-              var visibleCount = newIndex;
-              var newMiddle = visibleCount / 2;
-  
-              chart.series.each(function(series) {
-                  var trueIndex = chart.series.indexOf(series);
-                  var newIndex = series.dummyData;
-  
-                  var dx = (newIndex - trueIndex + middle - newMiddle) * delta
-  
-                  series.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
-                  series.bulletsContainer.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
-              })
-          }
-      }
-  }
+  categoryAxis.sortBySeries = series;
   
   }); // end am4core.ready()
   </script>
@@ -138,9 +117,8 @@
     <div class="container-fluid">
 
       <div class="row align-items-center py-4">
-        <div class="col-lg-6 col-7">
-      <h1 class="h1 text-white "> Selamat Datang {{Auth()->user()->name}} ke Modul Pentadbir Sistem </h1>
-      <h1 class="h2 text-white "> Sistem Pengurusan Roll Call
+        <div class="col-lg-12 col-7">
+      <h1 class="h1 text-white "> Selamat Datang {{Auth()->user()->name}} ke Sistem Pengurusan Roll Call</h1>
 </h1>
         </div>
       </div>
@@ -163,65 +141,65 @@
         <!-- Card stats -->
         <div class="row">
           <div class="col-xl-4 col-md-6">
-            <div class="card card-stats">
-              <!-- Card body -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0">PERMOHONAN KERJA LEBIH MASA
-                    </h5>
-                    <span class="h2 font-weight-bold mb-0">350,897</span>
+              <div class="card card-stats">
+                  <!-- Card body -->
+                  <div class="card-body">
+                      <div class="row">
+                          <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0">JUMLAH KEHADIRAN ROLL CALL </h5>
+                              <span class="h2 font-weight-bold mb-0">350,897</span>
+                          </div>
+                          <div class="col-auto">
+                              <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                  <i class="ni ni-active-40"></i>
+                              </div>
+                          </div>
+                      </div>
                   </div>
-                  <div class="col-auto">
-                    <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                      <i class="ni ni-active-40"></i>
-                    </div>
-                  </div>
-                </div>
               </div>
-            </div>
           </div>
           <div class="col-xl-4 col-md-6">
-            <div class="card card-stats">
-              <!-- Card body -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0"> PENGESAHAN KERJA LEBIH MASA
-                    </h5>
-                    <span class="h2 font-weight-bold mb-0">2,356</span>
-                  </div>
-                  <div class="col-auto">
-                    <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                      <i class="ni ni-chart-pie-35"></i>
-                    </div>
-                  </div>
-                </div>
+              <div class="card card-stats">
+                  <!-- Card body -->
+                  <div class="card-body">
+                      <div class="row">
+                          <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH ROLL CALL TIDAK HADIR
+                              </h5>
+                              <span class="h2 font-weight-bold mb-0">2,356</span>
+                          </div>
+                          <div class="col-auto">
+                              <div
+                                  class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                  <i class="ni ni-chart-pie-35"></i>
+                              </div>
+                          </div>
+                      </div>
 
+                  </div>
               </div>
-            </div>
           </div>
           <div class="col-xl-4 col-md-6">
-            <div class="card card-stats">
-              <!-- Card body -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0"> TUNTUTAN ELAUN LEBIH MASA
-                    </h5>
-                    <span class="h2 font-weight-bold mb-0">924</span>
+              <div class="card card-stats">
+                  <!-- Card body -->
+                  <div class="card-body">
+                      <div class="row">
+                          <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH KEHADIRAN ROLL CALL DITOLAK
+                              </h5>
+                              <span class="h2 font-weight-bold mb-0">924</span>
+                          </div>
+                          <div class="col-auto">
+                              <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                                  <i class="ni ni-money-coins"></i>
+                              </div>
+                          </div>
+                      </div>
+
                   </div>
-                  <div class="col-auto">
-                    <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                      <i class="ni ni-money-coins"></i>
-                    </div>
-                  </div>
-                </div>
- 
               </div>
-            </div>
           </div>
-        </div>
+      </div>
       </div>
     </div>
   </div>

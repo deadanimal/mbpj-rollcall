@@ -59,7 +59,10 @@
         href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet"
         href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+    {{--  --}}
 
+    <link rel="stylesheet" href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/fullcalendar/dist/fullcalendar.min.css">
+    <link rel="stylesheet" href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/sweetalert2/dist/sweetalert2.min.css">
     {{--  --}}
     <script>
         (function (w, d, s, l, i) {
@@ -267,6 +270,11 @@
     <script
         src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-select/js/dataTables.select.min.js">
     </script>
+    {{--  --}}
+
+    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/moment/min/moment.min.js"></script>
+    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
 
     <script>
         // Facebook Pixel Code Don't Delete

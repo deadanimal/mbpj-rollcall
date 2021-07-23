@@ -117,9 +117,8 @@
     <div class="container-fluid">
 
       <div class="row align-items-center py-4">
-        <div class="col-lg-6 col-7">
-      <h1 class="h1 text-white "> Selamat Datang {{Auth()->user()->name}} ke Modul Ketua Bahagian </h1>
-      <h1 class="h2 text-white "> Sistem Pengurusan Roll Call
+        <div class="col-lg-12 col-7">
+      <h1 class="h1 text-white "> Selamat Datang {{Auth()->user()->name}} ke Sistem Pengurusan Roll Call</h1>
 </h1>
         </div>
       </div>
@@ -141,167 +140,66 @@
         </div>
         <!-- Card stats -->
         <div class="row">
-          <div class="col-xl-3 col-md-6">
-            <div class="card card-stats">
-              <!-- Card body -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0">JUMLAH PERMOHONAN LEBIH MASA
-                    </h5>
-                    <span class="h2 font-weight-bold mb-0">350,897</span>
+          <div class="col-xl-4 col-md-6">
+              <div class="card card-stats">
+                  <!-- Card body -->
+                  <div class="card-body">
+                      <div class="row">
+                          <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0">JUMLAH KEHADIRAN ROLL CALL </h5>
+                              <span class="h2 font-weight-bold mb-0">350,897</span>
+                          </div>
+                          <div class="col-auto">
+                              <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                  <i class="ni ni-active-40"></i>
+                              </div>
+                          </div>
+                      </div>
                   </div>
-                  <div class="col-auto">
-                    <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                      <i class="ni ni-active-40"></i>
-                    </div>
-                  </div>
-                </div>
               </div>
-            </div>
           </div>
-          <div class="col-xl-3 col-md-6">
-            <div class="card card-stats">
-              <!-- Card body -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0"> PERMOHONAN KERJA LEBIH MASA LULUS
-                    </h5>
-                    <span class="h2 font-weight-bold mb-0">2,356</span>
-                  </div>
-                  <div class="col-auto">
-                    <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                      <i class="ni ni-chart-pie-35"></i>
-                    </div>
-                  </div>
-                </div>
+          <div class="col-xl-4 col-md-6">
+              <div class="card card-stats">
+                  <!-- Card body -->
+                  <div class="card-body">
+                      <div class="row">
+                          <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH ROLL CALL TIDAK HADIR
+                              </h5>
+                              <span class="h2 font-weight-bold mb-0">2,356</span>
+                          </div>
+                          <div class="col-auto">
+                              <div
+                                  class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                  <i class="ni ni-chart-pie-35"></i>
+                              </div>
+                          </div>
+                      </div>
 
+                  </div>
               </div>
-            </div>
           </div>
-          <div class="col-xl-3 col-md-6">
-            <div class="card card-stats">
-              <!-- Card body -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0"> TUNTUTAN ELAUN LEBIH MASA 
-                    </h5>
-                    <span class="h2 font-weight-bold mb-0">924</span>
-                  </div>
-                  <div class="col-auto">
-                    <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                      <i class="ni ni-money-coins"></i>
-                    </div>
-                  </div>
-                </div>
- 
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-3 col-md-6">
-            <div class="card card-stats">
-              <!-- Card body -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0"> TUNTUTAN ELAUN LEBIH MASA (RM)
-                    </h5>
-                    <span class="h2 font-weight-bold mb-0">RM 49,65</span>
-                  </div>
-                  <div class="col-auto">
-                    <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-                      <i class="ni ni-chart-bar-32"></i>
-                    </div>
-                  </div>
-                </div>
-       
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xl-3 col-md-6">
-            <div class="card card-stats">
-              <!-- Card body -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0">JUMLAH PERMOHONAN LEBIH MASA
-                    </h5>
-                    <span class="h2 font-weight-bold mb-0">350,897</span>
-                  </div>
-                  <div class="col-auto">
-                    <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                      <i class="ni ni-active-40"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-3 col-md-6">
-            <div class="card card-stats">
-              <!-- Card body -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0"> PERMOHONAN KERJA LEBIH MASA LULUS
-                    </h5>
-                    <span class="h2 font-weight-bold mb-0">2,356</span>
-                  </div>
-                  <div class="col-auto">
-                    <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                      <i class="ni ni-chart-pie-35"></i>
-                    </div>
-                  </div>
-                </div>
+          <div class="col-xl-4 col-md-6">
+              <div class="card card-stats">
+                  <!-- Card body -->
+                  <div class="card-body">
+                      <div class="row">
+                          <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH KEHADIRAN ROLL CALL DITOLAK
+                              </h5>
+                              <span class="h2 font-weight-bold mb-0">924</span>
+                          </div>
+                          <div class="col-auto">
+                              <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                                  <i class="ni ni-money-coins"></i>
+                              </div>
+                          </div>
+                      </div>
 
+                  </div>
               </div>
-            </div>
           </div>
-          <div class="col-xl-3 col-md-6">
-            <div class="card card-stats">
-              <!-- Card body -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0"> TUNTUTAN ELAUN LEBIH MASA 
-                    </h5>
-                    <span class="h2 font-weight-bold mb-0">924</span>
-                  </div>
-                  <div class="col-auto">
-                    <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                      <i class="ni ni-money-coins"></i>
-                    </div>
-                  </div>
-                </div>
- 
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-3 col-md-6">
-            <div class="card card-stats">
-              <!-- Card body -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0"> TUNTUTAN ELAUN LEBIH MASA (RM)
-                    </h5>
-                    <span class="h2 font-weight-bold mb-0">RM 49,65</span>
-                  </div>
-                  <div class="col-auto">
-                    <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-                      <i class="ni ni-chart-bar-32"></i>
-                    </div>
-                  </div>
-                </div>
-       
-              </div>
-            </div>
-          </div>
-        </div>
+      </div>
       </div>
     </div>
   </div>
