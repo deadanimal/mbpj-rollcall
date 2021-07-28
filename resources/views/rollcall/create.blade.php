@@ -34,9 +34,9 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="tajuk_rollcall">Tajuk Roll Call</label>
+                                        <label for="tajuk_rollcall">Tajuk roll call</label>
                                         <div class="input-group input-group-merge">
-                                            <input class="form-control" name="tajuk_rollcall" placeholder="tajuk"
+                                            <input class="form-control" name="tajuk_rollcall"required placeholder="tajuk"
                                                 type="text">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class=""></i></span>
@@ -47,7 +47,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="tajuk_rollcall">Status</label>
-                                        <select class="form-select form-select-sm col-12" name="status"
+                                        <select class="form-select form-select-sm col-12" name="status" required
                                             aria-label=".form-select-sm example">
                                             <option value="dibuka">Buka</option>
                                             <option value="ditutup"> Tutup</option>
@@ -59,9 +59,9 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="lokasi">lokasi Roll Call</label>
+                                        <label for="lokasi">Lokasi roll call</label>
                                         <div class="input-group input-group-merge">
-                                            <input class="form-control" name="lokasi" placeholder="tajuk" type="text">
+                                            <input class="form-control" name="lokasi" required placeholder="lokasi" type="text">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class=""></i></span>
                                             </div>
@@ -72,7 +72,7 @@
                                     <div class="form-group">
                                         <label for="catatan">Catatan</label>
                                         <div class="input-group input-group-merge">
-                                            <input class="form-control" name="catatan" placeholder="tajuk" type="text">
+                                            <input class="form-control" name="catatan" required placeholder="tajuk" type="text">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class=""></i></span>
                                             </div>
@@ -85,7 +85,7 @@
                                     <div class="form-group">
                                         <label for="mula_rollcall">Pilih waktu mula</label>
                                         <div class="input-group date" id="datetimepicker1">
-                                            <input type="text" class="form-control" name="mula_rollcall">
+                                            <input type="text" class="form-control" name="mula_rollcall" required> 
                                             <span class="input-group-addon input-group-append">
                                                 <button class="btn btn-outline-primary" type="button"
                                                     id="button-addon2"> <span class="fa fa-calendar"></span></button>
@@ -97,7 +97,7 @@
                                     <div class="form-group">
                                         <label for="akhir_rollcall">Pilih waktu akhir</label>
                                         <div class="input-group date" id="datetimepicker2">
-                                            <input type="text" class="form-control" name="akhir_rollcall">
+                                            <input type="text" class="form-control" name="akhir_rollcall" required>
                                             <span class="input-group-addon input-group-append">
                                                 <button class="btn btn-outline-primary" type="button"
                                                     id="button-addon2"> <span class="fa fa-calendar"></span></button>
@@ -111,7 +111,7 @@
                                     <div class="form-group">
                                         <label for="pegawai_sokong_id">Pilih pegawai sokong</label>
                                         <div class="input-group input-group-merge">
-                                            <input class="form-control" name="pegawai_sokong_id"
+                                            <input class="form-control" name="pegawai_sokong_id" required
                                                 placeholder="pegawai_sokong_id">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
@@ -123,7 +123,7 @@
                                     <div class="form-group">
                                         <label for="pegawai_lulus_id">Pilih pegawai lulus</label>
                                         <div class="input-group input-group-merge">
-                                            <input class="form-control" name="pegawai_lulus_id"
+                                            <input class="form-control" name="pegawai_lulus_id" required
                                                 placeholder="pegawai_lulus_id">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>

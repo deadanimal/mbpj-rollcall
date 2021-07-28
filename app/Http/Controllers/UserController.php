@@ -45,8 +45,16 @@ class UserController extends Controller
             ]);
 
     }
-    public function kemaskini() {
+    public function kemaskini(Request $request) 
+    
+    {
+        $user =User::where('user_code', $request->user_code);
+        $user->role = $request ->role;
+        $user->status = $request ->status;
+        $user->save();
 
+        $redirected_url= '/users/';
+        return redirect($redirected_url);        
     }
 
     public function tukar_kata_laluan() {

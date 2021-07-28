@@ -41,9 +41,7 @@ Route::resource('profiles',ProfileController::class)->middleware(['auth']);
 Route::resource('rollcalls',RollcallController::class)->middleware(['auth']);
 Route::resource('laporans',LaporanController::class)->middleware(['auth']);
 Route::resource('users',UserController::class)->middleware(['auth']);
-
-
-
+Route::post('/users/kemaskini',[UserController::class,'kemaskini'])->middleware(['auth']);
 
 
 require __DIR__.'/auth.php';

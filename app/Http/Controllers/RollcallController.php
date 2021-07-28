@@ -82,8 +82,6 @@ class RollcallController extends Controller
         $redirected_url= '/rollcalls/';
         return redirect($redirected_url);        
     }
-
-
     public function destroy(Rollcall $rollcall)
     {
         //

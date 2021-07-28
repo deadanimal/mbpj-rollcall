@@ -1,10 +1,6 @@
 @extends('base')
 
 @section('content')
-{{-- css --}}
-<link rel="stylesheet" href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
-<link rel="stylesheet" href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
 
 <div class="header bg-primary pb-6">
     <div class="container-fluid">
@@ -84,89 +80,104 @@
         </div>
     </div>
 </div>
+
+
+{{--  --}}
 <div class="container-fluid mt--6">
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="mb-0">Pengurusan Penguna</h3>   
-                <div class="card-body px-0">
-                    <div class="table-responsive py-4">
-                        <table class="table table-flush" id="datatable-basic">
-                            <thead class="thead-light">
-                        
+                    <h3 class="mb-0">Pengurusan Penguna</h3>
+                    <div class="card-body px-0">
+                        <div class="table-responsive py-4">
+                            <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
+                                style="width:100%">
+                                <thead>
                                 <tr>
-                                    <th>No. </th>
-                                    <th>No. Pekerja</th>
+                                    <th>No.</th>
+                                    <th>No.Pekerja</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Peranan</th>
                                     <th>Status</th>
                                     <th>Tindakan</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                     @forelse ($users as $user)
                                     <tr>
-                                        <th scope="row">
-                                            <div class="media align-items-center">
-                                                <div class="media-body">
-                                                    <span class="name mb-0 text-sm">
-                                                        <a>{{$user->id}}</a>
-                                                    </span>
-                                                </div>
+                                        <td>{{$user->id}}</td>    
+                                        <td>{{$user->user_code}}</td>  
+                                        <td>{{$user->name}}</td>  
+                                        <td>{{$user->email}}</td>  
+                                        <td>{{$user->role}}</td>   
+                                        <td>{{$user->status}} </td>
+                                        <td><a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal"
+                                                    data-target="#modalLoginForm">Kemaskini</a>
                                             </div>
-                                        </th>
-                                        <td class="No. Pekerja">
-                                            {{$user->user_code}}
-                                        </td>     
-                                        <td class="Name">
-                                            {{$user->name}}
-                                        </td>   
-                                        <td class="Email">
-                                            {{$user->email}}
-                                        </td>   
-                                        <td class="Peranan">
-                                            <div class="form-group">
-                                                <select class="form-select form-select-sm col-8" name="pengurusan" aria-label=".form-select-sm example">
-                                                <option value="individu">{{$user->role}}</option>
-                                              </div> 
-                                            {{-- {{$user->role}} --}}
-                                        </td>    
-                                        <td class="Status">
-                                            <div class="form-group">
-                                                <select class="form-select form-select-sm col-8" name="pengurusan" aria-label=".form-select-sm example">
-                                                <option value="individu">Aktif</option>
-                                                <option value="berkumpulan">Nyahaktif</option></select>
-                                              </div>  
-                                        </td>          
-                                        <td class="Tindakan">
-                                            <a href="#"class="btn btn-success">Kemaskini</a>
                                         </td>
-                                        
                                     </tr>
                                     @empty
-                                    Tiada Rekod
+                                    <div style="text-align:center;">
+                                        <td>
+                                            <h5> Tiada rekod </h5>
+                                        </td>
+                                    </div>
                                     @endforelse
-
-                                    
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    {{-- Modal  --}}
 
 
-{{-- datatables --}}
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
-@endsection
+    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Kemaskini Maklumat</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    {{-- form  --}}
+
+                    <form method="POST" action="/users/kemaskini">
+                        <div class="md-form mb-3">
+                            <label data-error="wrong" data-success="right" for="defaultForm-email">No Pekerja</label>
+                            <input name="user_code" id="defaultForm-email" class="form-control validate">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-select form-select-sm col-12" name="role"
+                                aria-label=".form-select-sm example">
+                                <option value="pentadbir_sistem">Pentadbir Sistem</option>
+                                <option value="naziran">Naziran</option>
+                                <option value="penyelia">Penyelia</option>
+                                <option value="ketua_jabatan">Ketua Jabatan</option>
+                                <option value="ketua_bahagian">Ketua Bahagian</option>
+                                <option value="penguatkuasa">Penguatkuasa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-select form-select-sm col-12" name="role"
+                                aria-label=".form-select-sm example">
+                                <option value="aktif">Aktif</option>
+                                <option value="tidak_aktif">Nyahaktifkan</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn btn-default">Kemaskini</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endsection

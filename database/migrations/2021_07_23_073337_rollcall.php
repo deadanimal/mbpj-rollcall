@@ -14,7 +14,7 @@ class Rollcall extends Migration
     public function up()
     {
         Schema::table('rollcalls', function (Blueprint $table) {
-            $table->char('staffno',20)->nullable();
+            $table->char('staffno', 20)->nullable();
             $table->char('tajuk_rollcall',255) ;
             $table->datetime('mula_rollcall');
             $table->datetime('akhir_rollcall');
