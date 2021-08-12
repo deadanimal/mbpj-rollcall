@@ -131,11 +131,11 @@
                                 </div>
                             </div>
 
-                            <div class="container">
+                            {{-- <div class="container">
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">
                                   Tambah Penguatkuasa
                                 </button>  
-                              </div>
+                              </div> --}}
                             {{-- <button  class="btn btn-primary float-left">Tambah Penguatkuasa</button> --}}
                             <button  onclick="tambah_rollcall()" class="btn btn-primary float-right">Tambah Roll Call</button>
 

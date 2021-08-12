@@ -46,8 +46,6 @@ class RollcallController extends Controller
         return redirect($redirected_url);
     }
 
-
-  
     public function show(Rollcall $rollcall)
     {
         return view('rollcall.edit',[
@@ -57,12 +55,22 @@ class RollcallController extends Controller
 
     public function edit(Rollcall $rollcall)
     {
+        $status = [
+            "dibuka" => "Dibuka",
+            "ditutup" => "Tutup",
+            "ditangguh" => "Tangguh"
+
+        ];
         return view('rollcall.edit',[
             'rollcall'=> $rollcall,
+            'status' => $status     
+
         ]);
     }
 
     public function update(Request $request, Rollcall $rollcall)
+
+
     {
         if($request->mula_rollcall) {
             $mula_rollcall = $request->mula_rollcall;    
@@ -81,10 +89,11 @@ class RollcallController extends Controller
         $rollcall->pegawai_sokong_id = $request-> pegawai_sokong_id;
         $rollcall->pegawai_lulus_id = $request-> pegawai_lulus_id;
 
+    
         $rollcall->save();
 
         $redirected_url= '/rollcalls/';
-        return redirect($redirected_url);        
+        return redirect($redirected_url); 
     }
 
 

@@ -17,11 +17,15 @@
                             </ol>
                         </nav>
                     </div>
+                    <div class="col-lg-12 col text-right">
+                        <a type="button" class="btn btn-neutral" data-toggle="modal" data-target="#tambahkakitangan"> +
+                            Tambah Kakitangan Roll Call</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    @if(auth()->user()->role == 'naziran')
+@if(auth()->user()->role == 'naziran')
     <div class="container-fluid mt--6">
         <div class="row">
             <div class="col-lg-12">
@@ -133,7 +137,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="status">Catatan</label>
+                                            <label for="status">Status</label>
                                             <div class="input-group input-group-merge">
                                                 <input class="form-control" name="status" value="{{$rollcall->status}}"
                                                     type="text">
@@ -143,46 +147,76 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {{-- <div class="col-md-6 ">
+                                        <div class="form-group">
+                                            <label >Status</label>
+                                            <select name="status" >
+                                                @foreach ($rollcall as $key => $value)
+                                                <option value="{{ $key }}">{{ $value }}</option>
+                                    @endforeach
+                                    </select>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="pegawai_sokong_id">Pilih pegawai sokong</label>
-                                            <div class="input-group input-group-merge">
-                                                <input class="form-control" name="pegawai_sokong_id"
-                                                    value="{{$rollcall->pegawai_sokong_id}}" type="number">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text"><i
-                                                            class="fa fa-address-book"></i></span>
-                                                </div>
-                                            </div>
-
-                                        </div>
+                        </div> --}}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pegawai_sokong_id">Pilih pegawai sokong</label>
+                                <div class="input-group input-group-merge">
+                                    <input class="form-control" name="pegawai_sokong_id"
+                                        value="{{$rollcall->pegawai_sokong_id}}" type="number">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="pegawai_lulus_id">Pilih pegawai lulus</label>
-                                            <div class="input-group input-group-merge">
-                                                <input class="form-control" name="pegawai_lulus_id"
-                                                    value="{{$rollcall->pegawai_lulus_id}}" type="number">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text"><i
-                                                            class="fa fa-address-book"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                </div>
 
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pegawai_lulus_id">Pilih pegawai lulus</label>
+                                <div class="input-group input-group-merge">
+                                    <input class="form-control" name="pegawai_lulus_id"
+                                        value="{{$rollcall->pegawai_lulus_id}}" type="number">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                                data-target="#exampleModal">
+                                Kemaskini
+                            </button>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Makluman</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Kemaskini
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary float-right">Kemaskini</button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="container-fluid mt--10">
         <div class="row ">
             <div class="col-md-12">
@@ -204,7 +238,7 @@
                                             <th>Email</th>
                                             <th>Status</th>
                                             <th>Tindakan</th>
-                                        
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -216,23 +250,23 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                                                                  
+
                                             <td>
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                                     data-target="#exampleModal">
                                                     Lihat
                                                 </button>
-                                                <button class="btn btn-success" > Kemaskini </button>
+                                                <button class="btn btn-success"> Kemaskini </button>
                                                 <button class="btn btn-danger"> Buang </button>
                                             </td>
                                         </tr>
                                         {{-- @empty
-                                        <div style="text-align:center;">
-                                            <td>
-                                                <h5> Tiada rekod </h5>
-                                            </td>
-                                        </div>
-                                        @endforelse --}}
+                                            <div style="text-align:center;">
+                                                <td>
+                                                    <h5> Tiada rekod </h5>
+                                                </td>
+                                            </div>
+                                            @endforelse --}}
                                     </tbody>
                                 </table>
                             </div>
@@ -274,77 +308,144 @@
             </div>
         </div>
     </div>
-    @elseif(auth()->user()->role == 'penguatkuasa')
-
-    @endif
-    <footer class="footer pt-0">
-        <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6">
-                <div class="copyright text-center  text-lg-left  text-muted">
-                    &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">Sistem
-                        Pengurusan
-                        Elaun Lebih Masa</a>
+    <!-- Modal -->
+    <div class="modal fade" id="tambahkakitangan" tabindex="-1" role="dialog" aria-labelledby="tambahkakitanganLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tambahkakitanganLabel"> Tambah Kakitangan Roll Call</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card-wrapper">
+                                <!-- Input groups -->
+                                <div class="card">
+                                    <!-- Card header -->
+                                    <div class="card-header">
+                                        <h3 class="mb-0">Tambah Nama Kakitangan </h3>
+                                    </div>
+                                    <!-- Card body -->
+                                    <div class="card-body">
+                                        <form method="POST" action="/rollcalls/{{$rollcall->id}}">
+                                            @csrf
+                                            @method('PUT')
+                                            <!-- Input groups with icon -->                     
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="user_code">No Pekerja </label>
+                                                        <div class="input-group input-group-merge">
+                                                            <input class="form-control" name="lokasi" value=""
+                                                                type="text">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text"><i
+                                                                        class="fas fa-map-marker"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="nama">Nama</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <input class="form-control" name="catatan"
+                                                                value="" type="text">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text"><i class="fas fa-eye"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>                      
+                                    </div> 
+                                </div>
+                                
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
-    </footer>
-</div>
-@endsection {{-- Script --}} 
-@section('script') 
-<script
-        src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
-        </script>
-        <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/select2/dist/js/select2.min.js">
-        </script>
-        <script
-            src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
-        </script>
-        <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/moment.min.js">
-        </script>
-        <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datetimepicker.js">
-        </script>
-        <script
-            src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/nouislider/distribute/nouislider.min.js">
-        </script>
-        <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/quill/dist/quill.min.js">
-        </script>
-        <script
-            src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/dropzone/dist/min/dropzone.min.js">
-        </script>
-        <script
-            src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js">
-        </script>
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker({
-                    icons: {
-                        time: "fa fa-clock",
-                        date: "fa fa-calendar-day",
-                        up: "fa fa-chevron-up",
-                        down: "fa fa-chevron-down",
-                        previous: 'fa fa-chevron-left',
-                        next: 'fa fa-chevron-right',
-                        today: 'fa fa-screenshot',
-                        clear: 'fa fa-trash',
-                        close: 'fa fa-remove'
-                    }
-                });
-                $('#datetimepicker2').datetimepicker({
-                    icons: {
-                        time: "fa fa-clock",
-                        date: "fa fa-calendar-day",
-                        up: "fa fa-chevron-up",
-                        down: "fa fa-chevron-down",
-                        previous: 'fa fa-chevron-left',
-                        next: 'fa fa-chevron-right',
-                        today: 'fa fa-screenshot',
-                        clear: 'fa fa-trash',
-                        close: 'fa fa-remove'
-                    }
-                });
-            });
+    </div>
+@elseif(auth()->user()->role == 'penguatkuasa')
 
-        </script>
-        <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/js/demo.min.js">
-        </script>
-        @endsection
+@endif
+<footer class="footer pt-0">
+    <div class="row align-items-center justify-content-lg-between">
+        <div class="col-lg-6">
+            <div class="copyright text-center  text-lg-left  text-muted">
+                &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">Sistem
+                    Pengurusan
+                    Elaun Lebih Masa</a>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+@endsection {{-- Script --}}
+@section('script')
+<script
+    src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
+</script>
+<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/select2/dist/js/select2.min.js">
+</script>
+<script
+    src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
+</script>
+<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/moment.min.js">
+</script>
+<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datetimepicker.js">
+</script>
+<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/nouislider/distribute/nouislider.min.js">
+</script>
+<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/quill/dist/quill.min.js">
+</script>
+<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/dropzone/dist/min/dropzone.min.js">
+</script>
+<script
+    src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js">
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            icons: {
+                time: "fa fa-clock",
+                date: "fa fa-calendar-day",
+                up: "fa fa-chevron-up",
+                down: "fa fa-chevron-down",
+                previous: 'fa fa-chevron-left',
+                next: 'fa fa-chevron-right',
+                today: 'fa fa-screenshot',
+                clear: 'fa fa-trash',
+                close: 'fa fa-remove'
+            }
+        });
+        $('#datetimepicker2').datetimepicker({
+            icons: {
+                time: "fa fa-clock",
+                date: "fa fa-calendar-day",
+                up: "fa fa-chevron-up",
+                down: "fa fa-chevron-down",
+                previous: 'fa fa-chevron-left',
+                next: 'fa fa-chevron-right',
+                today: 'fa fa-screenshot',
+                clear: 'fa fa-trash',
+                close: 'fa fa-remove'
+            }
+        });
+    });
+
+</script>
+<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/js/demo.min.js">
+</script>
+@endsection

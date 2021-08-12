@@ -112,6 +112,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="/users">
+                                    <i class="ni ni-archive-2 text-green"></i>
+                                    <span class="nav-link-text">Pengurusan Pengguna</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="/laporans">
                                     <i class="ni ni-chart-bar-32 text-green"></i>
                                     <span class="nav-link-text">Laporan</span>

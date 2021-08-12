@@ -23,7 +23,7 @@
             <div class="row">
                 @if(auth()->user()->role == 'naziran')
                 <div class="col-lg-12 col text-right">
-                    <a href="/rollcalls/create" class="btn btn-sm btn-neutral">Tambah Roll Call</a>
+                    <a href="/rollcalls/create" class="btn btn-sm btn-neutral">+ Tambah Roll Call</a>
                 </div>
                 @elseif(auth()->user()->role == 'penyelia' or auth()->user()->role == 'ketua_bahagian' or
                 auth()->user()->role == 'ketua_jabatan' )
@@ -187,7 +187,8 @@
                                     <tbody>
                                         @forelse($rollcalls as $rollcall)
                                         <tr>
-                                            <td>{{$rollcall->id}}</td>
+                                            {{-- <td>{$rollcall->id}}{</td> --}}
+                                            <td>{{$loop->index+1}}</td>
                                             <td>{{$rollcall->tajuk_rollcall}}</td>
                                             <td>{{$rollcall->mula_rollcall}}</td>
                                             <td>{{$rollcall->akhir_rollcall}}</td>
@@ -270,7 +271,7 @@
         </div>
     </div>
 </div>
- @elseif(auth()->user()->role == 'penyelia' )
+@elseif(auth()->user()->role == 'penyelia' )
     <div class="card shadow">
         <div class="card-body">
             <div class="tab-content" id="myTabContent">
