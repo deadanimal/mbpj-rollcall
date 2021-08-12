@@ -113,9 +113,8 @@
                                         <td>{{$user->email}}</td>  
                                         <td>{{$user->role}}</td>   
                                         <td>{{$user->status}} </td>
-                                        <td><a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal"
-                                                    data-target="#modalLoginForm">Kemaskini</a>
-                                            </div>
+                                        <td><a href="/users/{{$user->id}}/edit"
+                                            class="btn btn-success">Lihat</a>                                            </div>
                                         </td>
                                     </tr>
                                     @empty
@@ -136,7 +135,7 @@
     {{-- Modal  --}}
 
 
-    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    {{-- <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -146,10 +145,10 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body mx-3">
+                <div class="modal-body mx-3"> --}}
                     {{-- form  --}}
 
-                    <form method="POST" action="/users/kemaskini">
+                    {{-- <form method="POST" action="/users/kemaskini">
                         <div class="md-form mb-3">
                             <label data-error="wrong" data-success="right" for="defaultForm-email">No Pekerja</label>
                             <input name="user_code" id="defaultForm-email" class="form-control validate">
@@ -179,5 +178,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     @endsection

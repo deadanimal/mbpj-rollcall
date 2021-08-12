@@ -36,10 +36,10 @@
                                     <div class="form-group">
                                         <label for="tajuk_rollcall">Tajuk roll call</label>
                                         <div class="input-group input-group-merge">
-                                            <input class="form-control" name="tajuk_rollcall"required placeholder="tajuk"
-                                                type="text">
+                                            <input class="form-control" name="tajuk_rollcall" required
+                                                placeholder="tajuk" type="text">
                                             <div class="input-group-append">
-                                                <span class="input-group-text"><i class=""></i></span>
+                                                {{-- <span class="input-group-text"><i class=""></i></span> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -61,10 +61,9 @@
                                     <div class="form-group">
                                         <label for="lokasi">Lokasi roll call</label>
                                         <div class="input-group input-group-merge">
-                                            <input class="form-control" name="lokasi" required placeholder="lokasi" type="text">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class=""></i></span>
-                                            </div>
+                                            <input class="form-control" name="lokasi" required placeholder="lokasi"
+                                                type="text">
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -72,10 +71,9 @@
                                     <div class="form-group">
                                         <label for="catatan">Catatan</label>
                                         <div class="input-group input-group-merge">
-                                            <input class="form-control" name="catatan" required placeholder="tajuk" type="text">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class=""></i></span>
-                                            </div>
+                                            <input class="form-control" name="catatan" required placeholder="tajuk"
+                                                type="text">
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +83,7 @@
                                     <div class="form-group">
                                         <label for="mula_rollcall">Pilih waktu mula</label>
                                         <div class="input-group date" id="datetimepicker1">
-                                            <input type="text" class="form-control" name="mula_rollcall" required> 
+                                            <input type="text" class="form-control" name="mula_rollcall" required>
                                             <span class="input-group-addon input-group-append">
                                                 <button class="btn btn-outline-primary" type="button"
                                                     id="button-addon2"> <span class="fa fa-calendar"></span></button>
@@ -133,7 +131,23 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary float-right">Tambah Roll Call</button>
+                            <div class="container">
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">
+                                  Tambah Penguatkuasa
+                                </button>  
+                              </div>
+                            {{-- <button  class="btn btn-primary float-left">Tambah Penguatkuasa</button> --}}
+                            <button  onclick="tambah_rollcall()" class="btn btn-primary float-right">Tambah Roll Call</button>
+
+                            <script>
+                            function tambah_rollcall() {
+                                    swal(
+                                    'Makluman',
+                                    'Tahniah Roll Call Berjaya Ditambah!',
+                                    'success'
+                                    )
+                            }
+                            </script>
                     </div>
                 </div>
             </div>
@@ -151,61 +165,88 @@
     </div>
 </div>
 
-    @endsection
+{{-- modal  --}}
 
 
-    {{-- Script --}}
-    @section('script')
-    <script
-        src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
-    </script>
-    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/select2/dist/js/select2.min.js">
-    </script>
-    <script
-        src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
-    </script>
-    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/moment.min.js"></script>
-    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datetimepicker.js">
-    </script>
-    <script
-        src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/nouislider/distribute/nouislider.min.js">
-    </script>
-    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/quill/dist/quill.min.js"></script>
-    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/dropzone/dist/min/dropzone.min.js">
-    </script>
-    <script
-        src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js">
-    </script>
-    <script type="text/javascript">
-        $(function () {
-            $('#datetimepicker1').datetimepicker({
-                icons: {
-                    time: "fa fa-clock",
-                    date: "fa fa-calendar-day",
-                    up: "fa fa-chevron-up",
-                    down: "fa fa-chevron-down",
-                    previous: 'fa fa-chevron-left',
-                    next: 'fa fa-chevron-right',
-                    today: 'fa fa-screenshot',
-                    clear: 'fa fa-trash',
-                    close: 'fa fa-remove'
-                }
-            });
-            $('#datetimepicker2').datetimepicker({
-                icons: {
-                    time: "fa fa-clock",
-                    date: "fa fa-calendar-day",
-                    up: "fa fa-chevron-up",
-                    down: "fa fa-chevron-down",
-                    previous: 'fa fa-chevron-left',
-                    next: 'fa fa-chevron-right',
-                    today: 'fa fa-screenshot',
-                    clear: 'fa fa-trash',
-                    close: 'fa fa-remove'
-                }
-            });
+<div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title" id="exampleModalLabel">Kemaskini Kehadiran Roll Call</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="email1">No Pekerja</label>
+              <input type="email" class="form-control" id="email1" aria-describedby="emailHelp" placeholder="Masukkan No Pekerja">
+              {{-- <small id="emailHelp" class="form-text text-muted">Your information is safe with us.</small> --}}
+            </div>
+          </div>
+          <div class="modal-footer border-top-0 d-flex justify-content-center">
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+@endsection
+
+
+{{-- Script --}}
+@section('script')
+<script
+    src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
+</script>
+<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/select2/dist/js/select2.min.js">
+</script>
+<script
+    src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
+</script>
+<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/moment.min.js"></script>
+<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datetimepicker.js">
+</script>
+<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/nouislider/distribute/nouislider.min.js">
+</script>
+<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/quill/dist/quill.min.js"></script>
+<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/dropzone/dist/min/dropzone.min.js">
+</script>
+<script
+    src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js">
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            icons: {
+                time: "fa fa-clock",
+                date: "fa fa-calendar-day",
+                up: "fa fa-chevron-up",
+                down: "fa fa-chevron-down",
+                previous: 'fa fa-chevron-left',
+                next: 'fa fa-chevron-right',
+                today: 'fa fa-screenshot',
+                clear: 'fa fa-trash',
+                close: 'fa fa-remove'
+            }
         });
+        $('#datetimepicker2').datetimepicker({
+            icons: {
+                time: "fa fa-clock",
+                date: "fa fa-calendar-day",
+                up: "fa fa-chevron-up",
+                down: "fa fa-chevron-down",
+                previous: 'fa fa-chevron-left',
+                next: 'fa fa-chevron-right',
+                today: 'fa fa-screenshot',
+                clear: 'fa fa-trash',
+                close: 'fa fa-remove'
+            }
+        });
+    });
 
-    </script>
-    <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/js/demo.min.js"></script>
-    @endsection
+</script>
+<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/js/demo.min.js"></script>
+@endsection

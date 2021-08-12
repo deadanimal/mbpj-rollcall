@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 
 class RollcallController extends Controller
 {
- 
+
+    // protected $listeners = [
+    //     'deleteCategory'=>'destroy'
+    // ];
+
     public function index()
     {
         $rollcalls = Rollcall::all();
@@ -82,8 +86,33 @@ class RollcallController extends Controller
         $redirected_url= '/rollcalls/';
         return redirect($redirected_url);        
     }
+
+
     public function destroy(Rollcall $rollcall)
     {
-        //
+     
+        if($rollcall)
+        {
+            if($rollcall->delete()){
+              $redirected_url= '/rollcalls/';
+              return redirect($redirected_url)->with('buang');;  
+              }
+         else{
+            return "something wrong";
+             }     
+                }
+            else{
+                return "roll call not exist";
+                }       
     }
+
+    // public function destroy($id){
+    //     try{
+    //         Rollcall::find($id)->delete();
+    //         session()->flash('success',"Category Deleted Successfully!!");
+    //     }catch(\Exception $e){
+    //         session()->flash('error',"Something goes wrong while deleting category!!");
+    //     }
+    // }
+    
 }

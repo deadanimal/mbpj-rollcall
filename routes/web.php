@@ -44,4 +44,7 @@ Route::resource('users',UserController::class)->middleware(['auth']);
 Route::post('/users/kemaskini',[UserController::class,'kemaskini'])->middleware(['auth']);
 
 
+
+
+
 require __DIR__.'/auth.php';
