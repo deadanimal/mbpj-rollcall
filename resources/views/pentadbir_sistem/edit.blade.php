@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-    @if(auth()->user()->role == 'pentadbir_sistem')
+    @if(auth()->user()->role == 'pentadbir_sistem'or auth()->user()->role == 'naziran' )
     <div class="container-fluid mt--6">
         <div class="row">
             <div class="col-lg-12">
