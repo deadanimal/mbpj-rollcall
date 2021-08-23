@@ -39,6 +39,8 @@ class RollcallController extends Controller
         $rollcall->status = $request-> status;
         $rollcall->pegawai_sokong_id = $request-> pegawai_sokong_id;
         $rollcall->pegawai_lulus_id = $request-> pegawai_lulus_id;
+        $rollcall->maklumat = $request-> maklumat;
+
 
         $rollcall->save();
 
@@ -88,6 +90,7 @@ class RollcallController extends Controller
         $rollcall->status = $request-> status;
         $rollcall->pegawai_sokong_id = $request-> pegawai_sokong_id;
         $rollcall->pegawai_lulus_id = $request-> pegawai_lulus_id;
+        $rollcall->maklumat = $request-> maklumat;
 
     
         $rollcall->save();

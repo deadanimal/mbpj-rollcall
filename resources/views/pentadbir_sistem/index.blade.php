@@ -108,11 +108,19 @@
                                     @forelse ($users as $user)
                                     <tr>
                                         <td>{{$user->id}}</td>    
-                                        <td>{{$user->user_code}}</td>  
+                                        <td>{{$user->nric}}</td>  
                                         <td>{{$user->name}}</td>  
                                         <td>{{$user->email}}</td>  
                                         <td>{{$user->role}}</td>   
-                                        <td>{{$user->status}} </td>
+                                        @if($user->status =='aktif')
+                                        <td>
+                                            <span class="badge badge-pill badge-success">Aktif</span>
+                                        </td>
+                                        @else
+                                        <td>
+                                            <span class="badge badge-pill badge-danger">Tidak Aktif</span>
+                                        </td>
+                                        @endif
                                         <td><a href="/users/{{$user->id}}/edit"
                                             class="btn btn-success">Lihat</a>                                            </div>
                                         </td>
@@ -132,51 +140,5 @@
             </div>
         </div>
     </div>
-    {{-- Modal  --}}
-
-
-    {{-- <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">Kemaskini Maklumat</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body mx-3"> --}}
-                    {{-- form  --}}
-
-                    {{-- <form method="POST" action="/users/kemaskini">
-                        <div class="md-form mb-3">
-                            <label data-error="wrong" data-success="right" for="defaultForm-email">No Pekerja</label>
-                            <input name="user_code" id="defaultForm-email" class="form-control validate">
-                        </div>
-                        <div class="form-group">
-                            <select class="form-select form-select-sm col-12" name="role"
-                                aria-label=".form-select-sm example">
-                                <option value="pentadbir_sistem">Pentadbir Sistem</option>
-                                <option value="naziran">Naziran</option>
-                                <option value="penyelia">Penyelia</option>
-                                <option value="ketua_jabatan">Ketua Jabatan</option>
-                                <option value="ketua_bahagian">Ketua Bahagian</option>
-                                <option value="penguatkuasa">Penguatkuasa</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-select form-select-sm col-12" name="role"
-                                aria-label=".form-select-sm example">
-                                <option value="aktif">Aktif</option>
-                                <option value="tidak_aktif">Nyahaktifkan</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="submit" class="btn btn-default">Kemaskini</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
+</div>
     @endsection

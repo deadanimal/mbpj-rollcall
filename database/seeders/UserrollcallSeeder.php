@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use App\Models\User;
+
 class UserrollcallSeeder extends Seeder
 {
     /**
@@ -13,6 +15,9 @@ class UserrollcallSeeder extends Seeder
      */
     public function run()
     {
-        //
+        // User::create([
+        //     'nric'=> '',
+        //     ''
+        // ]);
     }
 }

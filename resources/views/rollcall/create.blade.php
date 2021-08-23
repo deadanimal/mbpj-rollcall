@@ -130,13 +130,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="lokasi">Catatan Roll Call</label>
+                                        <div class="form-group">
+                                            <textarea class="ckeditor form-control"
+                                                name="maklumat"></textarea>
+                                    </div>
+                                </div>
+                            </div>
 
-                            {{-- <div class="container">
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">
-                                  Tambah Penguatkuasa
-                                </button>  
-                              </div> --}}
-                            {{-- <button  class="btn btn-primary float-left">Tambah Penguatkuasa</button> --}}
                             <button  onclick="tambah_rollcall()" class="btn btn-primary float-right">Tambah Roll Call</button>
 
                             <script>
@@ -249,4 +253,11 @@
 
 </script>
 <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/js/demo.min.js"></script>
+<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.ckeditor').ckeditor();
+    });
+
+</script>
 @endsection

@@ -96,7 +96,19 @@
                                             <td></td>
                                             <td>{{$rollcall->lokasi}}</td>
                                             <td>{{$rollcall->catatan}}</td>
-                                            <td>{{$rollcall->status}}</td>
+                                            @if($rollcall->status =='dibuka')
+                                            <td>
+                                                <span class="badge badge-pill badge-success">DIBUKA</span>
+                                            </td>
+                                            @elseif($rollcall->status =='ditutup')
+                                            <td>
+                                                <span class="badge badge-pill badge-danger">DITUTUP</span>
+                                            </td>
+                                            @elseif($rollcall->status =='ditangguh')
+                                            <td>
+                                                <span class="badge badge-pill badge-warning">DITANGGUH</span>
+                                            </td>
+                                            @endif
                                             <td>
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                                     data-target="#exampleModal">
@@ -178,8 +190,8 @@
                                             <th>lokasi</th>
                                             <th>Catatan</th>
                                             <th>Status</th>
-                                            <th>Pegawai Sokong</th>
-                                            <th>Pegawai Lulus</th>
+                                            {{-- <th>Pegawai Sokong</th>
+                                            <th>Pegawai Lulus</th> --}}
                                             <th>Tindakan</th>
 
                                         </tr>
@@ -196,24 +208,37 @@
                                             <td>{{$rollcall->waktu_keluar}}</td> --}}
                                             <td>{{$rollcall->lokasi}}</td>
                                             <td>{{$rollcall->catatan}}</td>
-                                            <td>{{$rollcall->status}}</td>
-                                            <td>{{$rollcall->pegawai_sokong_id}}</td>
-                                            <td>{{$rollcall->pegawai_lulus_id}}</td>
+                                            {{-- <td>{{$rollcall->status}}</td> --}}
+                                            @if($rollcall->status =='dibuka')
+                                            <td>
+                                                <span class="badge badge-pill badge-success">DIBUKA</span>
+                                            </td>
+                                            @elseif($rollcall->status =='ditutup')
+                                            <td>
+                                                <span class="badge badge-pill badge-danger">DITUTUP</span>
+                                            </td>
+                                            @elseif($rollcall->status =='ditangguh')
+                                            <td>
+                                                <span class="badge badge-pill badge-warning">DITANGGUH</span>
+                                            </td>
+                                            @endif
+                                            {{-- <td>{{$rollcall->pegawai_sokong_id}}</td>
+                                            <td>{{$rollcall->pegawai_lulus_id}}</td> --}}
 
                                             <td class="tindakan">
                                                 {{-- <form method="POST" action="/rollcalls/{{$rollcall->id}}"> --}}
                                                     {{-- @csrf
                                                     @method('DELETE') --}}
                                                     <a href="/rollcalls/{{$rollcall->id}}/edit"
-                                                        class="btn btn-success">Kemaskini</a>
-                                                    <button onclick="buang({{ $rollcall->id }})"
-                                                        class="btn btn-danger float-right">Buang</button>
+                                                        class="btn btn-primary"> <i class="ni ni-single-copy-04"></i>
+                                                    </a>
+                                                    <a onclick="buang({{ $rollcall->id }})"
+                                                        class="btn btn-danger"> <i class="ni ni-basket"></i>
+                                                    </a>
                                                 {{-- </form> --}}
                                         </tr>
 
                                         <script>
-
-
                                             function buang(id) {
                                                 swal({
                                                     title: 'Makluman?',
@@ -492,26 +517,6 @@
             </div>
         </div>
     </div>   
-    {{-- sweetalert --}}
-    <script>
-        // swal({
-        //     title: "An input!",
-        //     text: "Write something interesting:",
-        //     type: "input",
-        //     showCancelButton: true,
-        //     closeOnConfirm: false,
-        //     inputPlaceholder: "Write something"
-        //   }, function (inputValue) {
-        //     if (inputValue === false) return false;
-        //     if (inputValue === "") {
-        //       swal.showInputError("You need to write something!");
-        //       return false
-        //     }
-        //     swal("Nice!", "You wrote: " + inputValue, "success");
-        //   });
-        // 
-
-    </script>
     <!-- Modal Sokong -->
     <div class="modal fade" id="sokong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">

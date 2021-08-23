@@ -1,7 +1,6 @@
 @extends('base')
 
 @section('content')
-
 <div>
     <div class="header bg-primary pb-6">
         <div class="container-fluid">
@@ -134,61 +133,59 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
+                                    </div>             
+                                    <div class="col-md-6 ">
+                                        <div class="form-group ">
                                             <label for="status">Status</label>
                                             <div class="input-group input-group-merge">
-                                                <input class="form-control" name="status" value="{{$rollcall->status}}"
-                                                    type="text">
+                                                <select class="form-select form-select-sm col-12" name="status" require>
+                                                @foreach ($status as $key => $value)
+                                                <option value="{{ $key }}">{{ $value }}</option>
+                                                @endforeach
+                                            </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="pegawai_sokong_id">Pilih pegawai sokong</label>
+                                            <div class="input-group input-group-merge">
+                                                <input class="form-control" name="pegawai_sokong_id"
+                                                    value="{{$rollcall->pegawai_sokong_id}}" type="number">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text"><i class="fas fa-eye"></i></span>
+                                                    <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-6 ">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label >Status</label>
-                                            <select name="status" >
-                                                @foreach ($rollcall as $key => $value)
-                                                <option value="{{ $key }}">{{ $value }}</option>
-                                    @endforeach
-                                    </select>
-                                </div>
-                        </div> --}}
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="pegawai_sokong_id">Pilih pegawai sokong</label>
-                                <div class="input-group input-group-merge">
-                                    <input class="form-control" name="pegawai_sokong_id"
-                                        value="{{$rollcall->pegawai_sokong_id}}" type="number">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                                            <label for="pegawai_lulus_id">Pilih pegawai lulus</label>
+                                            <div class="input-group input-group-merge">
+                                                <input class="form-control" name="pegawai_lulus_id"
+                                                    value="{{$rollcall->pegawai_lulus_id}}" type="number">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <!-- Button trigger modal -->   
                                     </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="Perkara">Kemaskini Makluman Roll Call</label>
+                                                    <div class="form-group">
+                                                        <textarea class="form-control"
+                                                        id="maklumat" name="maklumat" value="{{$rollcall->maklumat}}"></textarea>
+                                                    </div>  
+                                        </div>
+                                        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                                        data-target="#exampleModal">
+                                        Kemaskini
+                                    </button>                        
                                 </div>
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="pegawai_lulus_id">Pilih pegawai lulus</label>
-                                <div class="input-group input-group-merge">
-                                    <input class="form-control" name="pegawai_lulus_id"
-                                        value="{{$rollcall->pegawai_lulus_id}}" type="number">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary float-right" data-toggle="modal"
-                                data-target="#exampleModal">
-                                Kemaskini
-                            </button>
-                        </div>
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -378,7 +375,6 @@
         </div>
     </div>
 @elseif(auth()->user()->role == 'penguatkuasa')
-
 @endif
 <footer class="footer pt-0">
     <div class="row align-items-center justify-content-lg-between">
@@ -392,7 +388,8 @@
     </div>
 </footer>
 </div>
-@endsection {{-- Script --}}
+@endsection 
+{{-- Script --}}
 @section('script')
 <script
     src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
@@ -448,4 +445,19 @@
 </script>
 <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/js/demo.min.js">
 </script>
+
+
+
+<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+<script type="text/javascript">
+
+$(window).on('load', function(){
+    // $('ckeditor').ckeditor();
+    var lol = CKEDITOR.replace('maklumat');
+    lol.setData({!! json_encode($rollcall->maklumat) !!});
+})
+
+</script>
+
 @endsection
+

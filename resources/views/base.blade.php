@@ -27,27 +27,6 @@
     <!-- Argon CSS -->
     <link rel="stylesheet" href="{{ asset('assets') }}//css/argon.min.css?v=1.2.1"
         type="text/css">
-
-
-
-    <script>
-        (function (w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-NKDMSK6');
-
-    </script>
-    <!-- End Google Tag Manager -->
 </head>
 
 <body>
@@ -95,6 +74,12 @@
                                 <span class="nav-link-text">Pengurusan Roll Call</span>
                             </a>
                         </li>
+                        {{-- <li class="nav-item">
+                            <a class="nav-link" href="">
+                                <i class="ni ni-chat-round text-red"></i>
+                                <span class="nav-link-text">Audit Trail</span>
+                            </a>
+                        </li> --}}
 
                         <!-- Nav items lain-lain custom -->
                         @elseif(auth()->user()->role == 'naziran')
@@ -229,6 +214,7 @@
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.25/pagination/select.js"></script>
+
     <script>
         $(document).ready(function () {
             var table = $('#example').DataTable({});
@@ -264,6 +250,7 @@
     </script>
 
     @yield('script')
+
 
 </body>
 
