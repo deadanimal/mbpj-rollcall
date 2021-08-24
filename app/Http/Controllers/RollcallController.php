@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rollcall;
 use Illuminate\Http\Request;
+use App\Models\Audit;
 
 class RollcallController extends Controller
 {
@@ -14,7 +15,14 @@ class RollcallController extends Controller
 
     public function index()
     {
-        $rollcalls = Rollcall::all();
+        $harini = date("Y-m-d");
+        $harini =date_create($harini);
+
+        $hari = date_sub($harini, date_interval_create_from_date_string("30 days"));
+        // $limabelasharisebelum = date_sub($harini, date_interval_create_from_date_string("30 days"));
+        // $audits = Audit::where('created_at', '>=', $limabelasharisebelum)->orderBy('created_at','DESC')->get();
+
+        $rollcalls = Rollcall::where('created_at', '>=', $hari)->orderBy('created_at','DESC')->get();
         return view ('rollcall.index',['rollcalls'=>$rollcalls]);
     }
 
@@ -27,10 +35,8 @@ class RollcallController extends Controller
     public function store(Request $request)
     {
         $rollcall = new Rollcall;
-
         $mula_rollcall = date("Y-m-d H:i:s", strtotime($request->mula_rollcall));  
         $akhir_rollcall = date("Y-m-d H:i:s", strtotime($request->akhir_rollcall));  
-        // $rollcall->staffno = $request-> $staffno;
         $rollcall->mula_rollcall = $mula_rollcall;
         $rollcall->akhir_rollcall = $akhir_rollcall;
         $rollcall->tajuk_rollcall = $request-> tajuk_rollcall; 
@@ -40,9 +46,16 @@ class RollcallController extends Controller
         $rollcall->pegawai_sokong_id = $request-> pegawai_sokong_id;
         $rollcall->pegawai_lulus_id = $request-> pegawai_lulus_id;
         $rollcall->maklumat = $request-> maklumat;
-
-
         $rollcall->save();
+
+        // Audit trail
+        $audit = new Audit;
+        $audit->user_id = $request->user()->id;
+        $audit->name = $request->user()->name;
+        $audit->peranan = $request->user()->role;
+        $audit->nric =$request->user()->nric;
+        $audit->description = 'Tambah Roll Call Tajuk: '.$rollcall->tajuk_rollcall;
+        $audit->save(); 
 
         $redirected_url= '/rollcalls/';
         return redirect($redirected_url);
@@ -91,21 +104,38 @@ class RollcallController extends Controller
         $rollcall->pegawai_sokong_id = $request-> pegawai_sokong_id;
         $rollcall->pegawai_lulus_id = $request-> pegawai_lulus_id;
         $rollcall->maklumat = $request-> maklumat;
-
-    
         $rollcall->save();
+
+         // Audit trail
+         $audit = new Audit;
+         $audit->user_id = $request->user()->id;
+         $audit->name = $request->user()->name;
+         $audit->peranan = $request->user()->role;
+         $audit->nric =$request->user()->nric;
+         $audit->description =  'Kemaskini Roll Call Tajuk: '.$rollcall->tajuk_rollcall;
+         $audit->save(); 
 
         $redirected_url= '/rollcalls/';
         return redirect($redirected_url); 
     }
 
 
-    public function destroy(Rollcall $rollcall)
+    public function destroy(Request $request,Rollcall $rollcall)
     {
      
         if($rollcall)
         {
             if($rollcall->delete()){
+
+                 // Audit trail
+                $audit = new Audit;
+                $audit->user_id = $request->user()->id;
+                $audit->name = $request->user()->name;
+                $audit->peranan = $request->user()->role;
+                $audit->nric =$request->user()->nric;
+                $audit->description =  'Hapus Roll Call Tajuk: '.$rollcall->tajuk_rollcall;
+                $audit->save(); 
+
               $redirected_url= '/rollcalls/';
               return redirect($redirected_url)->with('buang');;  
               }

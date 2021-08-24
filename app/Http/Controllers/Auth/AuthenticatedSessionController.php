@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Audit;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -32,6 +33,18 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // setup audit trail
+
+        $user = $request->user();
+        $audit = new Audit;
+        $audit->user_id = $user->id;
+        $audit->name = $user->name;
+        $audit->peranan = $user->role;
+        $audit->nric = $user->nric;
+        $audit->description =  'Log Masuk';
+        
+        $audit->save();
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
@@ -43,6 +56,18 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
+
+        // setup audit trail
+
+        $user = $request->user();
+        $audit = new Audit;
+        $audit->user_id = $user->id;
+        $audit->name = $user->name;
+        $audit->peranan = $user->role;
+        $audit->nric = $user->nric;
+        $audit->description =  'Log Keluar'; 
+        $audit->save();
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

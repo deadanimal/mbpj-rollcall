@@ -5,6 +5,7 @@
     width: 100%;
     height: 500px;
   }
+  
   </style>
   
   <!-- Resources -->
@@ -22,219 +23,159 @@
   
   var chart = am4core.create("chartdiv", am4charts.XYChart);
   
-  chart.data = [{
-   "country": "USA",
-   "visits": 2025
-  }, {
-   "country": "China",
-   "visits": 1882
-  }, {
-   "country": "Japan",
-   "visits": 1809
-  }, {
-   "country": "Germany",
-   "visits": 1322
-  }, {
-   "country": "UK",
-   "visits": 1122
-  }, {
-   "country": "France",
-   "visits": 1114
-  }, {
-   "country": "India",
-   "visits": 984
-  }, {
-   "country": "Spain",
-   "visits": 711
-  }, {
-   "country": "Netherlands",
-   "visits": 665
-  }, {
-   "country": "Russia",
-   "visits": 580
-  }, {
-   "country": "South Korea",
-   "visits": 443
-  }, {
-   "country": "Canada",
-   "visits": 441
-  }];
+  var data = [];
+  var value = 50;
+  for(var i = 0; i < 300; i++){
+    var date = new Date();
+    date.setHours(0,0,0,0);
+    date.setDate(i);
+    value -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+    data.push({date:date, value: value});
+  }
   
-  chart.padding(40, 40, 40, 40);
+  chart.data = data;
   
-  var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-  categoryAxis.renderer.grid.template.location = 0;
-  categoryAxis.dataFields.category = "country";
-  categoryAxis.renderer.minGridDistance = 60;
-  categoryAxis.renderer.inversed = true;
-  categoryAxis.renderer.grid.template.disabled = true;
+  // Create axes
+  var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+  dateAxis.renderer.minGridDistance = 60;
   
   var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-  valueAxis.min = 0;
-  valueAxis.extraMax = 0.1;
-  //valueAxis.rangeChangeEasing = am4core.ease.linear;
-  //valueAxis.rangeChangeDuration = 1500;
   
-  var series = chart.series.push(new am4charts.ColumnSeries());
-  series.dataFields.categoryX = "country";
-  series.dataFields.valueY = "visits";
-  series.tooltipText = "{valueY.value}"
-  series.columns.template.strokeOpacity = 0;
-  series.columns.template.column.cornerRadiusTopRight = 10;
-  series.columns.template.column.cornerRadiusTopLeft = 10;
-  //series.interpolationDuration = 1500;
-  //series.interpolationEasing = am4core.ease.linear;
-  var labelBullet = series.bullets.push(new am4charts.LabelBullet());
-  labelBullet.label.verticalCenter = "bottom";
-  labelBullet.label.dy = -10;
-  labelBullet.label.text = "{values.valueY.workingValue.formatNumber('#.')}";
+  // Create series
+  var series = chart.series.push(new am4charts.LineSeries());
+  series.dataFields.valueY = "value";
+  series.dataFields.dateX = "date";
+  series.tooltipText = "{value}"
   
-  chart.zoomOutButton.disabled = true;
+  series.tooltip.pointerOrientation = "vertical";
   
-  // as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
-  series.columns.template.adapter.add("fill", function (fill, target) {
-   return chart.colors.getIndex(target.dataItem.index);
-  });
+  chart.cursor = new am4charts.XYCursor();
+  chart.cursor.snapToSeries = series;
+  chart.cursor.xAxis = dateAxis;
   
-  setInterval(function () {
-   am4core.array.each(chart.data, function (item) {
-     item.visits += Math.round(Math.random() * 200 - 100);
-     item.visits = Math.abs(item.visits);
-   })
-   chart.invalidateRawData();
-  }, 2000)
-  
-  categoryAxis.sortBySeries = series;
+  //chart.scrollbarY = new am4core.Scrollbar();
+  chart.scrollbarX = new am4core.Scrollbar();
   
   }); // end am4core.ready()
-  </script>
+</script>
+
 @section('content')
-
-
 <div>
-
-  <div class="header bg-primary pb-6">
-    <div class="container-fluid">
-
-      <div class="row align-items-center py-4">
-        <div class="col-lg-12 col-7">
-      <h1 class="h1 text-white "> Selamat Datang {{Auth()->user()->name}} ke Sistem Pengurusan Roll Call</h1>
-</h1>
+    <div class="header bg-primary pb-6">
+        <div class="container-fluid">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-12 col-7">
+                    <h1 class="h1 text-white "> Selamat Datang {{Auth()->user()->name}} ke Sistem Pengurusan Roll Call
+                    </h1>
+                    </h1>
+                </div>
+            </div>
         </div>
-      </div>
-      </div>
-    
-    <div class="container-fluid">
-      <div class="header-body">
-        <div class="row align-items-center py-4">
-          <div class="col-lg-6 col-7">
-            <h6 class="h2 text-white d-inline-block mb-0">Dashboard</h6>
-            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-              <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-              </ol>
-            </nav>
-          </div>
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-center py-4">
+                    <div class="col-lg-6 col-7">
+                        <h6 class="h2 text-white d-inline-block mb-0">Dashboard</h6>
+                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- Card stats -->
-        <div class="row">
-          <div class="col-xl-4 col-md-6">
-              <div class="card card-stats">
-                  <!-- Card body -->
-                  <div class="card-body">
-                      <div class="row">
-                          <div class="col">
-                              <h5 class="card-title text-uppercase text-muted mb-0">JUMLAH KEHADIRAN ROLL CALL </h5>
-                              <span class="h2 font-weight-bold mb-0">350,897</span>
-                          </div>
-                          <div class="col-auto">
-                              <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                                  <i class="ni ni-active-40"></i>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-xl-4 col-md-6">
-              <div class="card card-stats">
-                  <!-- Card body -->
-                  <div class="card-body">
-                      <div class="row">
-                          <div class="col">
-                              <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH ROLL CALL TIDAK HADIR
-                              </h5>
-                              <span class="h2 font-weight-bold mb-0">2,356</span>
-                          </div>
-                          <div class="col-auto">
-                              <div
-                                  class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                                  <i class="ni ni-chart-pie-35"></i>
-                              </div>
-                          </div>
-                      </div>
-
-                  </div>
-              </div>
-          </div>
-          <div class="col-xl-4 col-md-6">
-              <div class="card card-stats">
-                  <!-- Card body -->
-                  <div class="card-body">
-                      <div class="row">
-                          <div class="col">
-                              <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH KEHADIRAN ROLL CALL DITOLAK
-                              </h5>
-                              <span class="h2 font-weight-bold mb-0">924</span>
-                          </div>
-                          <div class="col-auto">
-                              <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                                  <i class="ni ni-money-coins"></i>
-                              </div>
-                          </div>
-                      </div>
-
-                  </div>
-              </div>
-          </div>
-      </div>
-      </div>
     </div>
-  </div>
+</div>
 <div class="container-fluid">
-      <div class="container-fluid mt--6">
+  <div class="container-fluid mt--6">
       <div class="row">
-        <div class="col-xl-12">
-          <div class="card bg-default">
-            <div class="card-header ">
-              <div class="row align-items-center">
-                <div class="col">
-
-
+          <div class="col-xl-12">
+              <div class="card bg-default">
+                  <div class="card-header ">
+                      <div class="row align-items-center">
+                          <div class="col">
+                          </div>
+                      </div>
+                      <div class="card-body">
+                          <div id="chartdiv"></div>
+                      </div>
+                  </div>
               </div>
-            </div>
-            <div class="card-body">
-              <div id="chartdiv"></div>
-
-            </div>
           </div>
-        </div>
-        </div>
       </div>
+      <div class="row">
+          <div class="col-xl-12">
+              <div class="card bg-default">
+                     <!-- Card header -->
+                     <div class="card-header border-0">
+                      <h3 class="mb-0">Log Aktiviti Sistem Roll Call</h3>
+                      <div class="card-body px-0">
 
+                      <div class="table-responsive py-4">
+                          <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
+                              style="width:100%">
+                              <thead class="thead-light">
+                                  <tr>
+                                      <th>No</th>
+                                      {{-- <th>Id</th> --}}
+                                      <th>Nama</th>
+                                      <th>Peranan</th>
+
+                                      {{-- <th>Model</th> --}}
+                                      <th>Tarikh</th>
+                                      <th>Makluman</th>
+
+                                  </tr>
+                              </thead>
+                              <tbody>
+
+                                  @foreach ($audits as $audit)
+                                      <tr>
+                                          <td>{{ $loop->index + 1 }}</td>
+                                          {{-- <td>{{ $audit->id }}</td> --}}
+                                          <td>{{ $audit->name}}</td>
+                                          <td>{{ $audit->peranan}}</td>
+                                          {{-- <td>{{ $audit->model_name }}</td> --}}
+                                          <td>{{ $audit->created_at }}</td>
+                                          {{-- <td>{{ $audit->description }}</td> --}}
+
+                                          @if($audit->description =='Log Masuk')
+                                              <td>
+                                                  <span class="badge badge-pill badge-success">Log Masuk</span>
+                                              </td>
+                                          @elseif($audit->description =='Log Keluar')
+                                              <td>
+                                                  <span class="badge badge-pill badge-danger">Log Keluar</span>
+                                              </td>
+                                          @else 
+                                              <td>
+                                                  {{$audit->description}}
+                                              </td>                                                
+                                          @endif
+                                      </tr>
+                                  @endforeach
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
       <!-- Footer -->
       <footer class="footer pt-0">
-        <div class="row align-items-center justify-content-lg-between">
-          <div class="col-lg-6">
-            <div class="copyright text-center  text-lg-left  text-muted">
-              &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">Sistem Pengurusan Roll Call
-</a>
-            </div>
+          <div class="row align-items-center justify-content-lg-between">
+              <div class="col-lg-6">
+                  <div class="copyright text-center  text-lg-left  text-muted">
+                      &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">Sistem Pengurusan
+                          Elaun Lebih Masa
+                      </a>
+                  </div>
+              </div>
           </div>
-        </div>
       </footer>
-    </div>
+  </div>
+</div>
 @endsection
-
