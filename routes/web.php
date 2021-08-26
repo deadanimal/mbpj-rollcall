@@ -6,6 +6,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RollcallController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserrollcallController;
+
 
 
 
@@ -41,6 +43,8 @@ Route::resource('profiles',ProfileController::class)->middleware(['auth']);
 Route::resource('rollcalls',RollcallController::class)->middleware(['auth']);
 Route::resource('laporans',LaporanController::class)->middleware(['auth']);
 Route::resource('users',UserController::class)->middleware(['auth']);
+Route::resource('userrollcalls',UserrollcallController::class)->middleware(['auth']);
+
 Route::post('/users/kemaskini',[UserController::class,'kemaskini'])->middleware(['auth']);
 
 

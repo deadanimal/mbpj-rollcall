@@ -230,11 +230,13 @@
                                                     {{-- @csrf
                                                     @method('DELETE') --}}
                                                     <a href="/rollcalls/{{$rollcall->id}}/edit"
-                                                        class="btn btn-primary"> <i class="ni ni-single-copy-04"></i>
+                                                        class="btn btn-primary btn-sm"> kemaskini <i class="ni ni-single-copy-04"></i>
                                                     </a>
-                                                    <a onclick="buang({{ $rollcall->id }})"
+                                                    {{-- <a onclick="buang({{ $rollcall->id }})"
                                                         class="btn btn-danger"> <i class="ni ni-basket"></i>
-                                                    </a>
+                                                    </a> --}}
+                                                    <button onclick="buang({{ $rollcall->id }})"class="btn btn-danger btn-sm">Buang <i class="ni ni-basket"></i></button> </td>
+
                                                 {{-- </form> --}}
                                         </tr>
 

@@ -202,7 +202,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
+                                            data-dismiss="modal">Tutup</button>
                                         <button type="submit" class="btn btn-primary float-right">Kemaskini</button>
                                     </div>
                                 </div>
@@ -233,37 +233,77 @@
                                             <th>No Pekerja</th>
                                             <th>NRIC </th>
                                             <th>Email</th>
-                                            <th>Status</th>
                                             <th>Tindakan</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @forelse($rollcalls as $rollcall) --}}
+                                        {{-- {{$userrollcalls}} --}}
+                                        @forelse($userrollcalls as $userrollcall)
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-
+                                            <td>{{$loop->index+1}}</td>
+                                            <td>{{$userrollcall->penguatkuasa['name']}}</td>
+                                            <td>{{$userrollcall->penguatkuasa['user_code']}}</td>
+                                            <td>{{$userrollcall->penguatkuasa['nric']}}</td>
+                                            <td>{{$userrollcall->penguatkuasa['email']}}</td>
                                             <td>
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#exampleModal">
-                                                    Lihat
-                                                </button>
-                                                <button class="btn btn-success"> Kemaskini </button>
-                                                <button class="btn btn-danger"> Buang </button>
+                                                {{-- <form method="POST" action="/userrollcalls/{{$userrollcall->id}}"> 
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input class="button" name="delete" type="submit" >
+                                                </form> --}}
+                                                {{-- <a onclick="buang({{ $userrollcall->id }})"
+                                                    class="btn btn-danger"> <i class="ni ni-basket"></i>
+                                                </a> --}}
+                                                <button onclick="buang({{ $userrollcall->id }})"class="btn btn-danger btn-sm">Buang<i class="ni ni-basket"></i></button> </td>
+
+                                                {{-- <button class="btn btn-danger"> Buang </button> --}}
                                             </td>
                                         </tr>
-                                        {{-- @empty
+
+                                        <script>
+                                            function buang(id) {
+                                                swal({
+                                                    title: 'Makluman?',
+                                                    text: "Buang Kakitangan !",
+                                                    type: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: '#3085d6',
+                                                    cancelButtonColor: '#d33',
+                                                    confirmButtonText: 'Buang',
+                                                    cancelButtonText: 'Tutup',
+
+                                                }).then(result => {
+                                                    console.log("result", result);
+                                                    if (result.value == true) {
+                                                        console.log("id", id);
+                                                        $.ajax({
+                                                            url: "/userrollcalls/"+id,
+                                                            type: "POST",
+                                                            data: {
+                                                                "id": id,
+                                                                "_token": "{{ csrf_token() }}",
+                                                                "_method": 'delete'
+                                                            },
+                                                            success: function(data) {
+                                                                location.reload();
+                                                            },
+                                                        });
+                                                        
+                                                    } else if (result.dismiss == "cancel") {
+                                                        console.log("dismiss");
+                                                    }
+                                                })
+                                            }
+
+                                        </script>
+                                        @empty
                                             <div style="text-align:center;">
                                                 <td>
                                                     <h5> Tiada rekod </h5>
                                                 </td>
                                             </div>
-                                            @endforelse --}}
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -323,42 +363,48 @@
                                 <!-- Input groups -->
                                 <div class="card">
                                     <!-- Card header -->
-                                    <div class="card-header">
-                                        <h3 class="mb-0">Tambah Nama Kakitangan </h3>
-                                    </div>
+                                 
                                     <!-- Card body -->
                                     <div class="card-body">
-                                        <form method="POST" action="/rollcalls/{{$rollcall->id}}">
-                                            @csrf
-                                            @method('PUT')
-                                            <!-- Input groups with icon -->                     
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="user_code">No Pekerja </label>
-                                                        <div class="input-group input-group-merge">
-                                                            <input class="form-control" name="lokasi" value=""
-                                                                type="text">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><i
-                                                                        class="fas fa-map-marker"></i></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                        <div class="container">
+                                            {{-- <form action="{{ url('store-input-fields') }}" method="POST"> --}}
+                                                <form method="POST" action="/userrollcalls">
+                                                @csrf
+                                                @if ($errors->any())
+                                                <div class="alert alert-danger" role="alert">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="nama">Nama</label>
-                                                        <div class="input-group input-group-merge">
-                                                            <input class="form-control" name="catatan"
-                                                                value="" type="text">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><i class="fas fa-eye"></i></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                @endif
+                                                @if (Session::has('success'))
+                                                <div class="alert alert-success text-center">
+                                                    <p>{{ Session::get('success') }}</p>
                                                 </div>
-                                            </div>                      
+                                                @endif
+                                                <table class="table table-bordered" id="dynamicAddRemove">
+                                                    <tr>
+                                                        <th>No Kakitangan</th>
+                                                        {{-- <th></th> --}}
+                                                        <th>Tindakan</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="text" name="penguatkuasa_id" required placeholder="Enter penguatkuasa_id" class="form-control"  /></td>
+                                                        <td><input type="hidden" name="roll_id" class="form-control" value="{{$rollcall->id}}"/>
+                                                        <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary float-right">Tambah Kakitangan</button></td>
+                                                    </tr>
+                                                </table>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                    {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+                                                    <button type="submit" class="btn btn-primary">Simpan</button>
+
+                                                </div>                                   
+                                            </form>
+                                        </div>
+                                                         
                                     </div> 
                                 </div>
                                 
@@ -367,10 +413,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+   
             </div>
         </div>
     </div>
@@ -457,6 +500,18 @@ $(window).on('load', function(){
     lol.setData({!! json_encode($rollcall->maklumat) !!});
 })
 
+</script>
+<script type="text/javascript">
+    var i = 0;
+    $("#dynamic-ar").click(function () {
+        ++i;
+        $("#dynamicAddRemove").append('<tr><td><input type="text" name="addMoreInputFields[' + i +
+            '][penguatkuasa_id]" placeholder="Enter penguatkuasa_id" class="form-control" /></td><td><button type="button" class="btn btn-danger float-right remove-input-field">Tolak Kakitangan</button></td></tr>'
+            );
+    });
+    $(document).on('click', '.remove-input-field', function () {
+        $(this).parents('tr').remove();
+    });
 </script>
 
 @endsection

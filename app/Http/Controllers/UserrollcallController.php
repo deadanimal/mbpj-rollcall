@@ -7,14 +7,17 @@ use Illuminate\Http\Request;
 
 class UserrollcallController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function index() {  
+
+        // $userrollcalls = Userrollcalls::all();
+        // return view ('rollcall.edit',[
+        //     'userrollcalls'=>$userrollcalls
+        //     ]);
+        $userrollcalls = Userrollcall::all();
+        return view('rollcall.edit',[
+            'userrollcalls'=> $userrollcalls,
+
+        ]);
     }
 
     /**
@@ -24,7 +27,7 @@ class UserrollcallController extends Controller
      */
     public function create()
     {
-        //
+        return view('Userrollcall.create');
     }
 
     /**
@@ -35,7 +38,30 @@ class UserrollcallController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        // $request->validate([
+        //     'addMoreInputFields.*.penguatkuasa_id' => 'required'
+
+        // ]);
+        // dd($request);
+        $userrollcall = new Userrollcall;
+        $userrollcall->roll_id = $request['roll_id'];
+        $userrollcall->penguatkuasa_id = $request->penguatkuasa_id;
+
+        $userrollcall -> save();
+
+        if( $request->addMoreInputFields) {
+            foreach ($request->addMoreInputFields as $key => $value) {
+
+                $userrollcall = new Userrollcall;
+                
+                $userrollcall->roll_id = $request->roll_id;
+                $userrollcall->penguatkuasa_id = $value['penguatkuasa_id'];
+    
+                $userrollcall -> save();            
+            }
+        } 
+        return back()->with('success', 'Kakitangan Berjaya Ditambah.');
     }
 
     /**
@@ -78,8 +104,22 @@ class UserrollcallController extends Controller
      * @param  \App\Models\Userrollcall  $userrollcall
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Userrollcall $userrollcall)
+    public function destroy(Request $request,Userrollcall $userrollcall)
     {
-        //
+     
+        if($userrollcall)
+        {
+            if($userrollcall->delete()){
+
+              $redirected_url= '/rollcalls/';
+              return redirect($redirected_url)->with('buang');;  
+              }
+         else{
+            return "something wrong";
+             }     
+                }
+            else{
+                return "roll call not exist";
+                }       
     }
 }

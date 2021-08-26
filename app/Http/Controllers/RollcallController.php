@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rollcall;
+use App\Models\Userrollcall;
+
 use Illuminate\Http\Request;
 use App\Models\Audit;
 
@@ -23,7 +25,11 @@ class RollcallController extends Controller
         // $audits = Audit::where('created_at', '>=', $limabelasharisebelum)->orderBy('created_at','DESC')->get();
 
         $rollcalls = Rollcall::where('created_at', '>=', $hari)->orderBy('created_at','DESC')->get();
-        return view ('rollcall.index',['rollcalls'=>$rollcalls]);
+        return view ('rollcall.index',[
+            'rollcalls'=>$rollcalls,       
+    ]);
+
+
     }
 
 
@@ -70,6 +76,9 @@ class RollcallController extends Controller
 
     public function edit(Rollcall $rollcall)
     {
+
+        $userrollcalls = Userrollcall::where('roll_id','=',$rollcall->id)->get();
+        // dd($userrollcalls);
         $status = [
             "dibuka" => "Dibuka",
             "ditutup" => "Tutup",
@@ -78,7 +87,8 @@ class RollcallController extends Controller
         ];
         return view('rollcall.edit',[
             'rollcall'=> $rollcall,
-            'status' => $status     
+            'status' => $status, 
+            'userrollcalls'=> $userrollcalls,
 
         ]);
     }
@@ -145,7 +155,8 @@ class RollcallController extends Controller
                 }
             else{
                 return "roll call not exist";
-                }       
+                }    
+                   
     }
 
     // public function destroy($id){
