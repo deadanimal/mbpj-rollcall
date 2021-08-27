@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Rollcall;
 use App\Models\Userrollcall;
+use App\Models\Audit;
+use App\Models\User;
+
 
 use Illuminate\Http\Request;
-use App\Models\Audit;
 
 class RollcallController extends Controller
 {
@@ -17,16 +19,19 @@ class RollcallController extends Controller
 
     public function index()
     {
+        $users = User::all();
+
         $harini = date("Y-m-d");
         $harini =date_create($harini);
-
         $hari = date_sub($harini, date_interval_create_from_date_string("30 days"));
         // $limabelasharisebelum = date_sub($harini, date_interval_create_from_date_string("30 days"));
         // $audits = Audit::where('created_at', '>=', $limabelasharisebelum)->orderBy('created_at','DESC')->get();
 
         $rollcalls = Rollcall::where('created_at', '>=', $hari)->orderBy('created_at','DESC')->get();
         return view ('rollcall.index',[
-            'rollcalls'=>$rollcalls,       
+            'rollcalls'=>$rollcalls,  
+            'users'=>$users
+     
     ]);
 
 

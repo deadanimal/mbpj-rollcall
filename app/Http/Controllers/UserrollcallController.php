@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Userrollcall;
 use Illuminate\Http\Request;
+use App\Models\Audit;
+
 
 class UserrollcallController extends Controller
 {
@@ -57,11 +59,33 @@ class UserrollcallController extends Controller
                 
                 $userrollcall->roll_id = $request->roll_id;
                 $userrollcall->penguatkuasa_id = $value['penguatkuasa_id'];
+                
     
-                $userrollcall -> save();            
+                $userrollcall -> save();    
+                
+                  // Audit trail
+                $audit = new Audit;
+                $audit->user_id = $request->user()->id;
+                $audit->name = $request->user()->name;
+                $audit->peranan = $request->user()->role;
+                $audit->nric =$request->user()->nric;
+                $audit->description = 'Tambah Kakitangan: '.$userrollcall->penguatkuasa_id;
+                $audit->save(); 
             }
         } 
+
+        // Audit trail
+        $audit = new Audit;
+        $audit->user_id = $request->user()->id;
+        $audit->name = $request->user()->name;
+        $audit->peranan = $request->user()->role;
+        $audit->nric =$request->user()->nric;
+        $audit->description = 'Tambah Kakitangan: '.$userrollcall->penguatkuasa_id;
+        $audit->save(); 
+
         return back()->with('success', 'Kakitangan Berjaya Ditambah.');
+
+          
     }
 
     /**
@@ -110,6 +134,16 @@ class UserrollcallController extends Controller
         if($userrollcall)
         {
             if($userrollcall->delete()){
+
+                    // Audit trail
+                    $audit = new Audit;
+                    $audit->user_id = $request->user()->id;
+                    $audit->name = $request->user()->name;
+                    $audit->peranan = $request->user()->role;
+                    $audit->nric =$request->user()->nric;
+                    $audit->description = 'Hapus Kakitangan: '.$userrollcall->penguatkuasa_id;
+                    $audit->save(); 
+                    
 
               $redirected_url= '/rollcalls/';
               return redirect($redirected_url)->with('buang');;  

@@ -12,7 +12,10 @@
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('argon') }}/img/mbpj.png ">
     <!-- Fonts -->
-    {{-- <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"> --}}
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
     <!-- Icons -->
     <link rel="stylesheet" href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/nucleo/css/nucleo.css"
         type="text/css">

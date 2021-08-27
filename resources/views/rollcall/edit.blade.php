@@ -186,34 +186,35 @@
                                         Kemaskini
                                     </button>                        
                                 </div>
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Makluman</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Makluman</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Kemaskini
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Tutup</button>
+                                                    <button type="submit" class="btn btn-primary float-right">Kemaskini</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="modal-body">
-                                        Kemaskini
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Tutup</button>
-                                        <button type="submit" class="btn btn-primary float-right">Kemaskini</button>
-                                    </div>
-                                </div>
-                            </div>
+                              </div>
+                            </form>
                         </div>
-                    </div>
-                    </form>
+                  </div>
                 </div>
             </div>
         </div>
-    </div>
     <div class="container-fluid mt--10">
         <div class="row ">
             <div class="col-md-12">
@@ -221,6 +222,32 @@
                     <!-- Card header -->
                     <div class="card-header border-0">
                         <h3 class="mb-0">Senarai Kakitangan </h3>
+                        <div class="col-md-6 header float-right mb--12">
+
+                            {{-- <select class="livesearch form-control" name="livesearch"></select>
+                                                   
+                            <script type="text/javascript">
+                                $('.livesearch').select2({
+                                    placeholder: 'Pilih Kakitangan',
+                                    ajax: {
+                                        url: '/ajax-autocomplete-search',
+                                        dataType: 'json',
+                                        delay: 250,
+                                        processResults: function (data) {
+                                            return {
+                                                results: $.map(data, function (item) {
+                                                    return {
+                                                        text: item.name,
+                                                        id: item.id
+                                                    }
+                                                })
+                                            };
+                                        },
+                                        cache: true
+                                    }
+                                });
+                            </script> --}}
+                        </div>
                         <div class="card-body px-0">
                             <!-- Light table -->
                             <div class="table-responsive">
@@ -239,26 +266,15 @@
                                     </thead>
                                     <tbody>
                                         {{-- {{$userrollcalls}} --}}
-                                        @forelse($userrollcalls as $userrollcall)
+                                        @foreach($userrollcalls as $userrollcall)
                                         <tr>
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{$userrollcall->penguatkuasa['name']}}</td>
                                             <td>{{$userrollcall->penguatkuasa['user_code']}}</td>
                                             <td>{{$userrollcall->penguatkuasa['nric']}}</td>
                                             <td>{{$userrollcall->penguatkuasa['email']}}</td>
-                                            <td>
-                                                {{-- <form method="POST" action="/userrollcalls/{{$userrollcall->id}}"> 
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <input class="button" name="delete" type="submit" >
-                                                </form> --}}
-                                                {{-- <a onclick="buang({{ $userrollcall->id }})"
-                                                    class="btn btn-danger"> <i class="ni ni-basket"></i>
-                                                </a> --}}
-                                                <button onclick="buang({{ $userrollcall->id }})"class="btn btn-danger btn-sm">Buang<i class="ni ni-basket"></i></button> </td>
-
-                                                {{-- <button class="btn btn-danger"> Buang </button> --}}
-                                            </td>
+                                            <td> <button onclick="buang({{ $userrollcall->id }})"class="btn btn-danger btn-sm">Buang<i class="ni ni-basket"></i></button> </td>
+                                         
                                         </tr>
 
                                         <script>
@@ -297,13 +313,7 @@
                                             }
 
                                         </script>
-                                        @empty
-                                            <div style="text-align:center;">
-                                                <td>
-                                                    <h5> Tiada rekod </h5>
-                                                </td>
-                                            </div>
-                                        @endforelse
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -346,7 +356,8 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="tambahkakitangan" tabindex="-1" role="dialog" aria-labelledby="tambahkakitanganLabel"
+    <div  class="modal fade" id="tambahkakitangan" tabindex="-1" role="dialog" 
+    {{-- <div class="modal fade" id="tambahkakitangan" tabindex="-1" role="dialog" aria-labelledby="tambahkakitanganLabel" --}}
         aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -360,60 +371,83 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card-wrapper">
-                                <!-- Input groups -->
-                                <div class="card">
-                                    <!-- Card header -->
-                                 
-                                    <!-- Card body -->
-                                    <div class="card-body">
-                                        <div class="container">
-                                            {{-- <form action="{{ url('store-input-fields') }}" method="POST"> --}}
-                                                <form method="POST" action="/userrollcalls">
-                                                @csrf
-                                                @if ($errors->any())
-                                                <div class="alert alert-danger" role="alert">
-                                                    <ul>
-                                                        @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                                @endif
-                                                @if (Session::has('success'))
-                                                <div class="alert alert-success text-center">
-                                                    <p>{{ Session::get('success') }}</p>
-                                                </div>
-                                                @endif
-                                                <table class="table table-bordered" id="dynamicAddRemove">
-                                                    <tr>
-                                                        <th>No Kakitangan</th>
-                                                        {{-- <th></th> --}}
-                                                        <th>Tindakan</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><input type="text" name="penguatkuasa_id" required placeholder="Enter penguatkuasa_id" class="form-control"  /></td>
-                                                        <td><input type="hidden" name="roll_id" class="form-control" value="{{$rollcall->id}}"/>
-                                                        <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary float-right">Tambah Kakitangan</button></td>
-                                                    </tr>
-                                                </table>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                                                    {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
-                                                    <button type="submit" class="btn btn-primary">Simpan</button>
 
-                                                </div>                                   
-                                            </form>
-                                        </div>
-                                                         
-                                    </div> 
-                                </div>
+                                <form method="POST" action="/userrollcalls">
+
+
+                                    @csrf
+                                    @if ($errors->any())
+                                    <div class="alert alert-danger" role="alert">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    @endif
+                                    @if (Session::has('success'))
+                                    <div class="alert alert-success text-center">
+                                        <p>{{ Session::get('success') }}</p>
+                                    </div>
+                                    @endif
+                                    
+                                    <table class="table table-bordered" id="dynamicAddRemove">
+
+                                        <tr>
+
+                                            <th>No Kakitangan</th>
+                                            <th>Nama</th>
+                                            <th>Tindakan</th>
+                                        </tr>
+                                        <tr>             
+                                            <td><input type="text" name="penguatkuasa_id" required placeholder="Enter penguatkuasa_id" class="form-control"  /></td> 
+                                            <td><select id="livesearch" class="livesearch form-control" name="livesearch"></select></td>                              
+                                            <td><input type="hidden" name="roll_id" class="form-control" value="{{$rollcall->id}}"/>
+                                            <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary float-right">Tambah Kakitangan</button></td>
+
+                                           
+                                        </tr>
+                                        <script type="text/javascript">
+
+                                            $("#livesearch").select2({
+                                                placeholder: ' Kakitangan',
+                                                // source: NameArray,
+                                                dropdownParent: $("#tambahkakitangan"),
+                                                ajax: {
+                                                    url: '/ajax-autocomplete-search',
+                                                    dataType: 'json',
+                                                    delay: 250,
+                                                    processResults: function (data) {
+                                                        return {
+                                                            results: $.map(data, function (item) {
+                                                                return {
+                                                                    text: item.name,
+                                                                    id: item.id
+                                                                }
+                                                            })
+                                                        };
+                                                    },
+                                                    cache: true
+                                                }
+                                            });
+                                        </script>
+
+        
+                                    </table>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                        {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+
+                                    </div>   
+
                                 
                                 </form>
+                                
                             </div>
                         </div>
                     </div>
-                </div>
-   
+                </div>  
             </div>
         </div>
     </div>

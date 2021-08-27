@@ -7,31 +7,7 @@ use App\Http\Controllers\RollcallController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserrollcallController;
-
-
-
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// Route::get('/', function () {
-//     return view('auth.login');
-// });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
-
+use App\Http\Controllers\Select2SearchController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -45,7 +21,13 @@ Route::resource('laporans',LaporanController::class)->middleware(['auth']);
 Route::resource('users',UserController::class)->middleware(['auth']);
 Route::resource('userrollcalls',UserrollcallController::class)->middleware(['auth']);
 
+Route::resource('Select2Search',Select2SearchController::class)->middleware(['auth']);
+Route::get('/ajax-autocomplete-search', [Select2SearchController::class, 'selectSearch']);
+Route::get('/search', [Select2SearchController::class, 'index']);
+
 Route::post('/users/kemaskini',[UserController::class,'kemaskini'])->middleware(['auth']);
+
+
 
 
 
