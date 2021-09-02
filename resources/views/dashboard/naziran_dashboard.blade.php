@@ -1,7 +1,7 @@
 @extends('base')
 
 <head>
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  {{-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> --}}
     {{-- <meta name="csrf-token" content="{{ csrf_token() }}" /> --}}
 
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /> --}}
