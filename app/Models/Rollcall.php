@@ -10,6 +10,8 @@ class Rollcall extends Model
 {
     use HasFactory;
 
+    protected $dates = ['mula_rollcall', 'akhir_rollcall'];
+
     public function users()
     {
         return $this->belongsToMany(User::class);

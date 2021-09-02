@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Audit;
+use App\Models\Rollcall;
+use Carbon\Carbon;
+
 
 class DashboardController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         $role = $user->role;
@@ -35,8 +38,27 @@ class DashboardController extends Controller
         } elseif ($role == 'ketua_jabatan') {
             return view ('dashboard.ketua_jabatan_dashboard');
         } elseif ($role == 'naziran') {
-            return view ('dashboard.naziran_dashboard');
-        } 
+
+            $rollcalls = Rollcall::all();
+
+            if($request->ajax()) {
+                $datas = Rollcall::all();
+                $array = [];
+                foreach ($datas as $data) {
+                    array_push($array, [
+                        'id' => $data->id,
+                        'lokasi' => $data->lokasi,
+                        'title' => $data->tajuk_rollcall,
+                        'start' => $data->mula_rollcall->format('Y-m-d'),
+                        'end' => $data->akhir_rollcall->format('Y-m-d')
+                    ]);
+                }    
+                return response()->json($array);
+            }
+            return view ('dashboard.naziran_dashboard',[              
+                'rollcalls'=>$rollcalls,  
+            ]);
+        }    
     }
     
 }

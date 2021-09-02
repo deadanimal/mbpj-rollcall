@@ -185,30 +185,21 @@
                                             <th>Tajuk Roll Call</th>
                                             <th>Waktu mula rollcall</th>
                                             <th>Waktu akhir rollcall</th>
-                                            {{-- <th>Waktu masuk</th>
-                                    <th>Waktu keluar</th> --}}
                                             <th>lokasi</th>
                                             <th>Catatan</th>
-                                            <th>Status</th>
-                                            {{-- <th>Pegawai Sokong</th>
-                                            <th>Pegawai Lulus</th> --}}
+                                            <th>Status</th>                                  
                                             <th>Tindakan</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($rollcalls as $rollcall)
                                         <tr>
-                                            {{-- <td>{$rollcall->id}}{</td> --}}
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{$rollcall->tajuk_rollcall}}</td>
                                             <td>{{$rollcall->mula_rollcall}}</td>
-                                            <td>{{$rollcall->akhir_rollcall}}</td>
-                                            {{-- <td>{{$rollcall->waktu_masuk}}</td>
-                                            <td>{{$rollcall->waktu_keluar}}</td> --}}
+                                            <td>{{$rollcall->akhir_rollcall}}</td>                                       
                                             <td>{{$rollcall->lokasi}}</td>
                                             <td>{{$rollcall->catatan}}</td>
-                                            {{-- <td>{{$rollcall->status}}</td> --}}
                                             @if($rollcall->status =='dibuka')
                                             <td>
                                                 <span class="badge badge-pill badge-success">DIBUKA</span>

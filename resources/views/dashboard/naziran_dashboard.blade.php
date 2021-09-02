@@ -1,4 +1,16 @@
 @extends('base')
+
+<head>
+
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+</head>
+
 @section('content')
 <div>
     <div class="header bg-primary pb-6">
@@ -89,141 +101,226 @@
             </div>
         </div>
     </div>
-    <div class="header header-dark bg-primary pb-6 content__title content__title--calendar mt-0">
-      <div class="container-fluid">
-        <div class="header-body">
-          <div class="row align-items-center py-4">
-            <div class="col-lg-6">
-              <h6 class="fullcalendar-title h2 text-white d-inline-block mb-0">Full calendar</h6>
-              <nav aria-label="breadcrumb" class="d-none d-lg-inline-block ml-lg-4">  
-              </nav>
-            </div>
-            <div class="col-lg-6 mt-3 mt-lg-0 text-lg-right">
-              <a href="#" class="fullcalendar-btn-prev btn btn-sm btn-neutral">
-                <i class="fas fa-angle-left"></i>
-              </a>
-              <a href="#" class="fullcalendar-btn-next btn btn-sm btn-neutral">
-                <i class="fas fa-angle-right"></i>
-              </a>
-              <a href="#" class="btn btn-sm btn-neutral" data-calendar-view="month">Month</a>
-              <a href="#" class="btn btn-sm btn-neutral" data-calendar-view="basicWeek">Week</a>
-              <a href="#" class="btn btn-sm btn-neutral" data-calendar-view="basicDay">Day</a>
-            </div>
-          </div>
+    {{-- calendar --}}
+    <div class="container-fluid mt--12">
+        <!-- Card body -->
+        <div class="card-body">
+            <h1 class="text-center text-primary"><u>Full Calendar</u></h1>
+            <div id="calendar"></div>
         </div>
-      </div>
     </div>
-            <!-- Card body -->
-            <div class="container-fluid mt--6">
-              <div class="row">
-                <div class="col">
-                  <!-- Fullcalendar -->
-                  <div class="card card-calendar">
-                    <!-- Card header -->
-                    <div class="card-header">
-                      <!-- Title -->
-                      <h5 class="h3 mb-0">Jadual Roll Call</h5>
-                    </div>
-                    <!-- Card body -->
-                    <div class="card-body p-0">
-                      <div class="calendar" data-toggle="calendar" id="calendar"></div>
-                    </div>
-                  </div>
-                  <!-- Modal - Add new event -->
-                  <!--* Modal header *-->
-                  <!--* Modal body *-->
-                  <!--* Modal footer *-->
-                  <!--* Modal init *-->
-                  <div class="modal fade" id="new-event" tabindex="-1" role="dialog" aria-labelledby="new-event-label" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-secondary" role="document">
-                      <div class="modal-content">
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                          <form class="new-event--form">
-                            <div class="form-group">
-                              <label class="form-control-label">Event title</label>
-                              <input type="text" class="form-control form-control-alternative new-event--title" placeholder="Event Title">
-                            </div>
-                            <div class="form-group mb-0">
-                              <label class="form-control-label d-block mb-3">Status color</label>
-                              <div class="btn-group btn-group-toggle btn-group-colors event-tag" data-toggle="buttons">
-                                <label class="btn bg-info active"><input type="radio" name="event-tag" value="bg-info" autocomplete="off" checked></label>
-                                <label class="btn bg-warning"><input type="radio" name="event-tag" value="bg-warning" autocomplete="off"></label>
-                                <label class="btn bg-danger"><input type="radio" name="event-tag" value="bg-danger" autocomplete="off"></label>
-                                <label class="btn bg-success"><input type="radio" name="event-tag" value="bg-success" autocomplete="off"></label>
-                                <label class="btn bg-default"><input type="radio" name="event-tag" value="bg-default" autocomplete="off"></label>
-                                <label class="btn bg-primary"><input type="radio" name="event-tag" value="bg-primary" autocomplete="off"></label>
-                              </div>
-                            </div>
-                            <input class="new-event--start" />
-                            <input  class="new-event--end" />
-                          </form>
-                        </div>
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-primary new-event--add">Add event</button>
-                          <button type="button" class="btn btn-link ml-auto" data-dismiss="modal">Close</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Modal - Edit event -->
-                  <!--* Modal body *-->
-                  <!--* Modal footer *-->
-                  <!--* Modal init *-->
-                  <div class="modal fade" id="edit-event" tabindex="-1" role="dialog" aria-labelledby="edit-event-label" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-secondary" role="document">
-                      <div class="modal-content">
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                          <form class="edit-event--form">
-                            <div class="form-group">
-                              <label class="form-control-label">Event title</label>
-                              <input type="text" class="form-control form-control-alternative edit-event--title" placeholder="Event Title">
-                            </div>
-                            <div class="form-group">
-                              <label class="form-control-label d-block mb-3">Status color</label>
-                              <div class="btn-group btn-group-toggle btn-group-colors event-tag mb-0" data-toggle="buttons">
-                                <label class="btn bg-info active"><input type="radio" name="event-tag" value="bg-info" autocomplete="off" checked></label>
-                                <label class="btn bg-warning"><input type="radio" name="event-tag" value="bg-warning" autocomplete="off"></label>
-                                <label class="btn bg-danger"><input type="radio" name="event-tag" value="bg-danger" autocomplete="off"></label>
-                                <label class="btn bg-success"><input type="radio" name="event-tag" value="bg-success" autocomplete="off"></label>
-                                <label class="btn bg-default"><input type="radio" name="event-tag" value="bg-default" autocomplete="off"></label>
-                                <label class="btn bg-primary"><input type="radio" name="event-tag" value="bg-primary" autocomplete="off"></label>
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="form-control-label">Description</label>
-                              <textarea class="form-control form-control-alternative edit-event--description textarea-autosize" placeholder="Event Desctiption"></textarea>
-                              <i class="form-group--bar"></i>
-                            </div>
-                            <input  class="edit-event--id">
-                          </form>
-                        </div>
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                          <button class="btn btn-primary" data-calendar="update">Update</button>
-                          <button class="btn btn-danger" data-calendar="delete">Delete</button>
-                          <button class="btn btn-link ml-auto" data-dismiss="modal">Close</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+    {{-- modal --}}
+    <div id="calendarModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Makluman Roll Call</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-              </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header">
+                            <h4 id="modalTitle" class="modal-title"></h4>
+                        </div>
+                        <!-- Card body -->
+                          {{-- <div id="modalBody"></div>   --}} 
+                        <div class="card-body">
+
+                            @foreach ($rollcalls as $rollcall)
+
+                            <div class="row">
+                              <div class="col-md-12">
+                                  <div class="form-group">
+                                      <label> Waktu Mula Semasa</label>
+                                      <div class="input-group input-group-merge">
+                                          <input class="form-control " value="{{$rollcall->id}}" disabled>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label> Waktu Mula Semasa</label>
+                                          <div class="input-group input-group-merge">
+                                              <input class="form-control " value="{{$rollcall->mula_rollcall}}" disabled>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label for="">Waktu akhir Semasa</label>
+                                          <div class="input-group input-group-merge">
+                                              <input class="form-control" value="{{$rollcall->akhir_rollcall}}" disabled>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label for="lokasi">Lokasi </label>
+                                          <div class="input-group input-group-merge">
+                                              <input class="form-control" name="lokasi" value="{{$rollcall->lokasi}} "
+                                              disabled>
+                                              <div class="input-group-append">
+                                                  <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label for="Perkara">Catatan</label>
+                                          <div class="input-group input-group-merge">
+                                              <input class="form-control" name="catatan" value="{{$rollcall->catatan}}"
+                                              disabled>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label for="pegawai_sokong_id">Pegawai Sokong</label>
+                                          <div class="input-group input-group-merge">
+                                              <input class="form-control" name="pegawai_sokong_id"
+                                                  value="{{$rollcall->pegawai_sokong_id}}"disabled>
+                                              <div class="input-group-append">
+                                                  <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label for="pegawai_lulus_id">Pilih pegawai lulus</label>
+                                          <div class="input-group input-group-merge">
+                                              <input class="form-control" name="pegawai_lulus_id"
+                                                  value="{{$rollcall->pegawai_lulus_id}}"disabled>
+                                              <div class="input-group-append">
+                                                  <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <!-- Button trigger modal -->
+                                  </div>
+                              </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <!-- Footer -->
-            <footer class="footer pt-0">
-                <div class="row align-items-center justify-content-lg-between">
-                    <div class="col-lg-6">
-                        <div class="copyright text-center  text-lg-left  text-muted">
-                            &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">Sistem Pengurusan Roll
-                                Call</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </div> 
+        </div>
     </div>
+    <!-- Footer -->
+    <footer class="footer pt-0">
+        <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6">
+                <div class="copyright text-center  text-lg-left  text-muted">
+                    &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">Sistem Pengurusan Roll
+                        Call</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </div>
+</div>
+</div>
+@endsection
+@section('script')
+<script>
+    $(document).ready(function () {
+        var SITEURL = "{{ url('/') }}";
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var calendar = $('#calendar').fullCalendar({
+            editable: true,
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            events: SITEURL + '/dashboard',
+            selectable: true,
+            selectHelper: true,
+
+            eventClick: function (event, jsEvent, view) {
+                // $.ajax({  
+                //     type: "GET",  
+                //     data: "id=" + $(this).attr("id"), 
+                //   });
+                // ______________
+                // var id_ = event.id;
+                // var divId = '#rollCall' + id_;
+                // // $(divId).html('dsadas')
+                // // var d = new Date(event.rollcall.akhir_rollcall);
+                // var htmlStatement = `
+                // <div class="table-responsive py-4">
+                //             <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
+                //                 style="width:100%">
+                //                 <thead>
+                //                     <tr>
+                //                         <th>No</th>
+                //                         <th>Tajuk Roll Call</th>
+                //                         <th>Waktu mula rollcall</th>
+                //                         <th>Waktu akhir rollcall</th>
+                //                         <th>lokasi</th>
+                //                         <th>Catatan</th>
+                //                         <th>Status</th>                                  
+                //                         <th>Tindakan</th>
+                //                     </tr>
+                //                 </thead>
+                //                 <tbody>
+                //                     @forelse($rollcalls as $rollcall)
+                //                     <tr>
+                //                         <td>{{$loop->index+1}}</td>
+                //                         <td>{{$rollcall->tajuk_rollcall}}</td>
+                //                         <td>{{$rollcall->mula_rollcall}}</td>
+                //                         <td>{{$rollcall->akhir_rollcall}}</td>                                       
+                //                         <td>{{$rollcall->lokasi}}</td>
+                //                         <td>{{$rollcall->catatan}}</td>
+                //                         @if($rollcall->status =='dibuka')
+                //                         <td>
+                //                             <span class="badge badge-pill badge-success">DIBUKA</span>
+                //                         </td>
+                //                         @elseif($rollcall->status =='ditutup')
+                //                         <td>
+                //                             <span class="badge badge-pill badge-danger">DITUTUP</span>
+                //                         </td>
+                //                         @elseif($rollcall->status =='ditangguh')
+                //                         <td>
+                //                             <span class="badge badge-pill badge-warning">DITANGGUH</span>
+                //                         </td>
+                //                         @endif
+                //                         {{-- <td>{{$rollcall->pegawai_sokong_id}}</td>
+                //                         <td>{{$rollcall->pegawai_lulus_id}}</td> --}}                                 
+                //                     </tr>                                  
+                //                   @endforeach
+                //                 </tbody>
+                //             </table>
+                //         </div>
+                
+                // `
+                
+                $('#modalTitle').html(event.title);
+                // $('#modalBody').html(event.description);
+                // // $('#modalBody').html(htmlStatement);
+                // $('#eventUrl').attr('href', event.url);
+                $('#calendarModal').modal();
+            },
+        });
+
+    });
+
+</script>
 @endsection

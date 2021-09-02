@@ -211,7 +211,7 @@
                               </div>
                             </form>
                         </div>
-                  </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -224,29 +224,7 @@
                         <h3 class="mb-0">Senarai Kakitangan </h3>
                         <div class="col-md-6 header float-right mb--12">
 
-                            {{-- <select class="livesearch form-control" name="livesearch"></select>
-                                                   
-                            <script type="text/javascript">
-                                $('.livesearch').select2({
-                                    placeholder: 'Pilih Kakitangan',
-                                    ajax: {
-                                        url: '/ajax-autocomplete-search',
-                                        dataType: 'json',
-                                        delay: 250,
-                                        processResults: function (data) {
-                                            return {
-                                                results: $.map(data, function (item) {
-                                                    return {
-                                                        text: item.name,
-                                                        id: item.id
-                                                    }
-                                                })
-                                            };
-                                        },
-                                        cache: true
-                                    }
-                                });
-                            </script> --}}
+                            
                         </div>
                         <div class="card-body px-0">
                             <!-- Light table -->
