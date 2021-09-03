@@ -1,14 +1,18 @@
 @extends('base')
 
 <head>
-  {{-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> --}}
+    {{-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> --}}
     {{-- <meta name="csrf-token" content="{{ csrf_token() }}" /> --}}
 
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+    {{-- <link href='fullcalendar/main.css' rel='stylesheet' />
+    <script src='fullcalendar/main.js'></script> --}}
+    
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
+    
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" /> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script> --}}
 </head>
 
 @section('content')
@@ -106,6 +110,7 @@
         <!-- Card body -->
         <div class="card-body">
             <h1 class="text-center text-primary"><u>Full Calendar</u></h1>
+         
             <div id="calendar"></div>
         </div>
     </div>
@@ -120,96 +125,85 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="card">
-                        <!-- Card header -->
-                        <div class="card-header">
-                            <h4 id="modalTitle" class="modal-title"></h4>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div class="form-group">
+                                <h1 id="modalTitle" class="modal-title "></h1>
+                            </div>
                         </div>
+
                         <!-- Card body -->
-                          {{-- <div id="modalBody"></div>   --}} 
                         <div class="card-body">
-
-                            @foreach ($rollcalls as $rollcall)
-
                             <div class="row">
-                              <div class="col-md-12">
-                                  <div class="form-group">
-                                      <label> Waktu Mula Semasa</label>
-                                      <div class="input-group input-group-merge">
-                                          <input class="form-control " value="{{$rollcall->id}}" disabled>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <div class="form-group">
-                                          <label> Waktu Mula Semasa</label>
-                                          <div class="input-group input-group-merge">
-                                              <input class="form-control " value="{{$rollcall->mula_rollcall}}" disabled>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <div class="form-group">
-                                          <label for="">Waktu akhir Semasa</label>
-                                          <div class="input-group input-group-merge">
-                                              <input class="form-control" value="{{$rollcall->akhir_rollcall}}" disabled>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <div class="form-group">
-                                          <label for="lokasi">Lokasi </label>
-                                          <div class="input-group input-group-merge">
-                                              <input class="form-control" name="lokasi" value="{{$rollcall->lokasi}} "
-                                              disabled>
-                                              <div class="input-group-append">
-                                                  <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <div class="form-group">
-                                          <label for="Perkara">Catatan</label>
-                                          <div class="input-group input-group-merge">
-                                              <input class="form-control" name="catatan" value="{{$rollcall->catatan}}"
-                                              disabled>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <div class="form-group">
-                                          <label for="pegawai_sokong_id">Pegawai Sokong</label>
-                                          <div class="input-group input-group-merge">
-                                              <input class="form-control" name="pegawai_sokong_id"
-                                                  value="{{$rollcall->pegawai_sokong_id}}"disabled>
-                                              <div class="input-group-append">
-                                                  <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <div class="form-group">
-                                          <label for="pegawai_lulus_id">Pilih pegawai lulus</label>
-                                          <div class="input-group input-group-merge">
-                                              <input class="form-control" name="pegawai_lulus_id"
-                                                  value="{{$rollcall->pegawai_lulus_id}}"disabled>
-                                              <div class="input-group-append">
-                                                  <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <!-- Button trigger modal -->
-                                  </div>
-                              </div>
-                            @endforeach
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Waktu Mula Roll Call</label>
+                                        <div class="input-group input-group-merge">
+                                            <input id="rollcall_mula" class="form-control" value="" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Waktu Akhir Roll Call</label>
+                                        <div class="input-group input-group-merge">
+                                            <input id="rollcall_akhir" class="form-control" value="" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="lokasi">Lokasi </label>
+                                        <div class="input-group input-group-merge">
+                                            <input id="rollcall_lokasi" class="form-control" name="lokasi" value=""
+                                                disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="Perkara">Catatan</label>
+                                        <div class="input-group input-group-merge">
+                                            <input id="rollcall_catatan" class="form-control" name="catatan" value=""
+                                                disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="pegawai_sokong_id">Pegawai Sokong</label>
+                                        <div class="input-group input-group-merge">
+                                            <input id="rollcall_pegawai_sokong_id" class="form-control"
+                                                name="pegawai_sokong_id" value="" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="pegawai_lulus_id">Pegawai Lulus</label>
+                                        <div class="input-group input-group-merge">
+                                            <input id="rollcall_pegawai_lulus_id" class="form-control"
+                                                name="pegawai_lulus_id" value="" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="maklumat">Makluman</label>
+                                        <div class="input-group input-group-merge">
+                                            <input id="maklumat" class="form-control"
+                                                name="maklumat" value="" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -249,74 +243,31 @@
                 left: 'prev,next today',
                 center: 'title',
                 right: 'month,agendaWeek,agendaDay'
+                // start: 'title', // will normally be on the left. if RTL, will be on the right
+                // center: '',
+                // end: 'today prev,next'
             },
             events: SITEURL + '/dashboard',
             selectable: true,
             selectHelper: true,
+            
 
             eventClick: function (event, jsEvent, view) {
-                // $.ajax({  
-                //     type: "GET",  
-                //     data: "id=" + $(this).attr("id"), 
-                //   });
-                // ______________
-                // var id_ = event.id;
-                // var divId = '#rollCall' + id_;
-                // // $(divId).html('dsadas')
-                // // var d = new Date(event.rollcall.akhir_rollcall);
-                // var htmlStatement = `
-                // <div class="table-responsive py-4">
-                //             <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
-                //                 style="width:100%">
-                //                 <thead>
-                //                     <tr>
-                //                         <th>No</th>
-                //                         <th>Tajuk Roll Call</th>
-                //                         <th>Waktu mula rollcall</th>
-                //                         <th>Waktu akhir rollcall</th>
-                //                         <th>lokasi</th>
-                //                         <th>Catatan</th>
-                //                         <th>Status</th>                                  
-                //                         <th>Tindakan</th>
-                //                     </tr>
-                //                 </thead>
-                //                 <tbody>
-                //                     @forelse($rollcalls as $rollcall)
-                //                     <tr>
-                //                         <td>{{$loop->index+1}}</td>
-                //                         <td>{{$rollcall->tajuk_rollcall}}</td>
-                //                         <td>{{$rollcall->mula_rollcall}}</td>
-                //                         <td>{{$rollcall->akhir_rollcall}}</td>                                       
-                //                         <td>{{$rollcall->lokasi}}</td>
-                //                         <td>{{$rollcall->catatan}}</td>
-                //                         @if($rollcall->status =='dibuka')
-                //                         <td>
-                //                             <span class="badge badge-pill badge-success">DIBUKA</span>
-                //                         </td>
-                //                         @elseif($rollcall->status =='ditutup')
-                //                         <td>
-                //                             <span class="badge badge-pill badge-danger">DITUTUP</span>
-                //                         </td>
-                //                         @elseif($rollcall->status =='ditangguh')
-                //                         <td>
-                //                             <span class="badge badge-pill badge-warning">DITANGGUH</span>
-                //                         </td>
-                //                         @endif
-                //                         {{-- <td>{{$rollcall->pegawai_sokong_id}}</td>
-                //                         <td>{{$rollcall->pegawai_lulus_id}}</td> --}}                                 
-                //                     </tr>                                  
-                //                   @endforeach
-                //                 </tbody>
-                //             </table>
-                //         </div>
-                
-                // `
-                
-                $('#modalTitle').html(event.title);
-                // $('#modalBody').html(event.description);
-                // // $('#modalBody').html(htmlStatement);
-                // $('#eventUrl').attr('href', event.url);
-                $('#calendarModal').modal();
+                $.get(SITEURL + "/rollcalls/get_data/" + event.id, function (data, status) {
+                    if (status == "success") {
+                        $('#modalTitle').html(event.title);
+                        $('#rollcall_mula').val(data.mula_rollcall);
+                        $('#rollcall_akhir').val(data.akhir_rollcall);
+                        $('#rollcall_lokasi').val(data.lokasi);
+                        $('#rollcall_catatan').val(data.catatan);
+                        $('#rollcall_pegawai_sokong_id').val(data.pegawai_sokong['name']);
+                        $('#rollcall_pegawai_lulus_id').val(data.pegawai_lulus['name']);
+                        $('#rollcall_maklumat').html(data.maklumat);
+                        $('#calendarModal').modal();
+                    } else {
+                        alert("Tiada data ditemui");
+                    }
+                });
             },
         });
 

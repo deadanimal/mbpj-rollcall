@@ -17,6 +17,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 
 Route::resource('profiles',ProfileController::class)->middleware(['auth']);
 Route::resource('rollcalls',RollcallController::class)->middleware(['auth']);
+Route::get('/rollcalls/get_data/{id}', [RollcallController::class, 'get_data']);
 Route::resource('laporans',LaporanController::class)->middleware(['auth']);
 Route::resource('users',UserController::class)->middleware(['auth']);
 Route::resource('userrollcalls',UserrollcallController::class)->middleware(['auth']);

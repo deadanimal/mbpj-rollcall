@@ -47,7 +47,8 @@ class DashboardController extends Controller
                 foreach ($datas as $data) {
                     array_push($array, [
                         'id' => $data->id,
-                        'lokasi' => $data->lokasi,
+                        // 'lokasi' => $data->lokasi,
+                        'maklumat'=> $data->maklumat,
                         'title' => $data->tajuk_rollcall,
                         'start' => $data->mula_rollcall->format('Y-m-d'),
                         'end' => $data->akhir_rollcall->format('Y-m-d')

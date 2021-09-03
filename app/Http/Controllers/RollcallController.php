@@ -164,13 +164,12 @@ class RollcallController extends Controller
                    
     }
 
-    // public function destroy($id){
-    //     try{
-    //         Rollcall::find($id)->delete();
-    //         session()->flash('success',"Category Deleted Successfully!!");
-    //     }catch(\Exception $e){
-    //         session()->flash('error',"Something goes wrong while deleting category!!");
-    //     }
-    // }
+    public function get_data(Request $request, $id) {
+        if ($request->ajax()) {
+            $rollcall = Rollcall::with('pegawai_sokong', 'pegawai_lulus')->find($id)->toArray();
+            return response()->json($rollcall);
+        }
+    }
+
     
 }
