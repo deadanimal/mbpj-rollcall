@@ -1,28 +1,19 @@
 @extends('base')
 
-<head>
-    {{-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> --}}
-    {{-- <meta name="csrf-token" content="{{ csrf_token() }}" /> --}}
-
-    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /> --}}
-    {{-- <link href='fullcalendar/main.css' rel='stylesheet' />
-    <script src='fullcalendar/main.js'></script> --}}
-    
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
-    
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" /> --}}
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> --}}
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script> --}}
-</head>
-
 @section('content')
+
+<style>
+    .fc-header-toolbar {
+        display: block !important;
+    }
+
+</style>
 <div>
     <div class="header bg-primary pb-6">
         <div class="container-fluid">
             <div class="row align-items-center py-4">
                 <div class="col-lg-12 col-7">
                     <h1 class="h1 text-white "> Selamat Datang {{Auth()->user()->name}} ke Sistem Pengurusan Roll Call
-                    </h1>
                     </h1>
                 </div>
             </div>
@@ -106,12 +97,17 @@
         </div>
     </div>
     {{-- calendar --}}
+
     <div class="container-fluid mt--12">
-        <!-- Card body -->
-        <div class="card-body">
-            <h1 class="text-center text-primary"><u>Full Calendar</u></h1>
-         
-            <div id="calendar"></div>
+        <div class="card">
+            <div class="card-header">
+                {{-- <button type="button" class="btn btn-primary" id="today">
+                    Semak Jadual Bulan Semasa
+                </button>  --}}
+            </div>
+            <div class="card-body">
+                <div id='calendar'></div>
+            </div>
         </div>
     </div>
     {{-- modal --}}
@@ -193,28 +189,27 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 text-center">
                                     <div class="form-group">
                                         <label for="maklumat">Makluman</label>
                                         <div class="input-group input-group-merge">
-                                            <input id="maklumat" class="form-control"
-                                                name="maklumat" value="" disabled>
+                                            <div id="rollcall_maklumat">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                             
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Footer -->
-    <footer class="footer pt-0">
+     <!-- Footer -->
+     <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
             <div class="col-lg-6">
                 <div class="copyright text-center  text-lg-left  text-muted">
@@ -224,7 +219,6 @@
             </div>
         </div>
     </footer>
-</div>
 </div>
 </div>
 @endsection
@@ -240,17 +234,13 @@
         var calendar = $('#calendar').fullCalendar({
             editable: true,
             header: {
-                left: 'prev,next today',
+                left: 'prev, next today',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-                // start: 'title', // will normally be on the left. if RTL, will be on the right
-                // center: '',
-                // end: 'today prev,next'
+                right: 'month'
             },
             events: SITEURL + '/dashboard',
-            selectable: true,
-            selectHelper: true,
-            
+            // selectable: true,
+            // selectHelper: true,
 
             eventClick: function (event, jsEvent, view) {
                 $.get(SITEURL + "/rollcalls/get_data/" + event.id, function (data, status) {
@@ -274,4 +264,11 @@
     });
 
 </script>
+<script>
+    $("#today").click(function () {
+        $("#calendar").fullCalendar("today");
+    });
+
+</script>
+
 @endsection

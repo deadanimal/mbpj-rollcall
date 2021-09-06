@@ -8,6 +8,8 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserrollcallController;
 use App\Http\Controllers\Select2SearchController;
+use App\Http\Controllers\JadualController;
+
 
 Route::get('/', function () {
     return view('auth.login');
@@ -21,6 +23,8 @@ Route::get('/rollcalls/get_data/{id}', [RollcallController::class, 'get_data']);
 Route::resource('laporans',LaporanController::class)->middleware(['auth']);
 Route::resource('users',UserController::class)->middleware(['auth']);
 Route::resource('userrollcalls',UserrollcallController::class)->middleware(['auth']);
+Route::resource('jaduals',JadualController::class)->middleware(['auth']);
+
 
 Route::resource('Select2Search',Select2SearchController::class)->middleware(['auth']);
 Route::get('/ajax-autocomplete-search', [Select2SearchController::class, 'selectSearch']);

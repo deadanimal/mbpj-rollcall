@@ -10,19 +10,12 @@
     <meta name="author" content="Creative Tim">
     <title>Sistem Pengurusan Roll Call</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-    --}}
-
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('argon') }}/img/mbpj.png ">
     <!-- Fonts -->
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-
     <!-- Icons -->
     <link rel="stylesheet" href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/nucleo/css/nucleo.css"
         type="text/css">
@@ -30,17 +23,17 @@
         href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
         type="text/css">
     <!-- Page plugins -->
-    {{-- <link rel="stylesheet" href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/fullcalendar/dist/fullcalendar.min.css"> --}}
-    {{-- <link rel="stylesheet" href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/fullcalendar/dist/fullcalendar.min.css"> --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" type="text/css"> --}}
-    
+    <link rel="stylesheet"
+        href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/fullcalendar/dist/fullcalendar.min.css">
+    <link rel="stylesheet"
+        href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/sweetalert2/dist/sweetalert2.min.css">
 
-    <link rel="stylesheet" href="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/sweetalert2/dist/sweetalert2.min.css">
     <!-- Argon CSS -->
+    {{-- <link rel="stylesheet" href="{{ asset('assets') }}//css/argon.min.css?v=1.2.1" type="text/css"> --}}
     <link rel="stylesheet" href="{{ asset('assets') }}//css/argon.min.css?v=1.2.1" type="text/css">
 
-       
+    @yield('head')
+
 </head>
 
 <body>
@@ -88,62 +81,57 @@
                                 <span class="nav-link-text">Pengurusan Roll Call</span>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a class="nav-link" href="">
-                                <i class="ni ni-chat-round text-red"></i>
-                                <span class="nav-link-text">Audit Trail</span>
+                    </ul>
+                    <!-- Nav items lain-lain custom -->
+                    @elseif(auth()->user()->role == 'naziran')
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/dashboard">
+                                <i class="ni ni-archive-2 text-green"></i>
+                                <span class="nav-link-text">Dashboard</span>
                             </a>
-                        </li> --}}
-
-                        <!-- Nav items lain-lain custom -->
-                        @elseif(auth()->user()->role == 'naziran')
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/dashboard">
-                                    <i class="ni ni-archive-2 text-green"></i>
-                                    <span class="nav-link-text">Dashboard</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/rollcalls">
-                                    <i class="ni ni-calendar-grid-58 text-red"></i>
-                                    <span class="nav-link-text">Pengurusan Roll Call</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/users">
-                                    <i class="ni ni-archive-2 text-green"></i>
-                                    <span class="nav-link-text">Pengurusan Pengguna</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/laporans">
-                                    <i class="ni ni-chart-bar-32 text-green"></i>
-                                    <span class="nav-link-text">Laporan</span>
-                                </a>
-                            </li>
-                            <!-- Nav items dalaman -->
-                            @else
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/dashboard">
-                                        <i class="ni ni-archive-2 text-green"></i>
-                                        <span class="nav-link-text">Dashboard</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/rollcalls">
-                                        <i class="ni ni-chart-pie-35 text-info"></i>
-                                        <span class="nav-link-text"> Roll Call</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/laporans">
-                                        <i class="ni ni-chart-bar-32 text-green"></i>
-                                        <span class="nav-link-text">Laporan</span>
-                                    </a>
-                                </li>
-                                @endif
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/rollcalls">
+                                <i class="ni ni-calendar-grid-58 text-red"></i>
+                                <span class="nav-link-text">Pengurusan Roll Call</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/users">
+                                <i class="ni ni-archive-2 text-green"></i>
+                                <span class="nav-link-text">Pengurusan Pengguna</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/laporans">
+                                <i class="ni ni-chart-bar-32 text-green"></i>
+                                <span class="nav-link-text">Laporan</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- Nav items dalaman -->
+                    @else
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/dashboard">
+                                <i class="ni ni-archive-2 text-green"></i>
+                                <span class="nav-link-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/rollcalls">
+                                <i class="ni ni-chart-pie-35 text-info"></i>
+                                <span class="nav-link-text"> Roll Call</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/laporans">
+                                <i class="ni ni-chart-bar-32 text-green"></i>
+                                <span class="nav-link-text">Laporan</span>
+                            </a>
+                        </li>
+                        @endif
                 </div>
             </div>
         </div>
