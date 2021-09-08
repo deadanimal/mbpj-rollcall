@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Audit;
 use App\Models\Rollcall;
+use App\Models\Userrollcall;
+
+use App\Models\User;
+
 use Carbon\Carbon;
 
 
@@ -17,6 +21,28 @@ class DashboardController extends Controller
         $user = Auth::user();
         $role = $user->role;
         if ($role == 'penguatkuasa') {
+
+            $rollcalls = Rollcall::all();
+
+            if($request->ajax()) {
+                $datas = Rollcall::all();
+                $array = [];
+                foreach ($datas as $data) {
+                    array_push($array, [
+                        'id' => $data->id,
+                        // 'lokasi' => $data->lokasi,
+                        'maklumat'=> $data->maklumat,
+                        'title' => $data->tajuk_rollcall,
+                        'start' => $data->mula_rollcall->format('Y-m-d'),
+                        'end' => $data->akhir_rollcall->format('Y-m-d')
+                    ]);
+                }    
+                return response()->json($array);
+            }
+            return view ('dashboard.naziran_dashboard',[              
+                'rollcalls'=>$rollcalls,  
+                
+            ]);
             return view ('dashboard.penguatkuasa_dashboard');
         } elseif ($role == 'pentadbir_sistem') {
 
@@ -58,6 +84,7 @@ class DashboardController extends Controller
             }
             return view ('dashboard.naziran_dashboard',[              
                 'rollcalls'=>$rollcalls,  
+                
             ]);
         }    
     }

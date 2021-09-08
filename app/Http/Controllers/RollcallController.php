@@ -166,7 +166,7 @@ class RollcallController extends Controller
 
     public function get_data(Request $request, $id) {
         if ($request->ajax()) {
-            $rollcall = Rollcall::with('pegawai_sokong', 'pegawai_lulus')->find($id)->toArray();
+            $rollcall = Rollcall::with('pegawai_sokong', 'pegawai_lulus', 'user_rollcall.penguatkuasa')->find($id)->toArray();
             return response()->json($rollcall);
         }
     }

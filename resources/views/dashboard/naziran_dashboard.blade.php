@@ -124,11 +124,10 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <div class="form-group">
-                                <h1 id="modalTitle" class="modal-title "></h1>
+                                    <span id="modalTitle"></span>
                             </div>
                         </div>
 
-                        <!-- Card body -->
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
@@ -190,10 +189,22 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 text-center">
-                                    <div class="form-group">
-                                        <label for="maklumat">Makluman</label>
+                                        <label class=".badge-lg badge-pill badge-info ">Makluman</label>
+                                </div>
+                            </div><div class="row">
+                                <div class="col-md-12">
                                         <div class="input-group input-group-merge">
                                             <div id="rollcall_maklumat">
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="maklumat">Kakitangan Roll Call</label>
+                                        <div class="input-group input-group-merge">
+                                            <div id="penguatkuasa_id">
                                             </div>
                                         </div>
                                     </div>
@@ -246,13 +257,22 @@
                 $.get(SITEURL + "/rollcalls/get_data/" + event.id, function (data, status) {
                     if (status == "success") {
                         $('#modalTitle').html(event.title);
-                        $('#rollcall_mula').val(data.mula_rollcall);
-                        $('#rollcall_akhir').val(data.akhir_rollcall);
+                        var dateStringWithTimemula = moment(data.mula_rollcall).format('YYYY-MM-DD HH:mm:ss');
+                        var dateStringWithTimeakhir = moment(data.akhir_rollcall).format('YYYY-MM-DD HH:mm:ss');
+                        // console.log(dateStringWithTime)
+                        $('#rollcall_mula').val(dateStringWithTimemula);
+                        $('#rollcall_akhir').val(dateStringWithTimeakhir);
                         $('#rollcall_lokasi').val(data.lokasi);
                         $('#rollcall_catatan').val(data.catatan);
                         $('#rollcall_pegawai_sokong_id').val(data.pegawai_sokong['name']);
                         $('#rollcall_pegawai_lulus_id').val(data.pegawai_lulus['name']);
                         $('#rollcall_maklumat').html(data.maklumat);
+                        var penguatkuasas = "<ol>";
+                        data.user_rollcall.forEach((obj) => {
+                            penguatkuasas += "<li>"+obj.penguatkuasa.name+"--"+obj.penguatkuasa.nric+"</li>";
+                        });
+                        penguatkuasas += "</ol>";
+                        $('#penguatkuasa_id').html(penguatkuasas);
                         $('#calendarModal').modal();
                     } else {
                         alert("Tiada data ditemui");
@@ -264,11 +284,10 @@
     });
 
 </script>
-<script>
+{{-- <script>
     $("#today").click(function () {
         $("#calendar").fullCalendar("today");
     });
-
-</script>
+</script> --}}
 
 @endsection

@@ -207,10 +207,12 @@
     </div>
     {{-- calendar --}}
     <div class="container-fluid mt--12">
-        <!-- Card body -->
-        <div class="card-body">
-            <h1 class="text-center text-primary"><u>Full Calendar</u></h1>
-            <div id="calendar"></div>
+        <div class="card">
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+                <div id='calendar'></div>
+            </div>
         </div>
     </div>
     {{-- modal --}}
@@ -224,41 +226,29 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="card">
-                        <!-- Card header -->
-                        <div class="card-header">
-                            <h4 id="modalTitle" class="modal-title"></h4>
-                        </div>
-                        <!-- Card body -->
-                        {{-- <div id="modalBody"></div>   --}}
-                        <div class="card-body">
-
-                            @foreach ($rollcalls as $rollcall)
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label> Waktu Mula Semasa</label>
-                                        <div class="input-group input-group-merge">
-                                            <input class="form-control " value="{{$rollcall->id}}" disabled>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div class="form-group">
+                                <h1 id="modalTitle" class="modal-title "></h1>
                             </div>
+                        </div>
+
+                        <!-- Card body -->
+                        <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label> Waktu Mula Semasa</label>
+                                        <label> Waktu Mula Roll Call</label>
                                         <div class="input-group input-group-merge">
-                                            <input class="form-control " value="{{$rollcall->mula_rollcall}}" disabled>
+                                            <input id="rollcall_mula" class="form-control" value="" disabled>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="">Waktu akhir Semasa</label>
+                                        <label for="">Waktu Akhir Roll Call</label>
                                         <div class="input-group input-group-merge">
-                                            <input class="form-control" value="{{$rollcall->akhir_rollcall}}" disabled>
+                                            <input id="rollcall_akhir" class="form-control" value="" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -268,11 +258,8 @@
                                     <div class="form-group">
                                         <label for="lokasi">Lokasi </label>
                                         <div class="input-group input-group-merge">
-                                            <input class="form-control" name="lokasi" value="{{$rollcall->lokasi}} "
+                                            <input id="rollcall_lokasi" class="form-control" name="lokasi" value=""
                                                 disabled>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -280,7 +267,7 @@
                                     <div class="form-group">
                                         <label for="Perkara">Catatan</label>
                                         <div class="input-group input-group-merge">
-                                            <input class="form-control" name="catatan" value="{{$rollcall->catatan}}"
+                                            <input id="rollcall_catatan" class="form-control" name="catatan" value=""
                                                 disabled>
                                         </div>
                                     </div>
@@ -291,34 +278,37 @@
                                     <div class="form-group">
                                         <label for="pegawai_sokong_id">Pegawai Sokong</label>
                                         <div class="input-group input-group-merge">
-                                            <input class="form-control" name="pegawai_sokong_id"
-                                                value="{{$rollcall->pegawai_sokong_id}}" disabled>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                                            </div>
+                                            <input id="rollcall_pegawai_sokong_id" class="form-control"
+                                                name="pegawai_sokong_id" value="" disabled>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="pegawai_lulus_id">Pilih pegawai lulus</label>
+                                        <label for="pegawai_lulus_id">Pegawai Lulus</label>
                                         <div class="input-group input-group-merge">
-                                            <input class="form-control" name="pegawai_lulus_id"
-                                                value="{{$rollcall->pegawai_lulus_id}}" disabled>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                                            <input id="rollcall_pegawai_lulus_id" class="form-control"
+                                                name="pegawai_lulus_id" value="" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="maklumat">Makluman</label>
+                                        <div class="input-group input-group-merge">
+                                            <div id="rollcall_maklumat">
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Button trigger modal -->
                                 </div>
                             </div>
-                            @endforeach
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -330,7 +320,7 @@
                 <div class="copyright text-center  text-lg-left  text-muted">
                     &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">Sistem Pengurusan Roll
                         Call
-                    </a>
+                    </a>5
                 </div>
             </div>
         </div>
@@ -349,18 +339,39 @@
         var calendar = $('#calendar').fullCalendar({
             editable: true,
             header: {
-                left: 'prev,next today',
+                left: 'prev, next today',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
+                right: 'month'
             },
             events: SITEURL + '/dashboard',
-            selectable: true,
-            selectHelper: true,
+            // selectable: true,
+            // selectHelper: true,
 
             eventClick: function (event, jsEvent, view) {
-
-                $('#modalTitle').html(event.title);
-                $('#calendarModal').modal();
+                $.get(SITEURL + "/rollcalls/get_data/" + event.id, function (data, status) {
+                    if (status == "success") {
+                        $('#modalTitle').html(event.title);
+                        var dateStringWithTimemula = moment(data.mula_rollcall).format('YYYY-MM-DD HH:mm:ss');
+                        var dateStringWithTimeakhir = moment(data.akhir_rollcall).format('YYYY-MM-DD HH:mm:ss');
+                        // console.log(dateStringWithTime)
+                        $('#rollcall_mula').val(dateStringWithTimemula);
+                        $('#rollcall_akhir').val(dateStringWithTimeakhir);
+                        $('#rollcall_lokasi').val(data.lokasi);
+                        $('#rollcall_catatan').val(data.catatan);
+                        $('#rollcall_pegawai_sokong_id').val(data.pegawai_sokong['name']);
+                        $('#rollcall_pegawai_lulus_id').val(data.pegawai_lulus['name']);
+                        $('#rollcall_maklumat').html(data.maklumat);
+                        var penguatkuasas = "<ol>";
+                        data.user_rollcall.forEach((obj) => {
+                            penguatkuasas += "<li>"+obj.penguatkuasa.name+"--"+obj.penguatkuasa.nric+"</li>";
+                        });
+                        penguatkuasas += "</ol>";
+                        $('#penguatkuasa_id').html(penguatkuasas);
+                        $('#calendarModal').modal();
+                    } else {
+                        alert("Tiada data ditemui");
+                    }
+                });
             },
         });
 

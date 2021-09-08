@@ -222,9 +222,7 @@
                     <!-- Card header -->
                     <div class="card-header border-0">
                         <h3 class="mb-0">Senarai Kakitangan </h3>
-                        <div class="col-md-6 header float-right mb--12">
-
-                            
+                        <div class="col-md-6 header float-right mb--12">                 
                         </div>
                         <div class="card-body px-0">
                             <!-- Light table -->

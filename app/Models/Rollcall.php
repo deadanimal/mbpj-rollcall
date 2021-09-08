@@ -26,5 +26,10 @@ class Rollcall extends Model
     {
         return $this->belongsTo(User::class, 'pegawai_lulus_id', 'id');
     }
+
+    public function user_rollcall()
+    {
+        return $this->hasMany(Userrollcall::class, 'roll_id', 'id');
+    }
 }
  
