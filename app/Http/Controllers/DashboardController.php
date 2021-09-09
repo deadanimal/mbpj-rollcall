@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Audit;
 use App\Models\Rollcall;
 use App\Models\Userrollcall;
+use Illuminate\Support\Facades\DB;
+
 
 use App\Models\User;
 
@@ -39,11 +41,11 @@ class DashboardController extends Controller
                 }    
                 return response()->json($array);
             }
-            return view ('dashboard.naziran_dashboard',[              
+            return view ('dashboard.penguatkuasa_dashboard',[              
                 'rollcalls'=>$rollcalls,  
                 
             ]);
-            return view ('dashboard.penguatkuasa_dashboard');
+            // return view ('dashboard.penguatkuasa_dashboard');
         } elseif ($role == 'pentadbir_sistem') {
 
             $harini = date("Y-m-d");
@@ -52,13 +54,69 @@ class DashboardController extends Controller
             $limabelasharisebelum = date_sub($harini, date_interval_create_from_date_string("3 days"));
             $audits = Audit::where('created_at', '>=', $limabelasharisebelum)->orderBy('created_at','DESC')->get();
 
+            // Card status
+            $bils = DB::table('users')
+            ->where('role','=','penguatkuasa')
+            ->count();
+
+            $bilt = DB::table('users')
+            ->where('role','=','pentadbir_sistem')
+            ->count();
+
+            $bilp = DB::table('users')
+            ->where('role','=','penyelia')
+            ->count();
+
+            $biln = DB::table('users')
+            ->where('role','=','naziran')
+            ->count();
+
+            $bilkb = DB::table('users')
+            ->where('role','=','ketua_bahagian')
+            ->count();
+
+            $bilkj = DB::table('users')
+            ->where('role','=','ketua_jabatan')
+            ->count();
+
+
             return view ('dashboard.pentadbir_dashboard',[
-                'audits' => $audits
+                'audits' => $audits,
+                'bils' => $bilp,
+                'bilt' => $bilp,
+                'biln' => $bilp,
+                'bilkj' => $bilp,
+                'bilkb' => $bilp,
+                'bilp' => $bilp,
+
+
+                
+
             ]);     
 
             return view ('dashboard.pentadbir_dashboard');
         } elseif ($role == 'penyelia') {
-            return view ('dashboard.penyelia_dashboard');
+
+            //Dashboard 
+            $rollcalljumlah = DB::table('rollcalls')
+            ->count();
+            // 
+            $rollcallproses = DB::table('rollcalls')
+            ->where('status','=','ditangguh')
+            ->orwhere('status','=','dibuka')
+            ->count();
+            // 
+            $rollcallselesai = DB::table('rollcalls')
+            ->where('status','=','ditutup')
+            ->count();
+
+
+            return view ('dashboard.penyelia_dashboard',[
+            'rollcalljumlah'=>$rollcalljumlah,
+            'rollcallproses'=>$rollcallproses,
+            'rollcallselesai'=>$rollcallselesai
+            ]);
+
         } elseif ($role == 'ketua_bahagian') {
             return view ('dashboard.ketua_bahagian_dashboard');
         } elseif ($role == 'ketua_jabatan') {
@@ -66,6 +124,20 @@ class DashboardController extends Controller
         } elseif ($role == 'naziran') {
 
             $rollcalls = Rollcall::all();
+            
+            //Dashboard 
+            $rollcalljumlah = DB::table('rollcalls')
+            ->count();
+            // 
+            $rollcallproses = DB::table('rollcalls')
+            ->where('status','=','ditangguh')
+            ->orwhere('status','=','dibuka')
+            ->count();
+            // 
+            $rollcallselesai = DB::table('rollcalls')
+            ->where('status','=','ditutup')
+            ->count();
+
 
             if($request->ajax()) {
                 $datas = Rollcall::all();
@@ -83,7 +155,12 @@ class DashboardController extends Controller
                 return response()->json($array);
             }
             return view ('dashboard.naziran_dashboard',[              
-                'rollcalls'=>$rollcalls,  
+                'rollcalls'=>$rollcalls, 
+                'rollcalljumlah'=>$rollcalljumlah,
+                'rollcallproses'=>$rollcallproses,
+                'rollcallselesai'=>$rollcallselesai
+
+ 
                 
             ]);
         }    

@@ -43,7 +43,7 @@
                                         <h5 class="card-title text-uppercase text-muted mb-0">JUMLAH ROLL CALL DALAM
                                             PROSES
                                         </h5>
-                                        <span class="h2 font-weight-bold mb-0">78</span>
+                                        <span class="h2 font-weight-bold mb-0">{{$rollcallproses}}</span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -62,7 +62,7 @@
                                     <div class="col">
                                         <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH ROLL CALL SELESAI
                                         </h5>
-                                        <span class="h2 font-weight-bold mb-0">26</span>
+                                        <span class="h2 font-weight-bold mb-0">{{$rollcallselesai}}</span>
                                     </div>
                                     <div class="col-auto">
                                         <div
@@ -81,7 +81,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH ROLL CALL <h5>
-                                                <span class="h2 font-weight-bold mb-0">92</span>
+                                                <span class="h2 font-weight-bold mb-0">{{$rollcalljumlah}}</span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
@@ -115,7 +115,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Makluman Roll Call</h5>
+                    <h5 class="modal-title">Maklumat Roll Call</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -124,11 +124,24 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <div class="form-group">
-                                    <span id="modalTitle"></span>
+                                <span id="modalTitle"></span>
                             </div>
                         </div>
 
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <label class=".badge-lg badge-pill badge-info ">Makluman</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group input-group-merge">
+                                        <div id="rollcall_maklumat">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -189,23 +202,13 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 text-center">
-                                        <label class=".badge-lg badge-pill badge-info ">Makluman</label>
-                                </div>
-                            </div><div class="row">
-                                <div class="col-md-12">
-                                        <div class="input-group input-group-merge">
-                                            <div id="rollcall_maklumat">
-                                            </div>
-                                        </div>
+                                    <label class=".badge-lg badge-pill badge-primary ">Penguatkuasa Terlibat</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="maklumat">Kakitangan Roll Call</label>
-                                        <div class="input-group input-group-merge">
-                                            <div id="penguatkuasa_id">
-                                            </div>
+                                    <div class="input-group input-group-merge">
+                                        <div id="penguatkuasa_id">
                                         </div>
                                     </div>
                                 </div>
@@ -213,14 +216,14 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-     <!-- Footer -->
-     <footer class="footer pt-0">
+    <!-- Footer -->
+    <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
             <div class="col-lg-6">
                 <div class="copyright text-center  text-lg-left  text-muted">
@@ -247,7 +250,7 @@
             header: {
                 left: 'prev, next today',
                 center: 'title',
-                right: 'month'
+                right: 'month,agendaWeek'
             },
             events: SITEURL + '/dashboard',
             // selectable: true,
@@ -257,8 +260,10 @@
                 $.get(SITEURL + "/rollcalls/get_data/" + event.id, function (data, status) {
                     if (status == "success") {
                         $('#modalTitle').html(event.title);
-                        var dateStringWithTimemula = moment(data.mula_rollcall).format('YYYY-MM-DD HH:mm:ss');
-                        var dateStringWithTimeakhir = moment(data.akhir_rollcall).format('YYYY-MM-DD HH:mm:ss');
+                        var dateStringWithTimemula = moment(data.mula_rollcall).format(
+                            'YYYY-MM-DD HH:mm:ss');
+                        var dateStringWithTimeakhir = moment(data.akhir_rollcall).format(
+                            'YYYY-MM-DD HH:mm:ss');
                         // console.log(dateStringWithTime)
                         $('#rollcall_mula').val(dateStringWithTimemula);
                         $('#rollcall_akhir').val(dateStringWithTimeakhir);
@@ -269,7 +274,8 @@
                         $('#rollcall_maklumat').html(data.maklumat);
                         var penguatkuasas = "<ol>";
                         data.user_rollcall.forEach((obj) => {
-                            penguatkuasas += "<li>"+obj.penguatkuasa.name+"--"+obj.penguatkuasa.nric+"</li>";
+                            penguatkuasas += "<li>" + obj.penguatkuasa.name + "-" +
+                                obj.penguatkuasa.nric + "</li>";
                         });
                         penguatkuasas += "</ol>";
                         $('#penguatkuasa_id').html(penguatkuasas);

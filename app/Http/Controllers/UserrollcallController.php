@@ -59,8 +59,6 @@ class UserrollcallController extends Controller
                 
                 $userrollcall->roll_id = $request->roll_id;
                 $userrollcall->penguatkuasa_id = $value['penguatkuasa_id'];
-                
-    
                 $userrollcall -> save();    
                 
                   // Audit trail
@@ -69,7 +67,7 @@ class UserrollcallController extends Controller
                 $audit->name = $request->user()->name;
                 $audit->peranan = $request->user()->role;
                 $audit->nric =$request->user()->nric;
-                $audit->description = 'Tambah Kakitangan: '.$userrollcall->penguatkuasa_id;
+                $audit->description = 'Tambah Kakitangan: '.$userrollcall->penguatkuasa->name;
                 $audit->save(); 
             }
         } 
@@ -80,7 +78,7 @@ class UserrollcallController extends Controller
         $audit->name = $request->user()->name;
         $audit->peranan = $request->user()->role;
         $audit->nric =$request->user()->nric;
-        $audit->description = 'Tambah Kakitangan: '.$userrollcall->penguatkuasa_id;
+        $audit->description = 'Tambah Kakitangan: '.$userrollcall->penguatkuasa->name;
         $audit->save(); 
 
         return back()->with('success', 'Kakitangan Berjaya Ditambah.');
@@ -141,7 +139,7 @@ class UserrollcallController extends Controller
                     $audit->name = $request->user()->name;
                     $audit->peranan = $request->user()->role;
                     $audit->nric =$request->user()->nric;
-                    $audit->description = 'Hapus Kakitangan: '.$userrollcall->penguatkuasa_id;
+                    $audit->description = 'Hapus Kakitangan: '.$userrollcall->penguatkuasa->name;
                     $audit->save(); 
                     
 

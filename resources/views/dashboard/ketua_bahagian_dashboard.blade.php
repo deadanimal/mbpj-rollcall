@@ -147,7 +147,7 @@
                       <div class="row">
                           <div class="col">
                               <h5 class="card-title text-uppercase text-muted mb-0">JUMLAH KEHADIRAN ROLL CALL </h5>
-                              <span class="h2 font-weight-bold mb-0">350,897</span>
+                              <span class="h2 font-weight-bold mb-0">0</span>
                           </div>
                           <div class="col-auto">
                               <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -166,7 +166,7 @@
                           <div class="col">
                               <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH ROLL CALL TIDAK HADIR
                               </h5>
-                              <span class="h2 font-weight-bold mb-0">2,356</span>
+                              <span class="h2 font-weight-bold mb-0">0</span>
                           </div>
                           <div class="col-auto">
                               <div
@@ -187,7 +187,7 @@
                           <div class="col">
                               <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH KEHADIRAN ROLL CALL DITOLAK
                               </h5>
-                              <span class="h2 font-weight-bold mb-0">924</span>
+                              <span class="h2 font-weight-bold mb-0">0</span>
                           </div>
                           <div class="col-auto">
                               <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">

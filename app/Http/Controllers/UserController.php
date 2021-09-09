@@ -4,13 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class UserController extends Controller
 {
     public function index() {  
         $users = User::all();
+
+        // status staff
+        $stafjumlah = DB::table('users')
+        ->count();
+
+        $staffaktif = DB::table('users')
+        ->where('status','=','aktif')
+        ->count();
+
+        $staffxaktif = DB::table('users')
+        ->where('status','=','tidak_aktif')
+        ->count();
+
         return view ('pentadbir_sistem.index',[
-            'users'=>$users
+            'users'=>$users,
+            'stafjumlah'=>$stafjumlah,
+            'staffaktif' => $staffaktif,
+            'staffxaktif' => $staffxaktif
+
+
             ]);
 
     }

@@ -6,6 +6,10 @@
         height: 500px;
     }
 
+    .fc-header-toolbar {
+        display: block !important;
+    }
+
 </style>
 
 <!-- Resources -->
@@ -148,7 +152,7 @@
                                     <div class="col">
                                         <h5 class="card-title text-uppercase text-muted mb-0">JUMLAH KEHADIRAN ROLL CALL
                                         </h5>
-                                        <span class="h2 font-weight-bold mb-0">350,897</span>
+                                        <span class="h2 font-weight-bold mb-0">0</span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -168,7 +172,7 @@
                                         <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH ROLL CALL TIDAK
                                             HADIR
                                         </h5>
-                                        <span class="h2 font-weight-bold mb-0">2,356</span>
+                                        <span class="h2 font-weight-bold mb-0">0</span>
                                     </div>
                                     <div class="col-auto">
                                         <div
@@ -190,7 +194,7 @@
                                         <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH KEHADIRAN ROLL
                                             CALL DITOLAK
                                         </h5>
-                                        <span class="h2 font-weight-bold mb-0">924</span>
+                                        <span class="h2 font-weight-bold mb-0">0</span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
@@ -235,6 +239,19 @@
 
                         <!-- Card body -->
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <label class=".badge-lg badge-pill badge-info ">Makluman</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group input-group-merge">
+                                        <div id="rollcall_maklumat">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -294,12 +311,14 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <label class=".badge-lg badge-pill badge-primary ">Penguatkuasa Terlibat</label>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="maklumat">Makluman</label>
-                                        <div class="input-group input-group-merge">
-                                            <div id="rollcall_maklumat">
-                                            </div>
+                                    <div class="input-group input-group-merge">
+                                        <div id="penguatkuasa_id">
                                         </div>
                                     </div>
                                 </div>
@@ -307,7 +326,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
                     </div>
                 </div>
             </div>
@@ -363,13 +382,14 @@
                         $('#rollcall_maklumat').html(data.maklumat);
                         var penguatkuasas = "<ol>";
                         data.user_rollcall.forEach((obj) => {
-                            penguatkuasas += "<li>"+obj.penguatkuasa.name+"--"+obj.penguatkuasa.nric+"</li>";
+                            penguatkuasas += "<li>" + obj.penguatkuasa.name + "-" +
+                                obj.penguatkuasa.nric + "</li>";
                         });
                         penguatkuasas += "</ol>";
                         $('#penguatkuasa_id').html(penguatkuasas);
                         $('#calendarModal').modal();
                     } else {
-                        alert("Tiada data ditemui");
+                        alert
                     }
                 });
             },

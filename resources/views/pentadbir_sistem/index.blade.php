@@ -18,6 +18,45 @@
             </div>
             <!-- Card stats -->
             <div class="row">
+                <div class="col-xl-6 col-md-6">
+                    <div class="card card-stats">
+                        <!-- Card body -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">BILANGAN STAF AKTIF
+                                    </h5>
+                                    <span class="h2 font-weight-bold mb-0">{{$staffaktif}}</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                        <i class="ni ni-active-40"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6">
+                    <div class="card card-stats">
+                        <!-- Card body -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0"> BILANGAN STAF TIDAK AKTIF
+                                    </h5>
+                                    <span class="h2 font-weight-bold mb-0">{{$staffxaktif}}</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                        <i class="ni ni-chart-pie-35"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
                 <div class="col-xl-4 col-md-6">
                     <div class="card card-stats">
                         <!-- Card body -->
@@ -26,7 +65,7 @@
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">BILANGAN STAF
                                     </h5>
-                                    <span class="h2 font-weight-bold mb-0">350,897</span>
+                                    <span class="h2 font-weight-bold mb-0">{{$stafjumlah}}</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -45,7 +84,7 @@
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0"> BILANGAN STAF SEMENTARA
                                     </h5>
-                                    <span class="h2 font-weight-bold mb-0">2,356</span>
+                                    <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
@@ -65,7 +104,7 @@
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0"> BILANGAN STAF TETAP
                                     </h5>
-                                    <span class="h2 font-weight-bold mb-0">924</span>
+                                    <span class="h2 font-weight-bold mb-0">{{$stafjumlah}}</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
