@@ -22,6 +22,10 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $role = $user->role;
+        $status =$user->status;
+        
+        if ($status == 'aktif') {
+
         if ($role == 'penguatkuasa') {
 
             $rollcalls = Rollcall::all();
@@ -55,7 +59,7 @@ class DashboardController extends Controller
             $audits = Audit::where('created_at', '>=', $limabelasharisebelum)->orderBy('created_at','DESC')->get();
 
             // Card status
-            $bils = DB::table('users')
+            $bilp = DB::table('users')
             ->where('role','=','penguatkuasa')
             ->count();
 
@@ -87,10 +91,7 @@ class DashboardController extends Controller
                 'biln' => $bilp,
                 'bilkj' => $bilp,
                 'bilkb' => $bilp,
-                'bilp' => $bilp,
-
-
-                
+                'bilp' => $bilp,                
 
             ]);     
 
@@ -163,7 +164,13 @@ class DashboardController extends Controller
  
                 
             ]);
-        }    
+        }   
+
+       }
+        else {
+            Auth::logout();
+            return view('dashboard.inactive');
+        }
     }
     
 }

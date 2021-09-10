@@ -6,6 +6,8 @@ use App\Models\Rollcall;
 use App\Models\Userrollcall;
 use App\Models\Audit;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+
 
 
 use Illuminate\Http\Request;
@@ -21,6 +23,19 @@ class RollcallController extends Controller
     {
         $users = User::all();
 
+        // Card status
+        $dibuka = DB::table('rollcalls')
+        ->where('status','=','dibuka')
+        ->count();
+        // Card status
+        $ditangguh = DB::table('rollcalls')
+        ->where('status','=','ditangguh')
+        ->count();
+        // Card status
+        $ditutup = DB::table('rollcalls')
+        ->where('status','=','ditutup')
+        ->count();
+
         $harini = date("Y-m-d");
         $harini =date_create($harini);
         $hari = date_sub($harini, date_interval_create_from_date_string("30 days"));
@@ -30,7 +45,11 @@ class RollcallController extends Controller
         $rollcalls = Rollcall::where('created_at', '>=', $hari)->orderBy('created_at','DESC')->get();
         return view ('rollcall.index',[
             'rollcalls'=>$rollcalls,  
-            'users'=>$users
+            'users'=>$users,
+            'dibuka'=>$dibuka,
+            'ditangguh'=>$ditangguh,
+            'ditutup'=>$ditutup
+
      
     ]);
 

@@ -59,7 +59,7 @@
 @if(auth()->user()->role == 'penguatkuasa')
 <div>
     <div class="container-fluid mt--6">
-        
+
         <div class="row ">
             <div class="col-md-12">
                 <div class="card">
@@ -168,10 +168,201 @@
         </div>
     </div>
 </div>
-@elseif(auth()->user()->role == 'naziran' or auth()->user()->role == 'pentadbir_sistem')
+@elseif(auth()->user()->role == 'pentadbir_sistem')
 <div>
     <div class="container-fluid mt--6">
-       
+        <div class="row">
+            <div class="col-xl-4 col-md-6">
+                <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0">BILANGAN ROLL CALL DIBUKA
+                                </h5>
+                                <span class="h2 font-weight-bold mb-0">{{$dibuka}}</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                    <i class="ni ni-notification-70"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6">
+                <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0">BILANGAN ROLL CALL DITANGGUH
+                                </h5>
+                                <span class="h2 font-weight-bold mb-0">{{$ditangguh}}</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                    <i class="ni ni-notification-70"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6">
+                <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0">BILANGAN ROLL CALL SELESAI
+                                </h5>
+                                <span class="h2 font-weight-bold mb-0">{{$ditutup}}</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                    <i class="ni ni-notification-70"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- Card header -->
+                    <div class="card-header border-0">
+                        <h3 class="mb-0">Senarai Roll Call</h3>
+                        <div class="card-body px-0">
+                            <!-- Light table -->
+                            <div class="table-responsive py-4">
+                                <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
+                                    style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Tajuk Roll Call</th>
+                                            <th>Waktu mula rollcall</th>
+                                            <th>Waktu akhir rollcall</th>
+                                            <th>lokasi</th>
+                                            <th>Catatan</th>
+                                            <th>Status</th>
+                                            <th>Pegawai Sokong</th>
+                                            <th>Pegawai Lulus</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($rollcalls as $rollcall)
+                                        <tr>
+                                            <td>{{$loop->index+1}}</td>
+                                            <td>{{$rollcall->tajuk_rollcall}}</td>
+                                            <td>{{$rollcall->mula_rollcall}}</td>
+                                            <td>{{$rollcall->akhir_rollcall}}</td>
+                                            <td>{{$rollcall->lokasi}}</td>
+                                            <td>{{$rollcall->catatan}}</td>
+                                            @if($rollcall->status =='dibuka')
+                                            <td>
+                                                <span class="badge badge-pill badge-success">DIBUKA</span>
+                                            </td>
+                                            @elseif($rollcall->status =='ditutup')
+                                            <td>
+                                                <span class="badge badge-pill badge-danger">DITUTUP</span>
+                                            </td>
+                                            @elseif($rollcall->status =='ditangguh')
+                                            <td>
+                                                <span class="badge badge-pill badge-warning">DITANGGUH</span>
+                                            </td>
+                                            @endif
+                                            <td>{{$rollcall->pegawai_lulus['name']}}</td>
+                                            <td>{{$rollcall->pegawai_sokong['name']}}</td>
+                        
+                                        </tr>
+
+                                        </td>
+                                        </tr>
+                                      
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@elseif(auth()->user()->role == 'naziran')
+<div>
+    <div class="container-fluid mt--6">
+        <div class="row">
+            <div class="col-xl-4 col-md-6">
+                <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0">BILANGAN ROLL CALL DIBUKA
+                                </h5>
+                                <span class="h2 font-weight-bold mb-0">{{$dibuka}}</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                    <i class="ni ni-notification-70"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6">
+                <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0">BILANGAN ROLL CALL DITANGGUH
+                                </h5>
+                                <span class="h2 font-weight-bold mb-0">{{$ditangguh}}</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                    <i class="ni ni-notification-70"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6">
+                <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0">BILANGAN ROLL CALL SELESAI
+                                </h5>
+                                <span class="h2 font-weight-bold mb-0">{{$ditutup}}</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                    <i class="ni ni-notification-70"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row ">
             <div class="col-md-12">
                 <div class="card">

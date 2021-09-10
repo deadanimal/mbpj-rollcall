@@ -43,7 +43,7 @@ class AuthenticatedSessionController extends Controller
         $audit->nric = $user->nric;
         $audit->description =  'Log Masuk';
         
-        $audit->save();
+        $audit->save();        
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
