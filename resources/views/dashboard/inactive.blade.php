@@ -19,16 +19,16 @@
     }
 
     .errorPageRap h1 {
-        font-family: 'Roboto', Arial;
-        text-align: left;
+        font-family: 'Roboto';
+        text-align: center;
         font-size: 2.8rem;
         font-weight: 400;
         color: #506280;
         line-height: 5.4rem;
         display: inline-block;
-        vertical-align: text-bottom;
+        vertical-align: middle;
         margin: 0;
-        margin-left: 4rem;
+        margin-left: -9rem;
         width: 50%;
         min-width: 43.6rem;
         max-width: 64rem;
@@ -515,41 +515,21 @@
             </g>
         </svg>
     </div>
-    
-    <h1> Sila Rujuk Pentadbir Sistem Roll Call... <span><img
-                src="http://danielwolf.cc/codepen/errorpage/sadFace.png"></span>
+    <img src="{{ asset('argon') }}/img/404-error.jpeg" alt="Flowers in Chania" width="350" height="285">
+
+    <h1> Sila hubungi Pentadbir Sistem
+        <br> Sistem Pengurusan Elaun Lebih Masa
         <br>
-        Berkemungkinan Akaun Anda Tidak Diaktifkan Sebagai Pengguna Sistem Ini
+        akaun anda tidak diaktifkan sebagai
+        <br>
+        pengguna sistem Ini
         <br>
         <br>
-       
         <a href="{{URL('/')}}" class="btn btn-primary" role="button">Kembali ke Laman Utama</a>
-     
-        <h3>​Sebarang pertanyaan atau masalah sila hubungi kami melalui :
-          Emelkan pertanyaan, cadangan, komen atau masalah teknikal semasa melayari laman portal sila rujuk 
-          <a href="https://helpdesk.mbpj.gov.my/login" target="_blank">https://helpdesk.mbpj.gov.my/login</a></h3>
+
+    </h1>
+    <h2>​Sebarang pertanyaan atau masalah sila hubungi kami melalui : Emelkan pertanyaan, cadangan, komen atau masalah teknikal semasa melayari laman portal sila rujuk
+        <a href="https://helpdesk.mbpj.gov.my/login" target="_blank">https://helpdesk.mbpj.gov.my/login</a>
+    </h2>
 
 </div>
-
-{{-- <script>
-
-    // scale on resize
-function fontResize() {
-  var resolution = 1440;
-  var font = 10;
-
-  var width = $(window).width();
-
-  var newFont = font * (width / resolution);
-  $("html").css("font-size", newFont);
-}
-
-// $(document).ready(function() {
-//   fontResize();
-//   $(window).bind("resize", function() {
-//     fontResize();
-//   });
-// });
-
-
-</script> --}}

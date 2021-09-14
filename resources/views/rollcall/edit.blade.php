@@ -152,11 +152,18 @@
                                         <div class="form-group">
                                             <label for="pegawai_sokong_id">Pilih pegawai sokong</label>
                                             <div class="input-group input-group-merge">
-                                                <input class="form-control" name="pegawai_sokong_id"
+                                                {{-- <input class="form-control" name="pegawai_sokong_id"
                                                     value="{{$rollcall->pegawai_sokong_id}}" type="number">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                                                </div>
+                                                </div> --}}
+                                                <select name ="pegawai_sokong_id" class="form-control">
+                                                    <option hidden selected > {{$rollcall->pegawai_sokong_id}}</option>
+                                                    @foreach ($users as $user)
+                                                    <option value="{{$user->id}}">
+                                                        {{$user->name}} - {{$user->role}} </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -164,11 +171,18 @@
                                         <div class="form-group">
                                             <label for="pegawai_lulus_id">Pilih pegawai lulus</label>
                                             <div class="input-group input-group-merge">
-                                                <input class="form-control" name="pegawai_lulus_id"
+                                                {{-- <input class="form-control" name="pegawai_lulus_id"
                                                     value="{{$rollcall->pegawai_lulus_id}}" type="number">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                                                </div>
+                                                </div> --}}
+                                                <select name ="pegawai_lulus_id" class="form-control">
+                                                    <option hidden selected > {{$rollcall->pegawai_lulus_id}}</option>
+                                                    @foreach ($users as $user)
+                                                    <option value="{{$user->id}}">
+                                                        {{$user->name}} - {{$user->role}} </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                     <!-- Button trigger modal -->   
@@ -349,8 +363,6 @@
                             <div class="card-wrapper">
 
                                 <form method="POST" action="/userrollcalls">
-
-
                                     @csrf
                                     @if ($errors->any())
                                     <div class="alert alert-danger" role="alert">
@@ -372,18 +384,26 @@
                                         <tr>
 
                                             <th>No Kakitangan</th>
-                                            <th>Nama</th>
+                                            {{-- <th>Nama</th> --}}
                                             <th>Tindakan</th>
                                         </tr>
                                         <tr>             
-                                            <td><input type="text" name="penguatkuasa_id" required placeholder="Enter penguatkuasa_id" class="form-control"  /></td> 
-                                            <td><select id="livesearch" class="livesearch form-control" name="livesearch"></select></td>                              
+                                            <td>
+                                                {{-- <input type="text" name="penguatkuasa_id" required placeholder="Enter penguatkuasa_id" class="form-control"  /> --}}
+                                                <select name ="penguatkuasa_id[]" required placeholder="Enter penguatkuasa_id" class="form-control">
+                                                    @foreach ($users as $user)                                                    <option hidden selected > Pilih pegawai lulus</option>
+                                                    <option hidden selected > Pilih Penguatkuasa </option>
+                                                    <option value="{{$user->id}}">
+                                                        {{$user->name}} - {{$user->role}} </option>
+                                                    @endforeach
+                                                </select>
+                                            </td> 
+                                            {{-- <td><select id="livesearch" class="livesearch form-control" name="livesearch"></select></td>                               --}}
                                             <td><input type="hidden" name="roll_id" class="form-control" value="{{$rollcall->id}}"/>
                                             <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary float-right">Tambah Kakitangan</button></td>
-
-                                           
+    
                                         </tr>
-                                        <script type="text/javascript">
+                                        {{-- <script type="text/javascript">
 
                                             $("#livesearch").select2({
                                                 placeholder: ' Kakitangan',
@@ -406,7 +426,7 @@
                                                     cache: true
                                                 }
                                             });
-                                        </script>
+                                        </script> --}}
 
         
                                     </table>
@@ -515,9 +535,11 @@ $(window).on('load', function(){
     var i = 0;
     $("#dynamic-ar").click(function () {
         ++i;
-        $("#dynamicAddRemove").append('<tr><td><input type="text" name="addMoreInputFields[' + i +
-            '][penguatkuasa_id]" placeholder="Enter penguatkuasa_id" class="form-control" /></td><td><button type="button" class="btn btn-danger float-right remove-input-field">Tolak Kakitangan</button></td></tr>'
-            );
+        // $("#dynamicAddRemove").append('<tr><td><input type="text" name="addMoreInputFields[' + i +
+        //     '][penguatkuasa_id]" placeholder="Enter penguatkuasa_id" class="form-control" /></td><td><button type="button" class="btn btn-danger float-right remove-input-field">Tolak Kakitangan</button></td></tr>'
+        //     );
+
+        $("#dynamicAddRemove").append('<tr><td><select name="penguatkuasa_id[]"  placeholder="Enter penguatkuasa_id" class="form-control">@foreach ($users as $user) <option value="{{$user->id}}"> {{$user->name}} - {{$user->role}} </option> @endforeach  </select></td><td><button type="button" class="btn btn-danger float-right remove-input-field">Tolak Kakitangan</button></td></tr>');
     });
     $(document).on('click', '.remove-input-field', function () {
         $(this).parents('tr').remove();

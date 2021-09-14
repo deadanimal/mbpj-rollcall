@@ -266,6 +266,7 @@
                                             <td>{{$rollcall->akhir_rollcall}}</td>
                                             <td>{{$rollcall->lokasi}}</td>
                                             <td>{{$rollcall->catatan}}</td>
+                                          
                                             @if($rollcall->status =='dibuka')
                                             <td>
                                                 <span class="badge badge-pill badge-success">DIBUKA</span>
@@ -382,6 +383,8 @@
                                             <th>Waktu akhir rollcall</th>
                                             <th>lokasi</th>
                                             <th>Catatan</th>
+                                            <th>Pegawai Sokong</th>
+                                            <th>Pegawa Lulus</th>
                                             <th>Status</th>
                                             <th>Tindakan</th>
                                         </tr>
@@ -395,6 +398,22 @@
                                             <td>{{$rollcall->akhir_rollcall}}</td>
                                             <td>{{$rollcall->lokasi}}</td>
                                             <td>{{$rollcall->catatan}}</td>
+                                            <td>
+                                                @foreach ($users as $user)
+                                                @if ($rollcall->pegawai_sokong_id == $user->id)
+                                                    <option>
+                                                    {{$user->name}} </option>
+                                                @endif
+                                                 @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach ($users as $user)
+                                                @if ($rollcall->pegawai_lulus_id == $user->id)
+                                                    <option>
+                                                    {{$user->name}} </option>
+                                                @endif
+                                                 @endforeach  
+                                            </td>
                                             @if($rollcall->status =='dibuka')
                                             <td>
                                                 <span class="badge badge-pill badge-success">DIBUKA</span>

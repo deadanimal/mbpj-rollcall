@@ -40,9 +40,9 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">BILANGAN PENGUATKUASA
+                                <h5 class="card-title text-uppercase text-muted mb-0">JUMLAH PENGUATKUASA
                                 </h5>
-                                <span class="h2 font-weight-bold mb-0">{{$bils}}</span>
+                                <span class="h2 font-weight-bold mb-0">{{$bilpt}}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -59,7 +59,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0"> BILANGAN PENTADBIR SISTEM
+                                <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH PENTADBIR SISTEM
                                 </h5>
                                 <span class="h2 font-weight-bold mb-0">{{$bilt}}</span>
                             </div>
@@ -79,7 +79,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0"> BILANGAN NAZIRAN
+                                <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH NAZIRAN
                                 </h5>
                                 <span class="h2 font-weight-bold mb-0">{{$biln}}</span>
                             </div>
@@ -101,7 +101,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">BILANGAN PENYELIA
+                                <h5 class="card-title text-uppercase text-muted mb-0">JUMLAH PENYELIA
                                 </h5>
                                 <span class="h2 font-weight-bold mb-0">{{$bilp}}</span>
                             </div>
@@ -120,7 +120,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0"> BILANGAN KETUA BAHAGIAN
+                                <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH KETUA BAHAGIAN
                                 </h5>
                                 <span class="h2 font-weight-bold mb-0">{{$bilkb}}</span>
                             </div>
@@ -140,7 +140,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0"> BILANGAN KETUA JABATAN
+                                <h5 class="card-title text-uppercase text-muted mb-0"> JUMLAH KETUA JABATAN
                                 </h5>
                                 <span class="h2 font-weight-bold mb-0">{{$bilkj}}</span>
                             </div>

@@ -59,7 +59,7 @@ class DashboardController extends Controller
             $audits = Audit::where('created_at', '>=', $limabelasharisebelum)->orderBy('created_at','DESC')->get();
 
             // Card status
-            $bilp = DB::table('users')
+            $bilpt = DB::table('users')
             ->where('role','=','penguatkuasa')
             ->count();
 
@@ -86,11 +86,11 @@ class DashboardController extends Controller
 
             return view ('dashboard.pentadbir_dashboard',[
                 'audits' => $audits,
-                'bils' => $bilp,
-                'bilt' => $bilp,
-                'biln' => $bilp,
-                'bilkj' => $bilp,
-                'bilkb' => $bilp,
+                'bilpt' => $bilpt,
+                'bilt' => $bilt,
+                'biln' => $biln,
+                'bilkj' => $bilkj,
+                'bilkb' => $bilkb,
                 'bilp' => $bilp,                
 
             ]);     

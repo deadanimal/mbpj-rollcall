@@ -101,6 +101,8 @@ class RollcallController extends Controller
     public function edit(Rollcall $rollcall)
     {
 
+        $users = User::all();
+
         $userrollcalls = Userrollcall::where('roll_id','=',$rollcall->id)->get();
         // dd($userrollcalls);
         $status = [
@@ -113,6 +115,7 @@ class RollcallController extends Controller
             'rollcall'=> $rollcall,
             'status' => $status, 
             'userrollcalls'=> $userrollcalls,
+            'users'=> $users,
 
         ]);
     }

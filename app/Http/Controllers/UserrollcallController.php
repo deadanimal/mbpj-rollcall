@@ -46,19 +46,19 @@ class UserrollcallController extends Controller
 
         // ]);
         // dd($request);
-        $userrollcall = new Userrollcall;
-        $userrollcall->roll_id = $request['roll_id'];
-        $userrollcall->penguatkuasa_id = $request->penguatkuasa_id;
+        // $userrollcall = new Userrollcall;
+        // $userrollcall->roll_id = $request['roll_id'];
+        // $userrollcall->penguatkuasa_id = $request->penguatkuasa_id;
 
-        $userrollcall -> save();
+        // $userrollcall -> save();
 
-        if( $request->addMoreInputFields) {
-            foreach ($request->addMoreInputFields as $key => $value) {
+        if( $request->penguatkuasa_id ) {
+            foreach ($request->penguatkuasa_id as $key => $value) {
 
                 $userrollcall = new Userrollcall;
                 
                 $userrollcall->roll_id = $request->roll_id;
-                $userrollcall->penguatkuasa_id = $value['penguatkuasa_id'];
+                $userrollcall->penguatkuasa_id = $value;
                 $userrollcall -> save();    
                 
                   // Audit trail
