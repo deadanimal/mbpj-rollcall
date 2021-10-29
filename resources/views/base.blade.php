@@ -43,7 +43,7 @@
             <!-- Brand -->
             <div class="sidenav-header  d-flex  align-items-center  ">
                 <a class="navbar-brand" href="javascript:void(0)">
-                    <img src="{{ asset('argon') }}/img/mbpj.png">
+                    <img src="{{ asset('argon') }}/img/mbpj.png"  style="padding:20px 0px 0px 45px;">
                 </a>
                 <div class=" ml-auto ">
                     <!-- Sidenav toggler -->
@@ -65,13 +65,13 @@
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="/dashboard">
-                                <i class="ni ni-archive-2 text-green"></i>
+                                <i class="ni ni-archive-2 text-red"></i>
                                 <span class="nav-link-text">Dashboard</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/users">
-                                <i class="ni ni-archive-2 text-green"></i>
+                                <i class="ni ni-archive-2 text-red"></i>
                                 <span class="nav-link-text">Pengurusan Pengguna</span>
                             </a>
                         </li>
@@ -87,7 +87,7 @@
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="/dashboard">
-                                <i class="ni ni-archive-2 text-green"></i>
+                                <i class="ni ni-archive-2 text-red"></i>
                                 <span class="nav-link-text">Dashboard</span>
                             </a>
                         </li>
@@ -99,13 +99,13 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/users">
-                                <i class="ni ni-archive-2 text-green"></i>
+                                <i class="ni ni-archive-2 text-red"></i>
                                 <span class="nav-link-text">Pengurusan Pengguna</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/laporans">
-                                <i class="ni ni-chart-bar-32 text-green"></i>
+                                <i class="ni ni-chart-bar-32 text-red"></i>
                                 <span class="nav-link-text">Laporan</span>
                             </a>
                         </li>
@@ -115,7 +115,7 @@
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="/dashboard">
-                                <i class="ni ni-archive-2 text-green"></i>
+                                <i class="ni ni-archive-2 text-info"></i>
                                 <span class="nav-link-text">Dashboard</span>
                             </a>
                         </li>
@@ -127,7 +127,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/laporans">
-                                <i class="ni ni-chart-bar-32 text-green"></i>
+                                <i class="ni ni-chart-bar-32 text-info"></i>
                                 <span class="nav-link-text">Laporan</span>
                             </a>
                         </li>
@@ -162,16 +162,16 @@
                             </a>
                             <div class="dropdown-menu  dropdown-menu-right ">
                                 <div class="dropdown-header noti-title">
-                                    <h6 class="text-overflow m-0">Welcome!</h6>
+                                    <h6 class="text-overflow m-0">Selamat Datang !</h6>
                                 </div>
                                 <a href="/profiles" class="dropdown-item">
                                     <i class="ni ni-single-02"></i>
-                                    <span>My profile</span>
+                                    <span>Profil</span>
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a href="/logout" class="dropdown-item">
                                     <i class="ni ni-user-run"></i>
-                                    <span>Logout</span>
+                                    <span>Log Keluar</span>
                                 </a>
                             </div>
                         </li>

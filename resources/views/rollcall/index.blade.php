@@ -20,7 +20,7 @@
     </div>
     <div class="header bg-primary pb-3">
         <div class="container-fluid">
-            <div class="row">
+            <div class="row ">
                 @if(auth()->user()->role == 'naziran')
                 <div class="col-lg-12 col text-right">
                     <a href="/rollcalls/create" class="btn btn-sm btn-neutral">+ Tambah Roll Call</a>
@@ -28,7 +28,7 @@
                 @elseif(auth()->user()->role == 'penyelia' or auth()->user()->role == 'ketua_bahagian' or
                 auth()->user()->role == 'ketua_jabatan' )
 
-                <div class="nav-wrapper">
+                <div class="nav-wrapper  w-100">
                     <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab"
@@ -44,7 +44,7 @@
                         <li class="nav-item">
                             <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab"
                                 href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3"
-                                aria-selected="false"><i class="ni ni-calendar-grid-58 mr-2"></i>Senarai Tolak Roll
+                                aria-selected="false"><i class="ni ni-calendar-grid-58 mr-2"></i>Senarai Lulus Roll
                                 Call</a>
                         </li>
                     </ul>
@@ -65,7 +65,7 @@
                 <div class="card">
                     <!-- Card header -->
                     <div class="card-header border-0">
-                        <h3 class="mb-0">Senarai Roll Call</h3>
+                        <h3 class="mb-0">Senarai Roll Call Perlu Hadir</h3>
                         <div class="card-body px-0">
                             <!-- Light table -->
                             <div class="table-responsive">
@@ -73,59 +73,145 @@
                                     style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Tajuk Roll Call</th>
                                             <th>No</th>
-                                            <th>Waktu rollcall</th>
-                                            <th>Waktu rollcall</th>
-                                            <th>Waktu masuk</th>
-                                            <th>Waktu keluar</th>
-                                            <th>Kehadiran</th>
-                                            <th>lokasi</th>
-                                            <th>Catatan</th>
-                                            <th>Status</th>
+                                            <th>Tajuk Roll Call</th>
+                                            <th>Waktu Mula <br><br>Akhir rollcall</th>                                              
+                                            <th>Lokasi <br><br> Makluman</th>
+                                            <th>Waktu masuk <br><br> Waktu keluar</th>
+                                            <th style="background-color:#00FF00" > Masuk / Keluar <br><br> eKedatangan</th>
+                                            <th>Pegawai Sokong <br><br> Pegawai Lulus</th>
                                             <th>Tindakan</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse($rollcalls as $rollcall)
+                                        @foreach($userrollcalls as $userrollcall)
                                         <tr>
-                                            <td>{{$rollcall->tajuk_rollcall}}</td>
-                                            <td>{{$rollcall->id}}</td>
-                                            <td>{{$rollcall->mula_rollcall}}</td>
-                                            <td>{{$rollcall->akhir_rollcall}}</td>
-                                            <td>{{$rollcall->waktu_masuk}}</td>
-                                            <td>{{$rollcall->waktu_keluar}}</td>
-                                            <td></td>
-                                            <td>{{$rollcall->lokasi}}</td>
-                                            <td>{{$rollcall->catatan}}</td>
-                                            @if($rollcall->status =='dibuka')
                                             <td>
+                                                {{$loop->index+1}}
+                                            </td>
+
+                                            <td>{{$userrollcall->tajuk_rollcall}}<br><br>
+
+                                                @if($userrollcall->status =='dibuka')
+                                               
                                                 <span class="badge badge-pill badge-success">DIBUKA</span>
+                                           
+                                                @elseif($userrollcall->status =='ditutup')
+                                            
+                                                    <span class="badge badge-pill badge-danger">DITUTUP</span>
+                                            
+                                                @elseif($userrollcall->status =='ditangguh')
+                                            
+                                                    <span class="badge badge-pill badge-warning">DITANGGUH</span>
+                                            
+                                                @endif
+
                                             </td>
-                                            @elseif($rollcall->status =='ditutup')
+                                            {{-- <td>{{$userrollcall->id}}</td> --}}
+
+                                            <td>{{$userrollcall->mula_rollcall}} <br><br>{{$userrollcall->akhir_rollcall}}</td>
+                                            <td>{{$userrollcall->lokasi}} <br> <br> {{$userrollcall->catatan}}<br><br> </td>
                                             <td>
-                                                <span class="badge badge-pill badge-danger">DITUTUP</span>
+                                                {{$userrollcall->masuk}}<br><br>
+
+                                                @if($userrollcall->masuk === null)
+                                                <input type="datetime-local" onchange="MasaMula({{$userrollcall->userrollcall_id}},this)" value={{$userrollcall->mula}}>
+                                                 <br><br>
+                                                 @elseif($userrollcall->masuk !== null)
+                                                 @endif
+
+                                                {{$userrollcall->keluar}}<br><br>
+
+                                                @if($userrollcall->keluar === null)
+                                                <input type="datetime-local" onchange="MasaAkhir({{$userrollcall->userrollcall_id}},this)" value={{$userrollcall->mula}}>
+                                                @elseif($userrollcall->keluar !== null)
+
+                                                @endif
+                                            
                                             </td>
-                                            @elseif($rollcall->status =='ditangguh')
-                                            <td>
-                                                <span class="badge badge-pill badge-warning">DITANGGUH</span>
+                                            <td> 
+                                                <input type="text" value="ekedatangan" disabled>
+                                                
+                                                <br> <br> 
+                                
+                                                <input type="text" value="ekedatangan" disabled>
+                                                
                                             </td>
-                                            @endif
+                                        
+                                            
+                                            <td> {{$userrollcall->pegawai_sokong_name}} <br><br>{{$userrollcall->pegawai_lulus_name}}</td>
+                                   
                                             <td>
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#exampleModal">
-                                                    Lihat
-                                                </button>
+                                                @if($userrollcall->masuk === null)
+
+                                                   <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#exampleModal{{ $userrollcall->userrollcall_id }}">
+                                                    Hantar Sebab
+                                                    </button>      
+                                                    
+                                                @elseif($userrollcall->masuk !== null)
+                                            
+                                                    <span class="badge badge-pill badge-success">Dalam Proses</span><br><br>
+
+                                                    @if($userrollcall->keluar !== null)
+
+                                                    <span class="badge badge-pill badge-success">Dalam Proses</span><br><br>                            
+
+                                                    @elseif($userrollcall->keluar === null)
+
+                                                    <span class="badge badge-pill badge-primary">Dalam Proses</span><br><br>
+
+                                                        {{-- @if($userrollcall->keterangan === null) --}} 
+
+
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#sebabtakhadir{{$userrollcall->userrollcall_id}}">
+                                                        Hantar Sebab
+                                                        </button>  
+                                                        <br><br>{{$userrollcall->keterangan}}
+
+                                                        {{-- @elseif($userrollcall->keterangan !== null)
+
+                                                        @endif --}}
+                                                    @endif
+                                                @endif
                                             </td>
                                         </tr>
-                                        @empty
-                                        <div style="text-align:center;">
-                                            <td>
-                                                <h5> Tiada rekod </h5>
-                                            </td>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="sebabtakhadir{{ $userrollcall->userrollcall_id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel ">Kemaskini Sebab Tidak Hadir</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form method="POST" action="/simpan_sebab/{{$userrollcall->userrollcall_id }}/">
+                                                            @csrf
+                                                            
+                                                            <label for="exampleFormControlTextarea1">Keterangan</label>
+                                                            <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1 "  placeholder="Sebab Tidak Hadir Roll Call"></textarea><br><br>
+                                                    
+                                                            <label for="avatar">Lampiran Sebab Tidak Hadir:</label>
+
+                                                            <input type="file" id="avatar" name="file_path" accept="image/png, image/jpeg">
+                                                        
+
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                                <button type="submit" class="btn btn-primary">Kemaskini</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
                                         </div>
-                                        @endforelse
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -133,38 +219,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Kemaskini Sebab Tidak Hadir</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form method="POST" action="/rollcalls/kemaskini/kehadiran">
-                                <div class="form-group">
-                                    <label for="exampleFormControlTextarea1">Sebab tak hadir</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                </div>
-                                <form>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="customFileLang" lang="en">
-                                        <label class="custom-file-label" for="customFileLang">Select file</label>
-                                    </div>
-                                </form>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                            <button type="button" class="btn btn-primary">Kemaskini</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
         </div>
     </div>
 </div>
@@ -266,7 +321,7 @@
                                             <td>{{$rollcall->akhir_rollcall}}</td>
                                             <td>{{$rollcall->lokasi}}</td>
                                             <td>{{$rollcall->catatan}}</td>
-                                          
+
                                             @if($rollcall->status =='dibuka')
                                             <td>
                                                 <span class="badge badge-pill badge-success">DIBUKA</span>
@@ -282,12 +337,12 @@
                                             @endif
                                             <td>{{$rollcall->pegawai_lulus['name']}}</td>
                                             <td>{{$rollcall->pegawai_sokong['name']}}</td>
-                        
+
                                         </tr>
 
                                         </td>
                                         </tr>
-                                      
+
                                         @endforeach
 
                                     </tbody>
@@ -363,7 +418,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row ">
             <div class="col-md-12">
                 <div class="card">
@@ -379,71 +433,59 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Tajuk Roll Call</th>
-                                            <th>Waktu mula rollcall</th>
-                                            <th>Waktu akhir rollcall</th>
-                                            <th>lokasi</th>
-                                            <th>Catatan</th>
-                                            <th>Pegawai Sokong</th>
-                                            <th>Pegawa Lulus</th>
-                                            <th>Status</th>
+                                            <th>Waktu mula <br><br> akhir rollcall</th>
+                                            <th>lokasi<br><br>Catatan</th>
+                                            <th>Pegawai Sokong<br><br>Pegawa Lulus</th>
                                             <th>Tindakan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse($rollcalls as $rollcall)
+                                        @foreach($rollcalls as $rollcall)
                                         <tr>
                                             <td>{{$loop->index+1}}</td>
-                                            <td>{{$rollcall->tajuk_rollcall}}</td>
-                                            <td>{{$rollcall->mula_rollcall}}</td>
-                                            <td>{{$rollcall->akhir_rollcall}}</td>
-                                            <td>{{$rollcall->lokasi}}</td>
-                                            <td>{{$rollcall->catatan}}</td>
+                                            <td>{{$rollcall->tajuk_rollcall}}<br><br>  
+                                                @if($rollcall->status =='dibuka')
+                                               
+                                                    <span class="badge badge-pill badge-success">DIBUKA</span>
+                                                
+                                                @elseif($rollcall->status =='ditutup')
+                                               
+                                                    <span class="badge badge-pill badge-danger">DITUTUP</span>
+                                                
+                                                @elseif($rollcall->status =='ditangguh')
+                                               
+                                                    <span class="badge badge-pill badge-warning">DITANGGUH</span>
+                                                
+                                                @endif
+                                            </td>
+                                            <td>{{$rollcall->akhir_rollcall}}<br><br>{{$rollcall->mula_rollcall}}</td>
+                                            <td>{{$rollcall->lokasi}}<br><br>{{$rollcall->catatan}}</td>
                                             <td>
                                                 @foreach ($users as $user)
                                                 @if ($rollcall->pegawai_sokong_id == $user->id)
-                                                    <option>
+                                                <option>
                                                     {{$user->name}} </option>
                                                 @endif
-                                                 @endforeach
-                                            </td>
-                                            <td>
+                                                @endforeach
+                                                <br>
                                                 @foreach ($users as $user)
                                                 @if ($rollcall->pegawai_lulus_id == $user->id)
-                                                    <option>
+                                                <option>
                                                     {{$user->name}} </option>
                                                 @endif
-                                                 @endforeach  
+                                                @endforeach
                                             </td>
-                                            @if($rollcall->status =='dibuka')
-                                            <td>
-                                                <span class="badge badge-pill badge-success">DIBUKA</span>
-                                            </td>
-                                            @elseif($rollcall->status =='ditutup')
-                                            <td>
-                                                <span class="badge badge-pill badge-danger">DITUTUP</span>
-                                            </td>
-                                            @elseif($rollcall->status =='ditangguh')
-                                            <td>
-                                                <span class="badge badge-pill badge-warning">DITANGGUH</span>
-                                            </td>
-                                            @endif
-                                            {{-- <td>{{$rollcall->pegawai_sokong_id}}</td>
-                                            <td>{{$rollcall->pegawai_lulus_id}}</td> --}}
-
                                             <td class="tindakan">
-                                                {{-- <form method="POST" action="/rollcalls/{{$rollcall->id}}"> --}}
-                                                {{-- @csrf
-                                                    @method('DELETE') --}}
+                                             
                                                 <a href="/rollcalls/{{$rollcall->id}}/edit"
                                                     class="btn btn-primary btn-sm"> kemaskini <i
                                                         class="ni ni-single-copy-04"></i>
                                                 </a>
-                                                {{-- <a onclick="buang({{ $rollcall->id }})"
-                                                class="btn btn-danger"> <i class="ni ni-basket"></i>
-                                                </a> --}}
+                                             
                                                 <button onclick="buang({{ $rollcall->id }})"
                                                     class="btn btn-danger btn-sm">Buang <i
-                                                        class="ni ni-basket"></i></button> </td>
+                                                        class="ni ni-basket"></i></button>
+                                            </td>
 
                                             {{-- </form> --}}
                                         </tr>
@@ -487,15 +529,8 @@
 
                                         </td>
                                         </tr>
-                                        @empty
-                                        <div style="text-align:center;">
-                                            <td>
-                                                <h5> Tiada rekod </h5>
-                                            </td>
-                                        </div>
-                                        @endforelse
 
-
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -507,333 +542,286 @@
     </div>
 </div>
 @elseif(auth()->user()->role == 'penyelia' )
-<div class="card shadow">
-    <div class="card-body">
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel"
-                aria-labelledby="tabs-icons-text-1-tab">
-                <div>
-                    <div class="container-fluid mt--6">
-                        {{-- <div class="card">
-                            <div class="card-header">
-                                <h3 class="mb-0">Filters</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="col-md-12">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col mb-4">
-                                                <h4>Tajuk Roll Call</h4>
-                                                <input type="text" class="form-control" placeholder="Tajuk Roll Call">
-                                            </div>
-                                            <div class="col">
-                                                <h4>Lokasi Roll Call</h4>
-                                                <input type="text" class="form-control" placeholder="Lokasi">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm">
-                                                <h4>Tarikh Mula</h4>
-                                                <input id="start" type="date" /><br />
-                                            </div>
-                                            <div class="col-sm">
-                                                <h4>Tarikh Akhir</h4>
-                                                <input id="start" type="date" /><br />
-                                            </div>
-                                        </div>
-                                    </form>
+<div class="card-body">
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel"
+            aria-labelledby="tabs-icons-text-1-tab">
+            <div>
+                <div class="container-fluid mt--6">
+                    <div class="row ">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <!-- Card header -->
+                                <div class="card-header border-0">
+                                    <h3 class="mb-0">Senarai Kehadiran Roll Call</h3>
                                 </div>
-                                <div class="row float-right">
-                                    <div class="col-sm ">
-                                        <button id="clearFilter" class="btn btn-sm btn-danger">Clear Filter</button>
-                                        <button class="btn btn-sm btn-primary " id="filter">Filter</button>
-                                    </div>
+                                <!-- Light table -->
+                                <div class="table-responsive">
+                                    <table id="example"
+                                        class="display table table-striped table-bordered dt-responsive nowrap"
+                                        style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Tajuk Roll Call</th>
+                                                <th>Waktu rollcall</th>
+                                                <th>Waktu rollcall</th>
+                                                <th>Waktu masuk</th>
+                                                <th>Waktu keluar</th>
+                                                <th>lokasi</th>
+                                                <th>Catatan</th>
+                                                <th>Pegawai Sokong</th>
+                                                <th>Pegawai Lulus</th>
+                                                <th>Status</th>
+                                                <th>Tindakan</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($rollcalls as $rollcall)
+                                            <tr>
+                                                <td>{{$rollcall->id}}</td>
+                                                <td>{{$rollcall->tajuk_rollcall}}</td>
+                                                <td>{{$rollcall->mula_rollcall}}</td>
+                                                <td>{{$rollcall->akhir_rollcall}}</td>
+                                                <td>{{$rollcall->waktu_masuk}}</td>
+                                                <td>{{$rollcall->waktu_keluar}}</td>
+                                                <td>{{$rollcall->lokasi}}</td>
+                                                <td>{{$rollcall->catatan}}</td>
+                                                <td>{{$rollcall->pegawai_sokong_id}}</td>
+                                                <td>{{$rollcall->pegawai_lulus_id}}</td>
+                                                <td>{{$rollcall->status}}</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#sokong">
+                                                        Sokong
+                                                    </button>
+                                                    {{-- <a href="" class="btn btn-primary">Sokong</a> --}}
+                                                    {{-- <a href="" class="btn btn-danger">Tolak</a> --}}
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                        data-target="#tolak">
+                                                        Tolak
+                                                    </button>
+
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        </div> --}}
-                        <div class="row ">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+            <div>
+                <div class="container-fluid mt--6">
+                    {{-- <div class="card">
+                        <div class="card-header">
+                            <h3 class="mb-0">Filters</h3>
+                        </div>
+                        <div class="card-body">
                             <div class="col-md-12">
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header border-0">
-                                        <h3 class="mb-0">Senarai Kehadiran Roll Call</h3>
+                                <form>
+                                    <div class="row">
+                                        <div class="col mb-4">
+                                            <h4>Tajuk Roll Call</h4>
+                                            <input type="text" class="form-control" placeholder="Tajuk Roll Call">
+                                        </div>
+                                        <div class="col">
+                                            <h4>Lokasi Roll Call</h4>
+                                            <input type="text" class="form-control" placeholder="Lokasi">
+                                        </div>
                                     </div>
-                                    <!-- Light table -->
-                                    <div class="table-responsive">
-                                        <table id="example"
-                                            class="table table-striped table-bordered dt-responsive nowrap"
-                                            style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Tajuk Roll Call</th>
-                                                    <th>Waktu rollcall</th>
-                                                    <th>Waktu rollcall</th>
-                                                    <th>Waktu masuk</th>
-                                                    <th>Waktu keluar</th>
-                                                    <th>lokasi</th>
-                                                    <th>Catatan</th>
-                                                    <th>Pegawai Sokong</th>
-                                                    <th>Pegawai Lulus</th>
-                                                    <th>Status</th>
-                                                    <th>Tindakan</th>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <h4>Tarikh Mula</h4>
+                                            <input id="start" type="date" /><br />
+                                        </div>
+                                        <div class="col-sm">
+                                            <h4>Tarikh Akhir</h4>
+                                            <input id="start" type="date" /><br />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="row float-right">
+                                <div class="col-sm ">
+                                    <button id="clearFilter" class="btn btn-sm btn-danger">Clear Filter</button>
+                                    <button class="btn btn-sm btn-primary " id="filter">Filter</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>               --}}
+                    <div class="row ">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <!-- Card header -->
+                                <div class="card-header border-0">
+                                    <h3 class="mb-0">Senarai Sokong Roll Call</h3>
+                                </div>
+                                <!-- Light table -->
+                                <div class="table-responsive">
+                                    <table id="example"
+                                        class="display table table-striped table-bordered dt-responsive nowrap"
+                                        style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Tajuk Roll Call</th>
+                                                <th>Waktu rollcall</th>
+                                                <th>Waktu rollcall</th>
+                                                <th>Waktu masuk</th>
+                                                <th>Waktu keluar</th>
+                                                <th>lokasi</th>
+                                                <th>Catatan</th>
+                                                <th>Pegawai Sokong</th>
+                                                <th>Pegawai Lulus</th>
+                                                <th>Status</th>
+                                                <th>Tindakan</th>
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @forelse($rollcalls as $rollcall)
-                                                <tr>
-                                                    <td>{{$rollcall->id}}</td>
-                                                    <td>{{$rollcall->tajuk_rollcall}}</td>
-                                                    <td>{{$rollcall->mula_rollcall}}</td>
-                                                    <td>{{$rollcall->akhir_rollcall}}</td>
-                                                    <td>{{$rollcall->waktu_masuk}}</td>
-                                                    <td>{{$rollcall->waktu_keluar}}</td>
-                                                    <td>{{$rollcall->lokasi}}</td>
-                                                    <td>{{$rollcall->catatan}}</td>
-                                                    <td>{{$rollcall->pegawai_sokong_id}}</td>
-                                                    <td>{{$rollcall->pegawai_lulus_id}}</td>
-                                                    <td>{{$rollcall->status}}</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary"
-                                                            data-toggle="modal" data-target="#sokong">
-                                                            Sokong
-                                                        </button>
-                                                        {{-- <a href="" class="btn btn-primary">Sokong</a> --}}
-                                                        {{-- <a href="" class="btn btn-danger">Tolak</a> --}}
-                                                        <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                            data-target="#tolak">
-                                                            Tolak
-                                                        </button>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{-- @forelse($rollcalls as $rollcall) --}}
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
 
-                                                    </td>
-                                                </tr>
-                                                @empty
+
+                                                <td>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal">
+                                                        Lihat
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            {{-- @empty
                                                 <div style="text-align:center;">
                                                     <td>
                                                         <h5> Tiada rekod </h5>
                                                     </td>
                                                 </div>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                @endforelse --}}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-                <div>
-                    <div class="container-fluid mt--6">
-                        {{-- <div class="card">
-                            <div class="card-header">
-                                <h3 class="mb-0">Filters</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="col-md-12">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col mb-4">
-                                                <h4>Tajuk Roll Call</h4>
-                                                <input type="text" class="form-control" placeholder="Tajuk Roll Call">
-                                            </div>
-                                            <div class="col">
-                                                <h4>Lokasi Roll Call</h4>
-                                                <input type="text" class="form-control" placeholder="Lokasi">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm">
-                                                <h4>Tarikh Mula</h4>
-                                                <input id="start" type="date" /><br />
-                                            </div>
-                                            <div class="col-sm">
-                                                <h4>Tarikh Akhir</h4>
-                                                <input id="start" type="date" /><br />
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="row float-right">
-                                    <div class="col-sm ">
-                                        <button id="clearFilter" class="btn btn-sm btn-danger">Clear Filter</button>
-                                        <button class="btn btn-sm btn-primary " id="filter">Filter</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>               --}}
-                        <div class="row ">
+        </div>
+        <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+            <div>
+                <div class="container-fluid mt--6">
+                    {{-- <div class="card">
+                        <div class="card-header">
+                            <h3 class="mb-0">Filters</h3>
+                        </div>
+                        <div class="card-body">
                             <div class="col-md-12">
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header border-0">
-                                        <h3 class="mb-0">Senarai Sokong Roll Call</h3>
+                                <form>
+                                    <div class="row">
+                                        <div class="col mb-4">
+                                            <h4>Tajuk Roll Call</h4>
+                                            <input type="text" class="form-control" placeholder="Tajuk Roll Call">
+                                        </div>
+                                        <div class="col">
+                                            <h4>Lokasi Roll Call</h4>
+                                            <input type="text" class="form-control" placeholder="Lokasi">
+                                        </div>
                                     </div>
-                                    <!-- Light table -->
-                                    <div class="table-responsive">
-                                        <table id="example"
-                                            class="table table-striped table-bordered dt-responsive nowrap"
-                                            style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Tajuk Roll Call</th>
-                                                    <th>Waktu rollcall</th>
-                                                    <th>Waktu rollcall</th>
-                                                    <th>Waktu masuk</th>
-                                                    <th>Waktu keluar</th>
-                                                    <th>lokasi</th>
-                                                    <th>Catatan</th>
-                                                    <th>Pegawai Sokong</th>
-                                                    <th>Pegawai Lulus</th>
-                                                    <th>Status</th>
-                                                    <th>Tindakan</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {{-- @forelse($rollcalls as $rollcall) --}}
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-
-
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary"
-                                                            data-toggle="modal">
-                                                            Lihat
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                {{-- @empty
-                                                    <div style="text-align:center;">
-                                                        <td>
-                                                            <h5> Tiada rekod </h5>
-                                                        </td>
-                                                    </div>
-                                                    @endforelse --}}
-                                            </tbody>
-                                        </table>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <h4>Tarikh Mula</h4>
+                                            <input id="start" type="date" /><br />
+                                        </div>
+                                        <div class="col-sm">
+                                            <h4>Tarikh Akhir</h4>
+                                            <input id="start" type="date" /><br />
+                                        </div>
                                     </div>
+                                </form>
+                            </div>
+                            <div class="row float-right">
+                                <div class="col-sm ">
+                                    <button id="clearFilter" class="btn btn-sm btn-danger">Clear Filter</button>
+                                    <button class="btn btn-sm btn-primary " id="filter">Filter</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
-                <div>
-                    <div class="container-fluid mt--6">
-                        {{-- <div class="card">
-                            <div class="card-header">
-                                <h3 class="mb-0">Filters</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="col-md-12">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col mb-4">
-                                                <h4>Tajuk Roll Call</h4>
-                                                <input type="text" class="form-control" placeholder="Tajuk Roll Call">
-                                            </div>
-                                            <div class="col">
-                                                <h4>Lokasi Roll Call</h4>
-                                                <input type="text" class="form-control" placeholder="Lokasi">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm">
-                                                <h4>Tarikh Mula</h4>
-                                                <input id="start" type="date" /><br />
-                                            </div>
-                                            <div class="col-sm">
-                                                <h4>Tarikh Akhir</h4>
-                                                <input id="start" type="date" /><br />
-                                            </div>
-                                        </div>
-                                    </form>
+                    </div> --}}
+                    <div class="row ">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <!-- Card header -->
+                                <div class="card-header border-0">
+                                    <h3 class="mb-0">Senarai Sokong Roll Call</h3>
                                 </div>
-                                <div class="row float-right">
-                                    <div class="col-sm ">
-                                        <button id="clearFilter" class="btn btn-sm btn-danger">Clear Filter</button>
-                                        <button class="btn btn-sm btn-primary " id="filter">Filter</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-                        <div class="row ">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header border-0">
-                                        <h3 class="mb-0">Senarai Sokong Roll Call</h3>
-                                    </div>
-                                    <!-- Light table -->
-                                    <div class="table-responsive">
-                                        <table id="example"
-                                            class="table table-striped table-bordered dt-responsive nowrap"
-                                            style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Tajuk Roll Call</th>
-                                                    <th>Waktu rollcall</th>
-                                                    <th>Waktu rollcall</th>
-                                                    <th>Waktu masuk</th>
-                                                    <th>Waktu keluar</th>
-                                                    <th>lokasi</th>
-                                                    <th>Catatan</th>
-                                                    <th>Pegawai Sokong</th>
-                                                    <th>Pegawai Lulus</th>
-                                                    <th>Status</th>
-                                                    <th>Tindakan</th>
+                                <!-- Light table -->
+                                <div class="table-responsive">
+                                    <table id="example"
+                                        class="display table table-striped table-bordered dt-responsive nowrap"
+                                        style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Tajuk Roll Call</th>
+                                                <th>Waktu rollcall</th>
+                                                <th>Waktu rollcall</th>
+                                                <th>Waktu masuk</th>
+                                                <th>Waktu keluar</th>
+                                                <th>lokasi</th>
+                                                <th>Catatan</th>
+                                                <th>Pegawai Sokong</th>
+                                                <th>Pegawai Lulus</th>
+                                                <th>Status</th>
+                                                <th>Tindakan</th>
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {{-- @forelse($rollcalls as $rollcall) --}}
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{-- @forelse($rollcalls as $rollcall) --}}
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
 
 
+                                                <td>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal">
+                                                        Lihat
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            {{-- @empty
+                                                <div style="text-align:center;">
                                                     <td>
-                                                        <button type="button" class="btn btn-primary"
-                                                            data-toggle="modal">
-                                                            Lihat
-                                                        </button>
+                                                        <h5> Tiada rekod </h5>
                                                     </td>
-                                                </tr>
-                                                {{-- @empty
-                                                    <div style="text-align:center;">
-                                                        <td>
-                                                            <h5> Tiada rekod </h5>
-                                                        </td>
-                                                    </div>
-                                                    @endforelse --}}
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                </div>
+                                                @endforelse --}}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -888,342 +876,327 @@
     </div>
 </div>
 @elseif(auth()->user()->role == 'ketua_bahagian'or auth()->user()->role == 'ketua_jabatan' )
-<div class="card shadow">
-    <div class="card-body">
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel"
-                aria-labelledby="tabs-icons-text-1-tab">
-                <div>
-                    <div class="container-fluid mt--6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="mb-0">Filters</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="col-md-12">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col mb-4">
-                                                <h4>Tajuk Roll Call</h4>
-                                                <input type="text" class="form-control" placeholder="Tajuk Roll Call">
-                                            </div>
-                                            <div class="col">
-                                                <h4>Lokasi Roll Call</h4>
-                                                <input type="text" class="form-control" placeholder="Lokasi">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm">
-                                                <h4>Tarikh Mula</h4>
-                                                <input id="start" type="date" /><br />
-                                            </div>
-                                            <div class="col-sm">
-                                                <h4>Tarikh Akhir</h4>
-                                                <input id="start" type="date" /><br />
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="row float-right">
-                                    <div class="col-sm ">
-                                        <button id="clearFilter" class="btn btn-sm btn-danger">Clear Filter</button>
-                                        <button class="btn btn-sm btn-primary " id="filter">Filter</button>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel"
+        aria-labelledby="tabs-icons-text-1-tab">
+        <div>
+            <div class="container-fluid mt--6">
+                {{-- <div class="card">
+                    <div class="card-header">
+                        <h3 class="mb-0">Filters</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <form>
+                                <div class="row">
+                                    <div class="col mb-4">
+                                        <h4>Tajuk Roll Call</h4>
+                                        <input type="text" class="form-control" placeholder="Tajuk Roll Call">
+                                    </div>
+                                    <div class="col">
+                                        <h4>Lokasi Roll Call</h4>
+                                        <input type="text" class="form-control" placeholder="Lokasi">
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <h4>Tarikh Mula</h4>
+                                        <input id="start" type="date" /><br />
+                                    </div>
+                                    <div class="col-sm">
+                                        <h4>Tarikh Akhir</h4>
+                                        <input id="start" type="date" /><br />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row float-right">
+                            <div class="col-sm ">
+                                <button id="clearFilter" class="btn btn-sm btn-danger">Clear Filter</button>
+                                <button class="btn btn-sm btn-primary " id="filter">Filter</button>
                             </div>
                         </div>
-                        <div class="row ">
+                    </div>
+                </div> --}}
+                <div class="row ">
 
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header border-0">
-                                        <h3 class="mb-0">Senarai Kehadiran Roll Call</h3>
-                                    </div>
-                                    <!-- Light table -->
-                                    <div class="table-responsive">
-                                        <table id="example"
-                                            class="table table-striped table-bordered dt-responsive nowrap"
-                                            style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Tajuk Roll Call</th>
-                                                    <th>Waktu rollcall</th>
-                                                    <th>Waktu rollcall</th>
-                                                    <th>Waktu masuk</th>
-                                                    <th>Waktu keluar</th>
-                                                    <th>lokasi</th>
-                                                    <th>Catatan</th>
-                                                    <th>Pegawai Sokong</th>
-                                                    <th>Pegawai Lulus</th>
-                                                    <th>Status</th>
-                                                    <th>Tindakan</th>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <!-- Card header -->
+                            <div class="card-header border-0">
+                                <h3 class="mb-0">Senarai Roll Call</h3>
+                            </div>
+                            <!-- Light table -->
+                            <div class="table-responsive">
+                                <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
+                                    style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Tajuk Roll Call</th>
+                                            <th>Waktu Mula <br><br>Akhir rollcall</th>                                              
+                                            <th>Lokasi <br><br> Makluman</th>
+                                            <th>Pegawai Sokong <br><br> Pegawai Lulus</th>
+                                            <th>Status</th>
+                                            <th>Tindakan</th>
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @forelse($rollcalls as $rollcall)
-                                                <tr>
-                                                    <td>{{$rollcall->id}}</td>
-                                                    <td>{{$rollcall->tajuk_rollcall}}</td>
-                                                    <td>{{$rollcall->mula_rollcall}}</td>
-                                                    <td>{{$rollcall->akhir_rollcall}}</td>
-                                                    <td>{{$rollcall->waktu_masuk}}</td>
-                                                    <td>{{$rollcall->waktu_keluar}}</td>
-                                                    <td>{{$rollcall->lokasi}}</td>
-                                                    <td>{{$rollcall->catatan}}</td>
-                                                    <td>{{$rollcall->pegawai_sokong_id}}</td>
-                                                    <td>{{$rollcall->pegawai_lulus_id}}</td>
-                                                    <td>{{$rollcall->status}}</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary"
-                                                            data-toggle="modal" data-target="#sokong">
-                                                            Sokong
-                                                        </button>
-                                                        {{-- <a href="" class="btn btn-primary">Sokong</a> --}}
-                                                        {{-- <a href="" class="btn btn-danger">Tolak</a> --}}
-                                                        <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                            data-target="#tolak">
-                                                            Tolak
-                                                        </button>
-
-                                                    </td>
-                                                </tr>
-                                                @empty
-                                                <div style="text-align:center;">
-                                                    <td>
-                                                        <h5> Tiada rekod </h5>
-                                                    </td>
-                                                </div>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($rollcalls as $rollcall)
+                                        <tr>
+                                            <td>{{$rollcall->id}}</td>
+                                            <td>{{$rollcall->tajuk_rollcall}}</td>
+                                            <td>{{$rollcall->mula_rollcall}}<br><br>{{$rollcall->akhir_rollcall}}</td>
+                                        
+                                            <td>{{$rollcall->lokasi}}<br> <br>{{$rollcall->catatan}}</td>
+                                            <td>{{$rollcall->pegawai_sokong}} <br> <br>{{$rollcall->pegawai_lulus}}</td>
+                                            <td>
+                                                
+                                                @if($rollcall->status =='dibuka')
+                                            
+                                                <span class="badge badge-pill badge-success">DIBUKA</span>
+                                            
+                                            @elseif($rollcall->status =='ditutup')
+                                            
+                                                <span class="badge badge-pill badge-danger">DITUTUP</span>
+                                            
+                                            @elseif($rollcall->status =='ditangguh')
+                                            
+                                                <span class="badge badge-pill badge-warning">DITANGGUH</span>
+                                            
+                                            @endif
+                                            
+                                            
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                    data-target="#">
+                                                    Lihat
+                                                </button>   
+                                            </td>
+                                        </tr>
+                                        @empty
+                                        <div style="text-align:center;">
+                                            <td>
+                                                <h5> Tiada rekod </h5>
+                                            </td>
+                                        </div>
+                                        @endforelse
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-                <div>
-                    <div class="container-fluid mt--6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="mb-0">Filters</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="col-md-12">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col mb-4">
-                                                <h4>Tajuk Roll Call</h4>
-                                                <input type="text" class="form-control" placeholder="Tajuk Roll Call">
-                                            </div>
-                                            <div class="col">
-                                                <h4>Lokasi Roll Call</h4>
-                                                <input type="text" class="form-control" placeholder="Lokasi">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm">
-                                                <h4>Tarikh Mula</h4>
-                                                <input id="start" type="date" /><br />
-                                            </div>
-                                            <div class="col-sm">
-                                                <h4>Tarikh Akhir</h4>
-                                                <input id="start" type="date" /><br />
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="row float-right">
-                                    <div class="col-sm ">
-                                        <button id="clearFilter" class="btn btn-sm btn-danger">Clear Filter</button>
-                                        <button class="btn btn-sm btn-primary " id="filter">Filter</button>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+        <div>
+            <div class="container-fluid mt--6">
+                {{-- <div class="card">
+                    <div class="card-header">
+                        <h3 class="mb-0">Filters</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <form>
+                                <div class="row">
+                                    <div class="col mb-4">
+                                        <h4>Tajuk Roll Call</h4>
+                                        <input type="text" class="form-control" placeholder="Tajuk Roll Call">
+                                    </div>
+                                    <div class="col">
+                                        <h4>Lokasi Roll Call</h4>
+                                        <input type="text" class="form-control" placeholder="Lokasi">
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <h4>Tarikh Mula</h4>
+                                        <input id="start" type="date" /><br />
+                                    </div>
+                                    <div class="col-sm">
+                                        <h4>Tarikh Akhir</h4>
+                                        <input id="start" type="date" /><br />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row float-right">
+                            <div class="col-sm ">
+                                <button id="clearFilter" class="btn btn-sm btn-danger">Clear Filter</button>
+                                <button class="btn btn-sm btn-primary " id="filter">Filter</button>
                             </div>
                         </div>
-                        <div class="row ">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header border-0">
-                                        <h3 class="mb-0">Senarai Sokong Roll Call</h3>
-                                    </div>
-                                    <!-- Light table -->
-                                    <div class="table-responsive">
-                                        <table id="example"
-                                            class="table table-striped table-bordered dt-responsive nowrap"
-                                            style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Tajuk Roll Call</th>
-                                                    <th>Waktu rollcall</th>
-                                                    <th>Waktu rollcall</th>
-                                                    <th>Waktu masuk</th>
-                                                    <th>Waktu keluar</th>
-                                                    <th>lokasi</th>
-                                                    <th>Catatan</th>
-                                                    <th>Pegawai Sokong</th>
-                                                    <th>Pegawai Lulus</th>
-                                                    <th>Status</th>
-                                                    <th>Tindakan</th>
+                    </div>
+                </div> --}}
+                <div class="row ">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <!-- Card header -->
+                            <div class="card-header border-0">
+                                <h3 class="mb-0">Senarai Sokong Roll Call</h3>
+                            </div>
+                            <!-- Light table -->
+                            <div class="table-responsive">
+                                <table id="example" class="display table table-striped table-bordered dt-responsive nowrap"
+                                    style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Tajuk Roll Call</th>
+                                            <th>Waktu Mula <br><br> Akhir rollcall</th>                                              
+                                            <th>Lokasi <br><br> Makluman</th>
+                                            <th>Waktu masuk <br><br> Waktu keluar</th>
+                                            <th style="background-color:#00FF00" > Masuk / Keluar <br><br> eKedatangan</th>
+                                            <th>Pegawai Sokong<br><br> Pegawai Lulus</th>
+                                            <th>Tindakan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($rollcall_sokong_baru as $pegawai_sokong_rollcall)
+                                        <tr>
+                                            
+                                            <td>{{$loop->index+1}}</td>
+                                            <td>{{$pegawai_sokong_rollcall->tajuk_rollcall}}</td>
+                                            <td>{{$pegawai_sokong_rollcall->mula_rollcall}} <br><br> {{$pegawai_sokong_rollcall->akhir_rollcall}}</td>
+                                            <td>{{$pegawai_sokong_rollcall->lokasi}} <br><br> {{$pegawai_sokong_rollcall->catatan}}</td>
+                                            <td>{{$pegawai_sokong_rollcall->masuk}} <br> <br>{{$pegawai_sokong_rollcall->keluar}}</td>
+                                            <td>
+                                                <input type="text" value="ekedatangan" disabled>
+                                            
+                                                <br> <br> 
+                                
+                                                <input type="text" value="ekedatangan" disabled>
+                                            </td>
+                                            <td>{{$pegawai_sokong_rollcall->pegawai_sokong_name}}<br><br>{{$pegawai_sokong_rollcall->pegawai_lulus_name}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                    data-target="#sokong">
+                                                    Sokong
+                                                </button>
+                                                <br><br>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#tolak">
+                                                    Tolak
+                                                </button>
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {{-- @forelse($rollcalls as $rollcall) --}}
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                            </td>
+                                        </tr>
+                                        @endforeach
 
-
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary"
-                                                            data-toggle="modal" data-target="#sokong">
-                                                            Sokong
-                                                        </button>
-                                                        {{-- <a href="" class="btn btn-primary">Sokong</a> --}}
-                                                        {{-- <a href="" class="btn btn-danger">Tolak</a> --}}
-                                                        <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                            data-target="#tolak">
-                                                            Tolak
-                                                        </button>
-
-                                                    </td>
-                                                </tr>
-                                                {{-- @empty
-                                                <div style="text-align:center;">
-                                                    <td>
-                                                        <h5> Tiada rekod </h5>
-                                                    </td>
-                                                </div>
-                                                @endforelse --}}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
-                <div>
-                    <div class="container-fluid mt--6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="mb-0">Filters</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="col-md-12">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col mb-4">
-                                                <h4>Tajuk Roll Call</h4>
-                                                <input type="text" class="form-control" placeholder="Tajuk Roll Call">
-                                            </div>
-                                            <div class="col">
-                                                <h4>Lokasi Roll Call</h4>
-                                                <input type="text" class="form-control" placeholder="Lokasi">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm">
-                                                <h4>Tarikh Mula</h4>
-                                                <input id="start" type="date" /><br />
-                                            </div>
-                                            <div class="col-sm">
-                                                <h4>Tarikh Akhir</h4>
-                                                <input id="start" type="date" /><br />
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="row float-right">
-                                    <div class="col-sm ">
-                                        <button id="clearFilter" class="btn btn-sm btn-danger">Clear Filter</button>
-                                        <button class="btn btn-sm btn-primary " id="filter">Filter</button>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+        <div>
+            <div class="container-fluid mt--6">
+                {{-- Filter --}}
+                {{-- <div class="card">
+                    <div class="card-header">
+                        <h3 class="mb-0">Filters</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <form>
+                                <div class="row">
+                                    <div class="col mb-4">
+                                        <h4>Tajuk Roll Call</h4>
+                                        <input type="text" class="form-control" placeholder="Tajuk Roll Call">
+                                    </div>
+                                    <div class="col">
+                                        <h4>Lokasi Roll Call</h4>
+                                        <input type="text" class="form-control" placeholder="Lokasi">
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <h4>Tarikh Mula</h4>
+                                        <input id="start" type="date" /><br />
+                                    </div>
+                                    <div class="col-sm">
+                                        <h4>Tarikh Akhir</h4>
+                                        <input id="start" type="date" /><br />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row float-right">
+                            <div class="col-sm ">
+                                <button id="clearFilter" class="btn btn-sm btn-danger">Clear Filter</button>
+                                <button class="btn btn-sm btn-primary " id="filter">Filter</button>
                             </div>
                         </div>
-                        <div class="row ">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header border-0">
-                                        <h3 class="mb-0">Senarai Tolak Roll Call</h3>
-                                    </div>
-                                    <!-- Light table -->
-                                    <div class="table-responsive">
-                                        <table id="example"
-                                            class="table table-striped table-bordered dt-responsive nowrap"
-                                            style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Tajuk Roll Call</th>
-                                                    <th>Waktu rollcall</th>
-                                                    <th>Waktu rollcall</th>
-                                                    <th>Waktu masuk</th>
-                                                    <th>Waktu keluar</th>
-                                                    <th>lokasi</th>
-                                                    <th>Catatan</th>
-                                                    <th>Pegawai Sokong</th>
-                                                    <th>Pegawai Lulus</th>
-                                                    <th>Status</th>
-                                                    <th>Tindakan</th>
+                    </div>
+                </div> --}}
+                {{-- Senarai LULUS --}}
+                <div class="row ">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <!-- Card header -->
+                            <div class="card-header border-0">
+                                <h3 class="mb-0">Senarai Lulus Roll Call</h3>
+                            </div>
+                            <!-- Light table -->
+                            <div class="table-responsive">
+                                <table id="example"
+                                    class="display table table-striped table-bordered dt-responsive nowrap"
+                                    style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Tajuk Roll Call</th>
+                                            <th>Waktu Mula <br><br> Akhir rollcall</th>                                              
+                                            <th>Lokasi <br><br> Makluman</th>
+                                            <th>Waktu masuk <br><br> Waktu keluar</th>
+                                            <th style="background-color:#00FF00" > Masuk / Keluar <br><br> eKedatangan</th>
+                                            <th>Pegawai Sokong<br><br> Pegawai Lulus</th>
+                                            <th>Tindakan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($rollcall_lulus_baru as $pegawai_lulus_rollcall)
+                                        <tr>
+                                            
+                                            <td>{{$loop->index+1}}</td>
+                                            <td>{{$pegawai_lulus_rollcall->tajuk_rollcall}}</td>
+                                            <td>{{$pegawai_lulus_rollcall->mula_rollcall}} <br><br> {{$pegawai_lulus_rollcall->akhir_rollcall}}</td>
+                                            <td>{{$pegawai_lulus_rollcall->lokasi}} <br><br> {{$pegawai_lulus_rollcall->catatan}}</td>
+                                            <td>{{$pegawai_lulus_rollcall->masuk}} <br> <br>{{$pegawai_lulus_rollcall->keluar}}</td>
+                                            <td>
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {{-- @forelse($rollcalls as $rollcall) --}}
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                <input type="text" value="ekedatangan" disabled>
+                                            
+                                                <br> <br> 
+                                
+                                                <input type="text" value="ekedatangan" disabled>
+                                                
+                                            </td>
+                                            <td>{{$pegawai_sokong_rollcall->pegawai_sokong_name}}<br><br>{{$pegawai_sokong_rollcall->pegawai_lulus_name}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                    data-target="#sokong">
+                                                    Sokong
+                                                </button>
+                                                <br><br>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#tolak">
+                                                    Tolak
+                                                </button>
 
+                                            </td>
+                                        </tr>
+                                        @endforeach
 
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary"
-                                                            data-toggle="modal">
-                                                            Lihat
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                {{-- @empty
-                                                <div style="text-align:center;">
-                                                    <td>
-                                                        <h5> Tiada rekod </h5>
-                                                    </td>
-                                                </div>
-                                                @endforelse --}}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -1293,18 +1266,41 @@
     </div>
 </div>
 @endif
-<footer class="footer pt-0">
-    <div class="row align-items-center justify-content-lg-between">
-        <div class="col-lg-6">
-            <div class="copyright text-center  text-lg-left  text-muted">
-                &copy; 2021 <a href="" class="font-weight-bold ml-1" target="">Sistem Pengurusan Elaun
-                    Lebih Masa</a>
-            </div>
-        </div>
-    </div>
-</footer>
+
 </div>
 @endsection
 @section ('script')
+<script>
+    $(document).ready(function () {
+        var table = $('table.display').DataTable();
+    });
+
+    // Kemaskini Masuk dan Keluar
+        function MasaMula(obj, obj2) {
+            alert(obj)
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: "/ubah-masa_mula/" + obj,
+            type: "POST",
+            data: {
+                "masuk": obj2.value
+            }
+        
+        });
+    }
+    function MasaAkhir(obj, obj2) {
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: "/ubah-masa_akhir/" + obj,
+            type: "POST",
+            data: {
+                "keluar": obj2.value
+            }
+        
+        });
+    }
+    // ________________
+
+</script>
 
 @endsection

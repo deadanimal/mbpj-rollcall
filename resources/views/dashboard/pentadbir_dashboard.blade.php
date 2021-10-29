@@ -6,8 +6,9 @@
         <div class="container-fluid">
             <div class="row align-items-center py-4">
                 <div class="col-lg-12 col-7">
-                    <h1 class="h1 text-white "> Selamat Datang {{Auth()->user()->name}} ke Sistem Pengurusan Roll Call
+                    <h1 class="h1 text-white "> Selamat Datang ke Sistem Pengurusan Roll Call
                     </h1>
+                    <h1 class="h1 text-white "> Modul Pentadbir Sistem
                     </h1>
                 </div>
             </div>
@@ -216,10 +217,10 @@
             <!-- Footer -->
             <footer class="footer pt-0">
                 <div class="row align-items-center justify-content-lg-between">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="copyright text-center  text-lg-left  text-muted">
                             &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">Sistem Pengurusan
-                                Elaun Lebih Masa
+                                Roll Call
                             </a>
                         </div>
                     </div>

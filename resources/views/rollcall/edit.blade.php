@@ -152,18 +152,13 @@
                                         <div class="form-group">
                                             <label for="pegawai_sokong_id">Pilih pegawai sokong</label>
                                             <div class="input-group input-group-merge">
-                                                {{-- <input class="form-control" name="pegawai_sokong_id"
-                                                    value="{{$rollcall->pegawai_sokong_id}}" type="number">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                                                </div> --}}
-                                                <select name ="pegawai_sokong_id" class="form-control">
-                                                    <option hidden selected > {{$rollcall->pegawai_sokong_id}}</option>
-                                                    @foreach ($users as $user)
-                                                    <option value="{{$user->id}}">
-                                                        {{$user->name}} - {{$user->role}} </option>
+                                                <select name="pegawai_sokong_id" class="form-control">
+                                                    <option  hidden value="{{$rollcall->pegawai_sokong_id}}" selected>{{$rollcall->pegawai_sokong_name}}</option>
+                                                    @foreach ($pegawai as $pegawai1)
+                                                    <option value="{{$pegawai1->id}}">
+                                                        {{$pegawai1->name}} - {{$pegawai1->role}} </option>
                                                     @endforeach
-                                                </select>
+                                                </select>       
                                             </div>
                                         </div>
                                     </div>
@@ -171,16 +166,11 @@
                                         <div class="form-group">
                                             <label for="pegawai_lulus_id">Pilih pegawai lulus</label>
                                             <div class="input-group input-group-merge">
-                                                {{-- <input class="form-control" name="pegawai_lulus_id"
-                                                    value="{{$rollcall->pegawai_lulus_id}}" type="number">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                                                </div> --}}
                                                 <select name ="pegawai_lulus_id" class="form-control">
-                                                    <option hidden selected > {{$rollcall->pegawai_lulus_id}}</option>
-                                                    @foreach ($users as $user)
-                                                    <option value="{{$user->id}}">
-                                                        {{$user->name}} - {{$user->role}} </option>
+                                                    <option  hidden value="{{$rollcall->pegawai_lulus_id}}" selected>{{$rollcall->pegawai_lulus_name}}</option>
+                                                    @foreach ($pegawai as $pegawai2)
+                                                    <option value="{{$pegawai2->id}}">
+                                                        {{$pegawai2->name}} - {{$pegawai2->role}} </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -250,6 +240,8 @@
                                             <th>No Pekerja</th>
                                             <th>NRIC </th>
                                             <th>Email</th>
+                                            <th>Waktu Masuk</th>
+                                            <th>Waktu Keluar</th>
                                             <th>Tindakan</th>
 
                                         </tr>
@@ -263,6 +255,9 @@
                                             <td>{{$userrollcall->penguatkuasa['user_code']}}</td>
                                             <td>{{$userrollcall->penguatkuasa['nric']}}</td>
                                             <td>{{$userrollcall->penguatkuasa['email']}}</td>
+                                            <td>SCAN NRIC</td>
+                                            <td>SCAN NRIC</td>
+
                                             <td> <button onclick="buang({{ $userrollcall->id }})"class="btn btn-danger btn-sm">Buang<i class="ni ni-basket"></i></button> </td>
                                          
                                         </tr>
@@ -391,10 +386,10 @@
                                             <td>
                                                 {{-- <input type="text" name="penguatkuasa_id" required placeholder="Enter penguatkuasa_id" class="form-control"  /> --}}
                                                 <select name ="penguatkuasa_id[]" required placeholder="Enter penguatkuasa_id" class="form-control">
-                                                    @foreach ($users as $user)                                                    <option hidden selected > Pilih pegawai lulus</option>
+                                                    @foreach ($kakitangan as $kakitangan)                                                   
                                                     <option hidden selected > Pilih Penguatkuasa </option>
-                                                    <option value="{{$user->id}}">
-                                                        {{$user->name}} - {{$user->role}} </option>
+                                                    <option value="{{$kakitangan->id}}">
+                                                        {{$kakitangan->name}} - {{$kakitangan->role}} </option>
                                                     @endforeach
                                                 </select>
                                             </td> 

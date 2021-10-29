@@ -121,14 +121,13 @@
 
             <div class="row align-items-center py-4">
                 <div class="col-lg-12 col-7">
-                    <h1 class="h1 text-white "> Selamat Datang {{Auth()->user()->name}} ke Sistem Pengurusan Roll Call
-                    </h1>
-                    {{-- <h1 class="h2 text-white "> Sistem Pengurusan Roll Call --}}
-                    </h1>
+                    <h1 class="h1 text-white "> Selamat Datang ke Sistem Pengurusan Roll Call</h1>
+                    <h1 class="h1 text-white "> Modul Penguatkuasa </h1>
+
                 </div>
             </div>
         </div>
-        <div class="container-fluid mb--7">
+        <div class="container-fluid ">
             <div class="header-body">
                 <div class="row align-items-center py-4">
                     <div class="col-lg-6 col-7">
@@ -155,8 +154,8 @@
                                         <span class="h2 font-weight-bold mb-0">0</span>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                                            <i class="ni ni-active-40"></i>
+                                        <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                            <i class="ni ni-notification-70"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -175,9 +174,8 @@
                                         <span class="h2 font-weight-bold mb-0">0</span>
                                     </div>
                                     <div class="col-auto">
-                                        <div
-                                            class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                                            <i class="ni ni-chart-pie-35"></i>
+                                        <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                            <i class="ni ni-notification-70"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -197,8 +195,8 @@
                                         <span class="h2 font-weight-bold mb-0">0</span>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                                            <i class="ni ni-money-coins"></i>
+                                        <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                            <i class="ni ni-notification-70"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -209,141 +207,142 @@
             </div>
         </div>
     </div>
-    {{-- calendar --}}
-    <div class="container-fluid mt--12">
-        <div class="card">
-            <div class="card-header">
-            </div>
-            <div class="card-body">
-                <div id='calendar'></div>
-            </div>
+</div>
+{{-- calendar --}}
+<div class="container-fluid mt--6">
+    <div class="card">
+        <div class="card-header">
+        </div>
+        <div class="card-body">
+            <div id='calendar'></div>
         </div>
     </div>
-    {{-- modal --}}
-    <div id="calendarModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Makluman Roll Call</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <div class="form-group">
-                                <h1 id="modalTitle" class="modal-title "></h1>
-                            </div>
+</div>
+{{-- modal --}}
+<div id="calendarModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Makluman Roll Call</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="form-group">
+                            <h1 id="modalTitle" class="modal-title "></h1>
                         </div>
+                    </div>
 
-                        <!-- Card body -->
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <label class=".badge-lg badge-pill badge-info ">Makluman</label>
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <label class=".badge-lg badge-pill badge-info ">Makluman</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group input-group-merge">
+                                    <div id="rollcall_maklumat">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label> Waktu Mula Roll Call</label>
                                     <div class="input-group input-group-merge">
-                                        <div id="rollcall_maklumat">
-                                        </div>
+                                        <input id="rollcall_mula" class="form-control" value="" disabled>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label> Waktu Mula Roll Call</label>
-                                        <div class="input-group input-group-merge">
-                                            <input id="rollcall_mula" class="form-control" value="" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">Waktu Akhir Roll Call</label>
-                                        <div class="input-group input-group-merge">
-                                            <input id="rollcall_akhir" class="form-control" value="" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="lokasi">Lokasi </label>
-                                        <div class="input-group input-group-merge">
-                                            <input id="rollcall_lokasi" class="form-control" name="lokasi" value=""
-                                                disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="Perkara">Catatan</label>
-                                        <div class="input-group input-group-merge">
-                                            <input id="rollcall_catatan" class="form-control" name="catatan" value=""
-                                                disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="pegawai_sokong_id">Pegawai Sokong</label>
-                                        <div class="input-group input-group-merge">
-                                            <input id="rollcall_pegawai_sokong_id" class="form-control"
-                                                name="pegawai_sokong_id" value="" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="pegawai_lulus_id">Pegawai Lulus</label>
-                                        <div class="input-group input-group-merge">
-                                            <input id="rollcall_pegawai_lulus_id" class="form-control"
-                                                name="pegawai_lulus_id" value="" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <label class=".badge-lg badge-pill badge-primary ">Penguatkuasa Terlibat</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Waktu Akhir Roll Call</label>
                                     <div class="input-group input-group-merge">
-                                        <div id="penguatkuasa_id">
-                                        </div>
+                                        <input id="rollcall_akhir" class="form-control" value="" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="lokasi">Lokasi </label>
+                                    <div class="input-group input-group-merge">
+                                        <input id="rollcall_lokasi" class="form-control" name="lokasi" value=""
+                                            disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="Perkara">Catatan</label>
+                                    <div class="input-group input-group-merge">
+                                        <input id="rollcall_catatan" class="form-control" name="catatan" value=""
+                                            disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pegawai_sokong_id">Pegawai Sokong</label>
+                                    <div class="input-group input-group-merge">
+                                        <input id="rollcall_pegawai_sokong_id" class="form-control"
+                                            name="pegawai_sokong_id" value="" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pegawai_lulus_id">Pegawai Lulus</label>
+                                    <div class="input-group input-group-merge">
+                                        <input id="rollcall_pegawai_lulus_id" class="form-control"
+                                            name="pegawai_lulus_id" value="" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <label class=".badge-lg badge-pill badge-primary ">Penguatkuasa Terlibat</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group input-group-merge">
+                                    <div id="penguatkuasa_id">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Footer -->
-    <footer class="footer pt-0">
-        <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6">
-                <div class="copyright text-center  text-lg-left  text-muted">
-                    &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">Sistem Pengurusan Roll
-                        Call
-                    </a>5
-                </div>
+</div>
+<!-- Footer -->
+<footer class="footer pt-0">
+    <div class="row align-items-center justify-content-lg-between">
+        <div class="col-lg-6">
+            <div class="copyright text-center  text-lg-left  text-muted">
+                &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">Sistem Pengurusan Roll
+                    Call
+                </a>5
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 </div>
 @endsection
 @section('script')
@@ -370,8 +369,10 @@
                 $.get(SITEURL + "/rollcalls/get_data/" + event.id, function (data, status) {
                     if (status == "success") {
                         $('#modalTitle').html(event.title);
-                        var dateStringWithTimemula = moment(data.mula_rollcall).format('YYYY-MM-DD HH:mm:ss');
-                        var dateStringWithTimeakhir = moment(data.akhir_rollcall).format('YYYY-MM-DD HH:mm:ss');
+                        var dateStringWithTimemula = moment(data.mula_rollcall).format(
+                            'YYYY-MM-DD HH:mm:ss');
+                        var dateStringWithTimeakhir = moment(data.akhir_rollcall).format(
+                            'YYYY-MM-DD HH:mm:ss');
                         // console.log(dateStringWithTime)
                         $('#rollcall_mula').val(dateStringWithTimemula);
                         $('#rollcall_akhir').val(dateStringWithTimeakhir);

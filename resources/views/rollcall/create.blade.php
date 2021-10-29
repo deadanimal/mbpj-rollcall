@@ -107,26 +107,32 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="pegawai_sokong_id">Pilih pegawai sokong</label>
-                                        <div class="input-group input-group-merge">
-                                            <input class="form-control" name="pegawai_sokong_id" required
-                                                placeholder="pegawai_sokong_id">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                                            </div>
-                                        </div>
+                                        <label for="pegawai_sokong_id">Pilih pegawai
+                                            sokong</label>
+                                        <select name="pegawai_sokong_id" class="form-control">
+                                            <option hidden selected> Pilih pegawai sokong
+                                            </option>
+                                            @foreach ($pegawai as $user)
+                                            <option value="{{$user->id}}">
+                                                {{$user->name}} - {{$user->role}}
+
+                                            </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="pegawai_lulus_id">Pilih pegawai lulus</label>
-                                        <div class="input-group input-group-merge">
-                                            <input class="form-control" name="pegawai_lulus_id" required
-                                                placeholder="pegawai_lulus_id">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                                            </div>
-                                        </div>
+                                        <label for="pegawai_lulus_id">Pilih pegawai
+                                            lulus</label>
+                                        <select name="pegawai_lulus_id" class="form-control">
+                                            <option hidden selected> Pilih pegawai lulus
+                                            </option>
+                                            @foreach ($pegawai as $user)
+                                            <option value="{{$user->id}}">
+                                                {{$user->name}} - {{$user->role}} </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>

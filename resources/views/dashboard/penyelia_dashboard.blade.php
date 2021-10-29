@@ -1,158 +1,25 @@
 @extends('base')
-<!-- Styles -->
+
+@section('content')
+
 <style>
-    #chartdiv {
-        width: 100%;
-        height: 500px;
+    .fc-header-toolbar {
+        display: block !important;
     }
 
 </style>
 
-<!-- Resources -->
-<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-
-<!-- Chart code -->
-<script>
-    am4core.ready(function () {
-
-        // Themes begin
-        am4core.useTheme(am4themes_animated);
-        // Themes end
-
-
-
-        var chart = am4core.create('chartdiv', am4charts.XYChart)
-        chart.colors.step = 2;
-
-        chart.legend = new am4charts.Legend()
-        chart.legend.position = 'top'
-        chart.legend.paddingBottom = 20
-        chart.legend.labels.template.maxWidth = 95
-
-        var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
-        xAxis.dataFields.category = 'category'
-        xAxis.renderer.cellStartLocation = 0.1
-        xAxis.renderer.cellEndLocation = 0.9
-        xAxis.renderer.grid.template.location = 0;
-
-        var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
-        yAxis.min = 0;
-
-        function createSeries(value, name) {
-            var series = chart.series.push(new am4charts.ColumnSeries())
-            series.dataFields.valueY = value
-            series.dataFields.categoryX = 'category'
-            series.name = name
-
-            series.events.on("hidden", arrangeColumns);
-            series.events.on("shown", arrangeColumns);
-
-            var bullet = series.bullets.push(new am4charts.LabelBullet())
-            bullet.interactionsEnabled = false
-            bullet.dy = 30;
-            bullet.label.text = '{valueY}'
-            bullet.label.fill = am4core.color('#ffffff')
-
-            return series;
-        }
-
-        chart.data = [{
-                category: 'Place #1',
-                first: 40,
-                second: 55,
-                third: 60
-            },
-            {
-                category: 'Place #2',
-                first: 30,
-                second: 78,
-                third: 69
-            },
-            {
-                category: 'Place #3',
-                first: 27,
-                second: 40,
-                third: 45
-            },
-            {
-                category: 'Place #4',
-                first: 50,
-                second: 33,
-                third: 22
-            }
-        ]
-
-
-        createSeries('first', 'The First');
-        createSeries('second', 'The Second');
-        createSeries('third', 'The Third');
-
-        function arrangeColumns() {
-
-            var series = chart.series.getIndex(0);
-
-            var w = 1 - xAxis.renderer.cellStartLocation - (1 - xAxis.renderer.cellEndLocation);
-            if (series.dataItems.length > 1) {
-                var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
-                var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
-                var delta = ((x1 - x0) / chart.series.length) * w;
-                if (am4core.isNumber(delta)) {
-                    var middle = chart.series.length / 2;
-
-                    var newIndex = 0;
-                    chart.series.each(function (series) {
-                        if (!series.isHidden && !series.isHiding) {
-                            series.dummyData = newIndex;
-                            newIndex++;
-                        } else {
-                            series.dummyData = chart.series.indexOf(series);
-                        }
-                    })
-                    var visibleCount = newIndex;
-                    var newMiddle = visibleCount / 2;
-
-                    chart.series.each(function (series) {
-                        var trueIndex = chart.series.indexOf(series);
-                        var newIndex = series.dummyData;
-
-                        var dx = (newIndex - trueIndex + middle - newMiddle) * delta
-
-                        series.animate({
-                            property: "dx",
-                            to: dx
-                        }, series.interpolationDuration, series.interpolationEasing);
-                        series.bulletsContainer.animate({
-                            property: "dx",
-                            to: dx
-                        }, series.interpolationDuration, series.interpolationEasing);
-                    })
-                }
-            }
-        }
-
-    }); // end am4core.ready()
-
-</script>
-@section('content')
-
-
 <div>
-
     <div class="header bg-primary pb-6">
         <div class="container-fluid">
 
             <div class="row align-items-center py-4">
-                <div class="col-lg-6 col-7">
-                    <h1 class="h1 text-white "> Selamat Datang {{Auth()->user()->name}} ke Modul Penyelia </h1>
-                    <h1 class="h2 text-white "> Sistem Pengurusan Roll Call
-                    </h1>
+                <div class="col-lg-12 col-7">
+                    <h1 class="h1 text-white "> Selamat Datang Ke Modul Penyelia Sistem Pengurusan Roll Call</h1>
                 </div>
             </div>
         </div>
-
-        <div class="container-fluid">
+        <div class="container-fluid ">
             <div class="header-body">
                 <div class="row align-items-center py-4">
                     <div class="col-lg-6 col-7">
@@ -179,8 +46,8 @@
                                         <span class="h2 font-weight-bold mb-0">0</span>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                                            <i class="ni ni-active-40"></i>
+                                        <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                            <i class="ni ni-notification-70"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -199,9 +66,8 @@
                                         <span class="h2 font-weight-bold mb-0">0</span>
                                     </div>
                                     <div class="col-auto">
-                                        <div
-                                            class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                                            <i class="ni ni-chart-pie-35"></i>
+                                        <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                            <i class="ni ni-notification-70"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -221,8 +87,8 @@
                                         <span class="h2 font-weight-bold mb-0">0</span>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                                            <i class="ni ni-money-coins"></i>
+                                        <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                            <i class="ni ni-notification-70"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -244,8 +110,8 @@
                                         <span class="h2 font-weight-bold mb-0">{{$rollcallproses}}</span>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                                            <i class="ni ni-active-40"></i>
+                                        <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                            <i class="ni ni-notification-70"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -263,9 +129,8 @@
                                         <span class="h2 font-weight-bold mb-0">{{$rollcallselesai}}</span>
                                     </div>
                                     <div class="col-auto">
-                                        <div
-                                            class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                                            <i class="ni ni-chart-pie-35"></i>
+                                        <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                            <i class="ni ni-notification-70"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -283,8 +148,8 @@
                                                 <span class="h2 font-weight-bold mb-0">{{$rollcalljumlah}}</span>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                                            <i class="ni ni-money-coins"></i>
+                                        <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                            <i class="ni ni-notification-70"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -295,38 +160,200 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        <div class="container-fluid mt--6">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="card bg-default">
-                        <div class="card-header ">
-                            <div class="row align-items-center">
-                                <div class="col">
+</div>
+{{-- calendar --}}
+<div class="container-fluid mt--6">
+    <div class="card">
+        <div class="card-header">
 
+        </div>
+        <div class="card-body">
+            <div id='calendar'></div>
+        </div>
+    </div>
+</div>
+{{-- modal --}}
+<div id="calendarModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Maklumat Roll Call</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="form-group">
+                            <span id="modalTitle"></span>
+                        </div>
+                    </div>
 
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <label class=".badge-lg badge-pill badge-info ">Makluman</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group input-group-merge">
+                                    <div id="rollcall_maklumat">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <div id="chartdiv"></div>
-
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label> Waktu Mula Roll Call</label>
+                                    <div class="input-group input-group-merge">
+                                        <input id="rollcall_mula" class="form-control" value="" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Waktu Akhir Roll Call</label>
+                                    <div class="input-group input-group-merge">
+                                        <input id="rollcall_akhir" class="form-control" value="" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="lokasi">Lokasi </label>
+                                    <div class="input-group input-group-merge">
+                                        <input id="rollcall_lokasi" class="form-control" name="lokasi" value=""
+                                            disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="Perkara">Catatan</label>
+                                    <div class="input-group input-group-merge">
+                                        <input id="rollcall_catatan" class="form-control" name="catatan" value=""
+                                            disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pegawai_sokong_id">Pegawai Sokong</label>
+                                    <div class="input-group input-group-merge">
+                                        <input id="rollcall_pegawai_sokong_id" class="form-control"
+                                            name="pegawai_sokong_id" value="" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pegawai_lulus_id">Pegawai Lulus</label>
+                                    <div class="input-group input-group-merge">
+                                        <input id="rollcall_pegawai_lulus_id" class="form-control"
+                                            name="pegawai_lulus_id" value="" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <label class=".badge-lg badge-pill badge-primary ">Penguatkuasa Terlibat</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group input-group-merge">
+                                    <div id="penguatkuasa_id">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Footer -->
-            <footer class="footer pt-0">
-                <div class="row align-items-center justify-content-lg-between">
-                    <div class="col-lg-6">
-                        <div class="copyright text-center  text-lg-left  text-muted">
-                            &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">Sistem Pengurusan Roll
-                                Call
-                            </a>
-                        </div>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
                 </div>
-            </footer>
+            </div>
         </div>
-        @endsection
+    </div>
+
+</div>
+<footer class="footer pt-0">
+    <div class="row align-items-center justify-content-lg-between">
+        <div class="col-lg-6">
+            <div class="copyright text-center  text-lg-left  text-muted">
+                &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">Sistem Pengurusan Roll
+                    Call</a>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+@endsection
+@section('script')
+<script>
+    $(document).ready(function () {
+        var SITEURL = "{{ url('/') }}";
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var calendar = $('#calendar').fullCalendar({
+            editable: true,
+            header: {
+                left: 'prev, next today',
+                center: 'title',
+                // right: 'month,agendaWeek'
+                right: 'month'
+
+            },
+            events: SITEURL + '/dashboard',
+            // selectable: true,
+            // selectHelper: true,
+
+            eventClick: function (event, jsEvent, view) {
+                $.get(SITEURL + "/rollcalls/get_data/" + event.id, function (data, status) {
+                    if (status == "success") {
+                        $('#modalTitle').html(event.title);
+                        var dateStringWithTimemula = moment(data.mula_rollcall).format(
+                            'YYYY-MM-DD HH:mm:ss');
+                        var dateStringWithTimeakhir = moment(data.akhir_rollcall)
+                            .format(
+                                'YYYY-MM-DD HH:mm:ss');
+                        // console.log(dateStringWithTime)
+                        $('#rollcall_mula').val(dateStringWithTimemula);
+                        $('#rollcall_akhir').val(dateStringWithTimeakhir);
+                        $('#rollcall_lokasi').val(data.lokasi);
+                        $('#rollcall_catatan').val(data.catatan);
+                        $('#rollcall_pegawai_sokong_id').val(data.pegawai_sokong[
+                            'name']);
+                        $('#rollcall_pegawai_lulus_id').val(data.pegawai_lulus['name']);
+                        $('#rollcall_maklumat').html(data.maklumat);
+                        var penguatkuasas = "<ol>";
+                        data.user_rollcall.forEach((obj) => {
+                            penguatkuasas += "<li>" + obj.penguatkuasa.name +
+                                "-" +
+                                obj.penguatkuasa.nric + "</li>";
+                        });
+                        penguatkuasas += "</ol>";
+                        $('#penguatkuasa_id').html(penguatkuasas);
+                        $('#calendarModal').modal();
+                    } else {
+                        alert("Tiada data ditemui");
+                    }
+                });
+            },
+        });
+
+    });
+
+</script>
+@endsection

@@ -98,6 +98,9 @@ class DashboardController extends Controller
             return view ('dashboard.pentadbir_dashboard');
         } elseif ($role == 'penyelia') {
 
+            //Display roll call dalam takwim
+            $rollcalls = Rollcall::all();
+
             //Dashboard 
             $rollcalljumlah = DB::table('rollcalls')
             ->count();
@@ -111,17 +114,81 @@ class DashboardController extends Controller
             ->where('status','=','ditutup')
             ->count();
 
+            if($request->ajax()) {
+                $datas = Rollcall::all();
+                $array = [];
+                foreach ($datas as $data) {
+                    array_push($array, [
+                        'id' => $data->id,
+                        // 'lokasi' => $data->lokasi,
+                        'maklumat'=> $data->maklumat,
+                        'title' => $data->tajuk_rollcall,
+                        'start' => $data->mula_rollcall->format('Y-m-d'),
+                        'end' => $data->akhir_rollcall->format('Y-m-d')
+                    ]);
+                }    
+                return response()->json($array);
+            }
 
             return view ('dashboard.penyelia_dashboard',[
             'rollcalljumlah'=>$rollcalljumlah,
             'rollcallproses'=>$rollcallproses,
-            'rollcallselesai'=>$rollcallselesai
+            'rollcallselesai'=>$rollcallselesai,
+            'rollcalls'=>$rollcalls,
+
             ]);
 
         } elseif ($role == 'ketua_bahagian') {
-            return view ('dashboard.ketua_bahagian_dashboard');
+
+            //Display roll call dalam takwim
+            $rollcalls = Rollcall::all();
+
+              if($request->ajax()) {
+                $datas = Rollcall::all();
+                $array = [];
+                foreach ($datas as $data) {
+                    array_push($array, [
+                        'id' => $data->id,
+                        // 'lokasi' => $data->lokasi,
+                        'maklumat'=> $data->maklumat,
+                        'title' => $data->tajuk_rollcall,
+                        'start' => $data->mula_rollcall->format('Y-m-d'),
+                        'end' => $data->akhir_rollcall->format('Y-m-d')
+                    ]);
+                }    
+                return response()->json($array);
+            }
+
+            return view ('dashboard.ketua_bahagian_dashboard',[
+                'rollcalls'=>$rollcalls,
+
+            ]);
         } elseif ($role == 'ketua_jabatan') {
-            return view ('dashboard.ketua_jabatan_dashboard');
+
+                //Display roll call dalam takwim
+                $rollcalls = Rollcall::all();
+
+                if($request->ajax()) {
+                  $datas = Rollcall::all();
+                  $array = [];
+                  foreach ($datas as $data) {
+                      array_push($array, [
+                          'id' => $data->id,
+                          // 'lokasi' => $data->lokasi,
+                          'maklumat'=> $data->maklumat,
+                          'title' => $data->tajuk_rollcall,
+                          'start' => $data->mula_rollcall->format('Y-m-d'),
+                          'end' => $data->akhir_rollcall->format('Y-m-d')
+                      ]);
+                  }    
+                  return response()->json($array);
+              }
+  
+              return view ('dashboard.ketua_jabatan_dashboard',[
+                  'rollcalls'=>$rollcalls,
+  
+              ]);
+         
         } elseif ($role == 'naziran') {
 
             $rollcalls = Rollcall::all();
@@ -159,10 +226,8 @@ class DashboardController extends Controller
                 'rollcalls'=>$rollcalls, 
                 'rollcalljumlah'=>$rollcalljumlah,
                 'rollcallproses'=>$rollcallproses,
-                'rollcallselesai'=>$rollcallselesai
-
- 
-                
+                'rollcallselesai'=>$rollcallselesai,
+       
             ]);
         }   
 

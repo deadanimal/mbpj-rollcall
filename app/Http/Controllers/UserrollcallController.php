@@ -3,18 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Userrollcall;
+use App\Models\Rollcall;
 use Illuminate\Http\Request;
 use App\Models\Audit;
+use Exception;
 
 
 class UserrollcallController extends Controller
 {
     public function index() {  
 
-        // $userrollcalls = Userrollcalls::all();
-        // return view ('rollcall.edit',[
-        //     'userrollcalls'=>$userrollcalls
-        //     ]);
         $userrollcalls = Userrollcall::all();
         return view('rollcall.edit',[
             'userrollcalls'=> $userrollcalls,
@@ -40,7 +38,8 @@ class UserrollcallController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+
+        // dd($request);
         // $request->validate([
         //     'addMoreInputFields.*.penguatkuasa_id' => 'required'
 
@@ -55,10 +54,16 @@ class UserrollcallController extends Controller
         if( $request->penguatkuasa_id ) {
             foreach ($request->penguatkuasa_id as $key => $value) {
 
+                $rollcall_pegawai=Rollcall::where('id','=',$request->roll_id)->first();
+
+
                 $userrollcall = new Userrollcall;
                 
                 $userrollcall->roll_id = $request->roll_id;
                 $userrollcall->penguatkuasa_id = $value;
+                $userrollcall->pegawai_sokong_id = $rollcall_pegawai->pegawai_sokong_id;
+                $userrollcall->pegawai_lulus_id = $rollcall_pegawai->pegawai_lulus_id;
+
                 $userrollcall -> save();    
                 
                   // Audit trail
@@ -86,35 +91,19 @@ class UserrollcallController extends Controller
           
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Userrollcall  $userrollcall
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Userrollcall $userrollcall)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Userrollcall  $userrollcall
-     * @return \Illuminate\Http\Response
-     */
+  
     public function edit(Userrollcall $userrollcall)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Userrollcall  $userrollcall
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Userrollcall $userrollcall)
     {
         //
@@ -153,5 +142,38 @@ class UserrollcallController extends Controller
             else{
                 return "roll call not exist";
                 }       
+    }
+    public function simpan_sebab(Request $request, $id)
+    {
+
+        // $sebab = Userrollcall::where('id','=',$id)->first();
+        $sebab = Userrollcall::find($id);
+        $sebab->keterangan = $request->keterangan;
+        $sebab->file_path = $request->file_path;
+        
+        $sebab->save(); 
+
+        $redirected_url= '/rollcalls/';
+        return redirect($redirected_url);
+
+        // $req->validate([
+        //     'file' => 'required|mimes:png,PNG,jpg,PDF,pdf|max:2048'
+        // ]);
+
+        // $fileModel = new Manual;
+
+        // if($req->file()) {
+
+        // $fileName = time().'_'.$req->file->getClientOriginalName();
+        // $filePath = $req->file('file')->storeAs('uploads', $fileName, 'public');
+
+        // $fileModel->notis = $req-> notis;
+        // $fileModel->name = time().'_'.$req->file->getClientOriginalName();
+        // $fileModel->file_path = '/storage/' . $filePath;
+
+
+        // $fileModel->save();
+
+          
     }
 }

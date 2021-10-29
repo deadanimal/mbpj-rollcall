@@ -20,4 +20,10 @@ class Userrollcall extends Model
     {
         return $this->belongsTo(User::class);
     }  
+
+    public function rollcall()
+    {
+        return $this->belongsTo(Rollcall::class);
+    }
+
 }

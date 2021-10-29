@@ -33,7 +33,15 @@ Route::get('/search', [Select2SearchController::class, 'index']);
 Route::post('/users/kemaskini',[UserController::class,'kemaskini'])->middleware(['auth']);
 
 
+// permohonan custom ubah masa
+Route::post('/ubah-masa_mula/{userrollcalls}', [RollcallController::class, 'masuk']);
+Route::post('/ubah-masa_akhir/{userrollcalls}', [RollcallController::class, 'keluar']);
 
+//Upload sebab
+// Route::get('/upload-file', [FileUpload::class, 'createForm']);
+// Route::post('/upload-file', [FileUpload::class, 'fileUpload'])->name('fileUpload');
+
+Route::post('simpan_sebab/{id}',[UserrollcallController::class,'simpan_sebab']);
 
 
 

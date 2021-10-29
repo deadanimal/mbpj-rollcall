@@ -6,7 +6,9 @@ use App\Models\Rollcall;
 use App\Models\Userrollcall;
 use App\Models\Audit;
 use App\Models\User;
+use Auth;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 
 
@@ -15,11 +17,7 @@ use Illuminate\Http\Request;
 class RollcallController extends Controller
 {
 
-    // protected $listeners = [
-    //     'deleteCategory'=>'destroy'
-    // ];
-
-    public function index()
+    public function index(Request $request , Rollcall $rollcall)
     {
         $users = User::all();
 
@@ -39,27 +37,129 @@ class RollcallController extends Controller
         $harini = date("Y-m-d");
         $harini =date_create($harini);
         $hari = date_sub($harini, date_interval_create_from_date_string("30 days"));
-        // $limabelasharisebelum = date_sub($harini, date_interval_create_from_date_string("30 days"));
-        // $audits = Audit::where('created_at', '>=', $limabelasharisebelum)->orderBy('created_at','DESC')->get();
+
+        // Kakitangan 
+        //rollcall sokong --------------------------------------------------------------------------------
+        $user_id = $request->user()->id;  
+
+        // $rollcall_sokong = Userrollcall::where('pegawai_sokong_id', $user_id)
+        // ->orderByDesc("created_at")
+        // ->get();
+
+        $rollcall_sokong_baru = Rollcall::join('userrollcalls','rollcalls.id','=','userrollcalls.roll_id')
+        ->select('rollcalls.*', 'userrollcalls.*')
+        ->where('userrollcalls.pegawai_sokong_id', $user_id)
+        ->get();
+
+        //cari nama pegawai dekat KJ and KB
+        foreach ($rollcall_sokong_baru as $psn){
+            $rollcall_sokong_name = User::where("id", $psn ->pegawai_sokong_id)->first()->name;
+            $psn->pegawai_sokong_name = $rollcall_sokong_name;
+        }
+
+        foreach ($rollcall_sokong_baru as $pln){
+            $rollcall_sokong_name = User::where("id", $pln ->pegawai_lulus_id)->first()->name;
+            $pln->pegawai_lulus_name = $rollcall_sokong_name;
+        }
+
+        //rollcall lulus --------------------------------------------------------------------------------
+        // $rollcall_lulus = Userrollcall::where('pegawai_lulus_id', $user_id)
+        // ->orderByDesc("created_at")
+        // ->get();
+
+        $rollcall_lulus_baru = Rollcall::join('userrollcalls','rollcalls.id','=','userrollcalls.roll_id')
+        ->select('rollcalls.*', 'userrollcalls.*')
+        ->where('userrollcalls.pegawai_lulus_id', $user_id)
+        ->get();
+
+        foreach ($rollcall_lulus_baru as $psn){
+            $rollcall_lulus_name = User::where("id", $psn ->pegawai_sokong_id)->first()->name;
+            $psn->pegawai_sokong_name = $rollcall_sokong_name;
+        }
+
+        foreach ($rollcall_lulus_baru as $pln){
+            $rollcall_lulus_name = User::where("id", $pln ->pegawai_lulus_id)->first()->name;
+            $pln->pegawai_lulus_name = $rollcall_lulus_name;
+
+        }
+
+        // dd($rollcall_sokong);
 
         $rollcalls = Rollcall::where('created_at', '>=', $hari)->orderBy('created_at','DESC')->get();
+        
+        //cari nama pegawai dekat KJ and KB
+        foreach ($rollcalls as $ps){
+            $pegawai_sokong = User::where("id", $ps ->pegawai_sokong_id)->first()->name;
+            $ps->pegawai_sokong = $pegawai_sokong;
+        }
+
+        foreach ($rollcalls as $ps){
+            $pegawai_lulus = User::where("id", $ps ->pegawai_lulus_id)->first()->name;
+            $ps->pegawai_lulus = $pegawai_lulus;
+        }
+
+        //get waktu masuk keluar dari phone
+        $rollcall_id = Userrollcall::where('penguatkuasa_id', Auth::user()->id)->get();
+        $userrollcalls = [];
+        foreach($rollcall_id as $rid) {
+            //array_push($userrollcalls, RollCall::where('id', $rid->roll_id)->first());
+            $rollcallObj = RollCall::where('id', $rid->roll_id)->first();
+            $rollcallObj->userrollcall_id = $rid->id;
+
+            // dd($rollcallObj);
+            $rollcallObj->masuk = $rid->masuk;
+            $rollcallObj->keluar = $rid->keluar;
+            //  Create pegawai name
+            $rollcallObj->pegawai_sokong_name = User::where('id',$rollcallObj->pegawai_sokong_id)->first()->name;
+            $rollcallObj->pegawai_lulus_name = User::where('id',$rollcallObj->pegawai_lulus_id)->first()->name;
+
+            //  keterangan
+
+            try {
+                $rollcallObj->keterangan= Userrollcall::where('id',$rollcallObj->id)->first()->keterangan;
+                $rollcallObj->lampiran = Userrollcall::where('id',$rollcallObj->id)->first()->file_path;
+            } catch (Exception $e) {
+            }
+            
+       
+
+
+            array_push($userrollcalls, $rollcallObj);
+        }
+
+        //dd($userrollcalls);
+    
+
         return view ('rollcall.index',[
             'rollcalls'=>$rollcalls,  
             'users'=>$users,
             'dibuka'=>$dibuka,
             'ditangguh'=>$ditangguh,
-            'ditutup'=>$ditutup
+            'ditutup'=>$ditutup,
 
-     
+            'userrollcalls'=>$userrollcalls,    
+            // 'rollcall_sokong'=> $rollcall_sokong,
+            // 'rollcall_lulus'=> $rollcall_lulus,
+            'rollcall_lulus_baru'=>$rollcall_lulus_baru,
+            'rollcall_sokong_baru'=>$rollcall_sokong_baru,
+
+
+         
+ 
     ]);
-
 
     }
 
-
     public function create()
     {
-        return view('rollcall.create');
+
+        $pegawai = User::whereIn('role', array('penyelia','ketua_bahagian','ketua_jabatan'))->get();     
+
+        return view('rollcall.create',[
+            'pegawai'=>$pegawai,
+
+        ]);
+    
     }
 
     public function store(Request $request)
@@ -101,10 +201,24 @@ class RollcallController extends Controller
     public function edit(Rollcall $rollcall)
     {
 
-        $users = User::all();
+        // Create  option on select penguatkuasa in tambah
+        $kakitangan = User::whereIn('role', array('penguatkuasa'))->get(); 
+
+        // Create  option on select penguatkuasa addmore
+        $users = User::whereIn('role', array('penguatkuasa'))->get();     
+ 
+        // Create  option on select pegawai 
+        $pegawai = User::whereIn('role', array('penyelia','ketua_bahagian','ketua_jabatan'))->get(); 
+
+        //  Create pegawai name
+        $pegawai_sokong = User::where('id',$rollcall->pegawai_sokong_id)->first();   
+        $rollcall -> pegawai_sokong_name = $pegawai_sokong -> name;  
+
+        $pegawai_lulus = User::where('id',$rollcall->pegawai_lulus_id)->first();   
+        $rollcall -> pegawai_lulus_name = $pegawai_lulus -> name;  
 
         $userrollcalls = Userrollcall::where('roll_id','=',$rollcall->id)->get();
-        // dd($userrollcalls);
+
         $status = [
             "dibuka" => "Dibuka",
             "ditutup" => "Tutup",
@@ -116,6 +230,10 @@ class RollcallController extends Controller
             'status' => $status, 
             'userrollcalls'=> $userrollcalls,
             'users'=> $users,
+            'pegawai_sokong' => $pegawai_sokong,
+            'pegawai_lulus' => $pegawai_lulus,
+            'kakitangan'=> $kakitangan,
+            'pegawai'=> $pegawai,
 
         ]);
     }
@@ -193,5 +311,17 @@ class RollcallController extends Controller
         }
     }
 
+    public function masuk(Request $request, $id) {
+        $userrollcall = Userrollcall::Where('id','=',$id)->first();
+
+        // dd ($userrollcall);
+        $userrollcall->masuk = $request->masuk;
+        $userrollcall->save();
+    }
+    public function keluar(Request $request, $id) {
+        $userrollcall = Userrollcall::Where('id','=',$id)->first();
+        $userrollcall->keluar = $request->keluar;
+        $userrollcall->save();
+    }
     
 }
