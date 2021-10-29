@@ -302,13 +302,11 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Tajuk Roll Call</th>
-                                            <th>Waktu mula rollcall</th>
-                                            <th>Waktu akhir rollcall</th>
-                                            <th>lokasi</th>
-                                            <th>Catatan</th>
-                                            <th>Status</th>
-                                            <th>Pegawai Sokong</th>
-                                            <th>Pegawai Lulus</th>
+                                            <th>Waktu mula <br><br>akhir rollcall</th>
+                                            <th>lokasi<br><br> Catatan</th>
+                                            <th>Pegawai Sokong <br><br>Pegawai Lulus</th>
+                                            <th>Tindakan</th>
+
 
                                         </tr>
                                     </thead>
@@ -316,32 +314,68 @@
                                         @foreach($rollcalls as $rollcall)
                                         <tr>
                                             <td>{{$loop->index+1}}</td>
-                                            <td>{{$rollcall->tajuk_rollcall}}</td>
-                                            <td>{{$rollcall->mula_rollcall}}</td>
-                                            <td>{{$rollcall->akhir_rollcall}}</td>
-                                            <td>{{$rollcall->lokasi}}</td>
-                                            <td>{{$rollcall->catatan}}</td>
-
-                                            @if($rollcall->status =='dibuka')
-                                            <td>
-                                                <span class="badge badge-pill badge-success">DIBUKA</span>
+                                            <td>{{$rollcall->tajuk_rollcall}}<br><br>
+                                                @if($rollcall->status =='dibuka')
+                                              
+                                                    <span class="badge badge-pill badge-success">DIBUKA</span>
+                                               
+                                                @elseif($rollcall->status =='ditutup')
+                                              
+                                                    <span class="badge badge-pill badge-danger">DITUTUP</span>
+                                               
+                                                @elseif($rollcall->status =='ditangguh')
+                                              
+                                                    <span class="badge badge-pill badge-warning">DITANGGUH</span>
+                                               
+                                                @endif
+                                        
                                             </td>
-                                            @elseif($rollcall->status =='ditutup')
-                                            <td>
-                                                <span class="badge badge-pill badge-danger">DITUTUP</span>
+                                            <td>{{$rollcall->mula_rollcall}}<br><br>{{$rollcall->akhir_rollcall}}</td>
+                                            <td>{{$rollcall->lokasi}}<br><br>{{$rollcall->catatan}}</td>
+                                            <td>{{$rollcall->pegawai_lulus_id}}<br><br>{{$rollcall->pegawai_sokong_id}}</td>
+                                            <td>   
+                                            <button onclick="buang({{ $rollcall->id }})" class="btn btn-danger btn-sm">Buang <i class="ni ni-basket"></i></button>
                                             </td>
-                                            @elseif($rollcall->status =='ditangguh')
-                                            <td>
-                                                <span class="badge badge-pill badge-warning">DITANGGUH</span>
-                                            </td>
-                                            @endif
-                                            <td>{{$rollcall->pegawai_lulus['name']}}</td>
-                                            <td>{{$rollcall->pegawai_sokong['name']}}</td>
 
                                         </tr>
 
-                                        </td>
-                                        </tr>
+
+                                        <script>
+                                            function buang(id) {
+                                                swal({
+                                                    title: 'Makluman?',
+                                                    text: "Buang butiran Roll Call?!",
+                                                    type: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: '#3085d6',
+                                                    cancelButtonColor: '#d33',
+                                                    confirmButtonText: 'Buang',
+                                                    cancelButtonText: 'Tutup',
+
+                                                }).then(result => {
+                                                    console.log("result", result);
+                                                    if (result.value == true) {
+                                                        console.log("id", id);
+                                                        $.ajax({
+                                                            url: "rollcalls/" + id,
+                                                            type: "POST",
+                                                            data: {
+                                                                "id": id,
+                                                                "_token": "{{ csrf_token() }}",
+                                                                "_method": 'delete'
+                                                            },
+                                                            success: function (data) {
+                                                                location.reload();
+                                                            },
+                                                        });
+
+                                                    } else if (result.dismiss == "cancel") {
+                                                        console.log("dismiss");
+                                                    }
+                                                })
+                                            }
+
+                                        </script>
 
                                         @endforeach
 
@@ -937,38 +971,33 @@
                                             <th>Waktu Mula <br><br>Akhir rollcall</th>                                              
                                             <th>Lokasi <br><br> Makluman</th>
                                             <th>Pegawai Sokong <br><br> Pegawai Lulus</th>
-                                            <th>Status</th>
                                             <th>Tindakan</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse($rollcalls as $rollcall)
+                                        @foreach($rollcalls as $rollcall)
                                         <tr>
                                             <td>{{$rollcall->id}}</td>
-                                            <td>{{$rollcall->tajuk_rollcall}}</td>
-                                            <td>{{$rollcall->mula_rollcall}}<br><br>{{$rollcall->akhir_rollcall}}</td>
-                                        
-                                            <td>{{$rollcall->lokasi}}<br> <br>{{$rollcall->catatan}}</td>
-                                            <td>{{$rollcall->pegawai_sokong}} <br> <br>{{$rollcall->pegawai_lulus}}</td>
-                                            <td>
-                                                
+                                            <td>{{$rollcall->tajuk_rollcall}}<br><br>
                                                 @if($rollcall->status =='dibuka')
                                             
                                                 <span class="badge badge-pill badge-success">DIBUKA</span>
                                             
-                                            @elseif($rollcall->status =='ditutup')
-                                            
-                                                <span class="badge badge-pill badge-danger">DITUTUP</span>
-                                            
-                                            @elseif($rollcall->status =='ditangguh')
-                                            
-                                                <span class="badge badge-pill badge-warning">DITANGGUH</span>
-                                            
-                                            @endif
-                                            
-                                            
+                                                @elseif($rollcall->status =='ditutup')
+                                                
+                                                    <span class="badge badge-pill badge-danger">DITUTUP</span>
+                                                
+                                                @elseif($rollcall->status =='ditangguh')
+                                                
+                                                    <span class="badge badge-pill badge-warning">DITANGGUH</span>
+                                                
+                                                @endif                                             
                                             </td>
+                                            <td>{{$rollcall->mula_rollcall}}<br><br>{{$rollcall->akhir_rollcall}}</td>
+                                        
+                                            <td>{{$rollcall->lokasi}}<br> <br>{{$rollcall->catatan}}</td>
+                                            <td>{{$rollcall->pegawai_sokong}} <br> <br>{{$rollcall->pegawai_lulus}}</td>
+                                          
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
                                                     data-target="#">
@@ -976,13 +1005,8 @@
                                                 </button>   
                                             </td>
                                         </tr>
-                                        @empty
-                                        <div style="text-align:center;">
-                                            <td>
-                                                <h5> Tiada rekod </h5>
-                                            </td>
-                                        </div>
-                                        @endforelse
+                                      
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -1047,6 +1071,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Tajuk Roll Call</th>
+                                            <th>Nama Penguatkuasa</th>
                                             <th>Waktu Mula <br><br> Akhir rollcall</th>                                              
                                             <th>Lokasi <br><br> Makluman</th>
                                             <th>Waktu masuk <br><br> Waktu keluar</th>
@@ -1061,32 +1086,104 @@
                                             
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{$pegawai_sokong_rollcall->tajuk_rollcall}}</td>
+                                            <td>{{$pegawai_sokong_rollcall->nama_pemohon}}</td>
                                             <td>{{$pegawai_sokong_rollcall->mula_rollcall}} <br><br> {{$pegawai_sokong_rollcall->akhir_rollcall}}</td>
-                                            <td>{{$pegawai_sokong_rollcall->lokasi}} <br><br> {{$pegawai_sokong_rollcall->catatan}}</td>
+                                            <td >{{$pegawai_sokong_rollcall->lokasi}} <br><br> {{$pegawai_sokong_rollcall->catatan}}</td>
+
+                                            @if($pegawai_sokong_rollcall->masuk !== null)
                                             <td>{{$pegawai_sokong_rollcall->masuk}} <br> <br>{{$pegawai_sokong_rollcall->keluar}}</td>
+                                            @elseif($pegawai_sokong_rollcall->masuk === null)
+                                            <td>                      
+                                                 <span class="badge badge-pill badge-primary">Dalam Proses</span>
+                                                <br> <br>
+                                                <span class="badge badge-pill badge-primary">Dalam Proses</span>
+                                            </td>
+                                            @endif                                        
                                             <td>
                                                 <input type="text" value="ekedatangan" disabled>
-                                            
                                                 <br> <br> 
-                                
                                                 <input type="text" value="ekedatangan" disabled>
                                             </td>
                                             <td>{{$pegawai_sokong_rollcall->pegawai_sokong_name}}<br><br>{{$pegawai_sokong_rollcall->pegawai_lulus_name}}</td>
                                             <td>
+                                                @if($pegawai_sokong_rollcall->masuk !== null)   
                                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                                    data-target="#sokong">
+                                                    data-target="#sokong{{$pegawai_sokong_rollcall->id}}">
                                                     Sokong
                                                 </button>
                                                 <br><br>
                                                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                    data-target="#tolak">
+                                                    data-target="#tolak_sokong{{$pegawai_sokong_rollcall->id}}">
                                                     Tolak
                                                 </button>
+                                                @elseif($pegawai_sokong_rollcall->masuk ===null)
+                                                <span class="badge badge-pill badge-primary">Dalam Proses</span>
+                                                <br> <br>
+                                                <span class="badge badge-pill badge-primary">Dalam Proses</span>
+                                                @endif
 
                                             </td>
                                         </tr>
-                                        @endforeach
+                                        <!-- Modal Sokong -->
+                                        <div class="modal fade" id="sokong{{$pegawai_sokong_rollcall->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"> Makluman</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Sokong Kehadiran Roll Call Penguatkuasa
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Tutup</button>
 
+                                                        <a href="/sokong/{{$pegawai_sokong_rollcall->id}}/"
+                                                            class="btn btn-success btn-sm">Sokong</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Modal Tolak-->
+                                        <div class="modal fade" id="tolak_sokong{{$pegawai_sokong_rollcall->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" 
+                                                        id="exampleModalLabel"> 
+                                                            Tolak Kehadiran Roll Call Penguatkuasa ?
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                            <form method="POST" action="/tolak_sokong">
+                                                                @csrf
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="Perkara">Sebab Tolak Permohonan</label>
+                                                                        <input type="hidden"
+                                                                            value="{{ $pegawai_sokong_rollcall->id }}" name="id">
+                                                                        <div class="input-group input-group-merge">
+                                                                            <input class="form-control"
+                                                                                name="sokong_sebab"
+                                                                                placeholder="Sebab" type="text">
+                                                                        </div>
+                                                                    </div>
+                                                                
+                                                                <button type="button" class="btn btn-primary btn-sm "data-dismiss="modal">Tutup</button>
+                                                                <button type="submit" class="btn btn-success btn-sm">Hantar</button>
+                                                          
+                                                         
+                                                            </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -1154,6 +1251,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Tajuk Roll Call</th>
+                                            <th>Nama Penguatkuasa</th>
                                             <th>Waktu Mula <br><br> Akhir rollcall</th>                                              
                                             <th>Lokasi <br><br> Makluman</th>
                                             <th>Waktu masuk <br><br> Waktu keluar</th>
@@ -1168,83 +1266,107 @@
                                             
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{$pegawai_lulus_rollcall->tajuk_rollcall}}</td>
+                                            <td>{{$pegawai_lulus_rollcall->nama_pemohon}}</td>
                                             <td>{{$pegawai_lulus_rollcall->mula_rollcall}} <br><br> {{$pegawai_lulus_rollcall->akhir_rollcall}}</td>
                                             <td>{{$pegawai_lulus_rollcall->lokasi}} <br><br> {{$pegawai_lulus_rollcall->catatan}}</td>
-                                            <td>{{$pegawai_lulus_rollcall->masuk}} <br> <br>{{$pegawai_lulus_rollcall->keluar}}</td>
-                                            <td>
 
-                                                <input type="text" value="ekedatangan" disabled>
-                                            
-                                                <br> <br> 
-                                
-                                                <input type="text" value="ekedatangan" disabled>
-                                                
+                                            @if($pegawai_lulus_rollcall->masuk !== null)
+                                            <td>{{$pegawai_lulus_rollcall->masuk}} <br> <br>{{$pegawai_lulus_rollcall->keluar}}</td>
+                                            @elseif($pegawai_lulus_rollcall->masuk === null)
+                                            <td>                      
+                                                 <span class="badge badge-pill badge-primary">Dalam Proses</span>
+                                                <br> <br>
+                                                <span class="badge badge-pill badge-primary">Dalam Proses</span>
                                             </td>
-                                            <td>{{$pegawai_sokong_rollcall->pegawai_sokong_name}}<br><br>{{$pegawai_sokong_rollcall->pegawai_lulus_name}}</td>
+                                            @endif
                                             <td>
+                                                <input type="text" value="ekedatangan" disabled>
+                                                <br> <br> 
+                                                <input type="text" value="ekedatangan" disabled>
+                                            </td>
+                                            <td>{{$pegawai_lulus_rollcall->pegawai_sokong_name}}<br><br>{{$pegawai_lulus_rollcall->pegawai_lulus_name}}</td>
+                                            <td>
+                                                @if($pegawai_lulus_rollcall->masuk !== null)
                                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                                    data-target="#sokong">
-                                                    Sokong
-                                                </button>
-                                                <br><br>
-                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                    data-target="#tolak">
-                                                    Tolak
-                                                </button>
+                                                data-target="#lulus{{$pegawai_lulus_rollcall->id}}">
+                                                Lulus
+                                            </button>
+                                            <br><br>
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                data-target="#tolak_lulus{{$pegawai_lulus_rollcall->id}}">
+                                                Tolak
+                                            </button>
+                                                @elseif($pegawai_lulus_rollcall->masuk ===null)
+                                                <span class="badge badge-pill badge-primary">Dalam Proses</span>
+                                                <br> <br>
+                                                <span class="badge badge-pill badge-primary">Dalam Proses</span>
+                                                @endif
 
                                             </td>
                                         </tr>
-                                        @endforeach
+                                         <!-- Modal lulus -->
+                                         <div class="modal fade" id="lulus{{$pegawai_lulus_rollcall->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"> Makluman</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Lulus Kehadiran Roll Call Penguatkuasa
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Tutup</button>
 
+                                                        <a href="/lulus/{{$pegawai_lulus_rollcall->id}}/"
+                                                            class="btn btn-success btn-sm">Lulus</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Modal Tolak-->
+                                        <div class="modal fade" id="tolak_lulus{{$pegawai_lulus_rollcall->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"> Tolak Kehadiran Roll Call Penguatkuasa ?
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                            <form method="POST" action="/tolak_lulus">
+                                                                @csrf
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="Perkara">Sebab Tolak Permohonan</label>
+                                                                        <input type="hidden"
+                                                                            value="{{ $pegawai_lulus_rollcall->id }}" name="id">
+                                                                        <div class="input-group input-group-merge">
+                                                                            <input class="form-control"
+                                                                                name="lulus_sebab"
+                                                                                placeholder="Sebab" type="text">
+                                                                        </div>
+                                                                    </div>
+                                                                
+                                                                <button type="button" class="btn btn-primary btn-sm "data-dismiss="modal">Tutup</button>
+                                                                <button type="submit" class="btn btn-success btn-sm">Hantar</button>
+                                                          
+                                                         
+                                                            </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal Sokong -->
-<div class="modal fade" id="sokong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> Makluman</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Lulus kehadiran roll call penguatkuasa
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="button" class="btn btn-primary">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal Tolak-->
-<div class="modal fade" id="tolak" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> Tolak kehadiran roll call penguatkuasa ?
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Catatan</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="button" class="btn btn-primary">Simpan</button>
             </div>
         </div>
     </div>

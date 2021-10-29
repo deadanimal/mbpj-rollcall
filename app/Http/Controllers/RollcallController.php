@@ -8,6 +8,7 @@ use App\Models\Audit;
 use App\Models\User;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Exception;
 
 
@@ -55,11 +56,15 @@ class RollcallController extends Controller
         foreach ($rollcall_sokong_baru as $psn){
             $rollcall_sokong_name = User::where("id", $psn ->pegawai_sokong_id)->first()->name;
             $psn->pegawai_sokong_name = $rollcall_sokong_name;
+            $pemohon = User::where("id", $psn ->penguatkuasa_id)->first()->name;
+            $psn->nama_pemohon = $pemohon;
         }
 
         foreach ($rollcall_sokong_baru as $pln){
             $rollcall_sokong_name = User::where("id", $pln ->pegawai_lulus_id)->first()->name;
             $pln->pegawai_lulus_name = $rollcall_sokong_name;
+            $pemohon = User::where("id", $pln ->penguatkuasa_id)->first()->name;
+            $pln->nama_pemohon = $pemohon;
         }
 
         //rollcall lulus --------------------------------------------------------------------------------
@@ -75,11 +80,15 @@ class RollcallController extends Controller
         foreach ($rollcall_lulus_baru as $psn){
             $rollcall_lulus_name = User::where("id", $psn ->pegawai_sokong_id)->first()->name;
             $psn->pegawai_sokong_name = $rollcall_sokong_name;
+            $pemohon = User::where("id", $psn ->penguatkuasa_id)->first()->name;
+            $psn->nama_pemohon = $pemohon;
         }
 
         foreach ($rollcall_lulus_baru as $pln){
             $rollcall_lulus_name = User::where("id", $pln ->pegawai_lulus_id)->first()->name;
             $pln->pegawai_lulus_name = $rollcall_lulus_name;
+            $pemohon = User::where("id", $pln ->penguatkuasa_id)->first()->name;
+            $pln->nama_pemohon = $pemohon;
 
         }
 
@@ -313,8 +322,6 @@ class RollcallController extends Controller
 
     public function masuk(Request $request, $id) {
         $userrollcall = Userrollcall::Where('id','=',$id)->first();
-
-        // dd ($userrollcall);
         $userrollcall->masuk = $request->masuk;
         $userrollcall->save();
     }
@@ -323,5 +330,48 @@ class RollcallController extends Controller
         $userrollcall->keluar = $request->keluar;
         $userrollcall->save();
     }
-    
+    public function sokong($id)
+    {
+        $userrollcall = Userrollcall::find($id);
+        $userrollcall-> sokong = true;
+        $userrollcall-> tarikh_sokong = Carbon::now()->format('Y-m-d H:i:s');
+        $userrollcall->save();
+
+        $redirected_url= '/rollcalls/';
+        return redirect($redirected_url);        
+    }
+    public function tolak_sokong(Request $request)
+    {
+        $userrollcall = Userrollcall::find($request->id);
+        $userrollcall-> sokong = false;
+        $userrollcall-> tarikh_sokong = Carbon::now()->format('Y-m-d H:i:s');
+        $userrollcall-> sokong_sebab = $request-> sokong_sebab;
+
+        $userrollcall->save();
+
+        $redirected_url= '/rollcalls/';
+        return redirect($redirected_url);        
+    }
+    public function lulus($id)
+    {
+        $userrollcall = Userrollcall::find($id);
+        $userrollcall-> lulus = true;
+        $userrollcall-> tarikh_lulus = Carbon::now()->format('Y-m-d H:i:s');
+        $userrollcall->save();
+
+        $redirected_url= '/rollcalls/';
+        return redirect($redirected_url);        
+    }
+    public function tolak_lulus(Request $request)
+    {
+        $userrollcall = Userrollcall::find($request->id);
+        $userrollcall-> lulus = false;
+        $userrollcall-> tarikh_lulus = Carbon::now()->format('Y-m-d H:i:s');
+        $userrollcall-> lulus_sebab = $request-> lulus_sebab;
+
+        $userrollcall->save();
+
+        $redirected_url= '/rollcalls/';
+        return redirect($redirected_url);        
+    }
 }

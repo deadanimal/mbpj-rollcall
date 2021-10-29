@@ -170,11 +170,7 @@
                                     <thead class="thead-light">
                                         <tr>
                                             <th>No</th>
-                                            {{-- <th>Id</th> --}}
-                                            <th>Nama</th>
-                                            <th>Peranan</th>
-
-                                            {{-- <th>Model</th> --}}
+                                            <th>Nama<br><br>Peranan</th>
                                             <th>Tarikh</th>
                                             <th>Makluman</th>
 
@@ -186,8 +182,7 @@
                                         <tr>
                                             <td>{{ $loop->index + 1 }}</td>
                                             {{-- <td>{{ $audit->id }}</td> --}}
-                                            <td>{{ $audit->name}}</td>
-                                            <td>{{ $audit->peranan}}</td>
+                                            <td>{{ $audit->name}}<br><br>{{ $audit->peranan}}</td>
                                             {{-- <td>{{ $audit->model_name }}</td> --}}
                                             <td>{{ $audit->created_at }}</td>
                                             {{-- <td>{{ $audit->description }}</td> --}}
@@ -228,4 +223,5 @@
             </footer>
         </div>
     </div>
-    @endsection
+</div>
+@endsection

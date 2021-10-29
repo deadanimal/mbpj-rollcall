@@ -43,6 +43,14 @@ Route::post('/ubah-masa_akhir/{userrollcalls}', [RollcallController::class, 'kel
 
 Route::post('simpan_sebab/{id}',[UserrollcallController::class,'simpan_sebab']);
 
+//sokong 
+Route::get('/sokong/{id}',[RollcallController::class,'sokong']);
+Route::post('/tolak_sokong',[RollcallController::class,'tolak_sokong']);
+
+//lulus 
+Route::get('/lulus/{id}',[RollcallController::class,'lulus']);
+Route::post('/tolak_lulus',[RollcallController::class,'tolak_lulus']);
+
 
 
 

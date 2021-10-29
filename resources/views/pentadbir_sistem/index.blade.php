@@ -119,8 +119,6 @@
         </div>
     </div>
 </div>
-
-
 {{--  --}}
 <div class="container-fluid mt--6">
     <div class="row">
@@ -144,7 +142,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($users as $user)
+                                    @foreach ($users as $user)
                                     <tr>
                                         <td>{{$user->id}}</td>    
                                         <td>{{$user->nric}}</td>  
@@ -161,16 +159,10 @@
                                         </td>
                                         @endif
                                         <td><a href="/users/{{$user->id}}/edit"
-                                            class="btn btn-success">Lihat</a>                                            </div>
+                                            class="btn btn-primary btn-sm">Lihat</a>                                   
                                         </td>
                                     </tr>
-                                    @empty
-                                    <div style="text-align:center;">
-                                        <td>
-                                            <h5> Tiada rekod </h5>
-                                        </td>
-                                    </div>
-                                    @endforelse
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
