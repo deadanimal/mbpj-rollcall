@@ -575,341 +575,7 @@
         </div>
     </div>
 </div>
-@elseif(auth()->user()->role == 'penyelia' )
-<div class="card-body">
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel"
-            aria-labelledby="tabs-icons-text-1-tab">
-            <div>
-                <div class="container-fluid mt--6">
-                    <div class="row ">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <!-- Card header -->
-                                <div class="card-header border-0">
-                                    <h3 class="mb-0">Senarai Kehadiran Roll Call</h3>
-                                </div>
-                                <!-- Light table -->
-                                <div class="table-responsive">
-                                    <table id="example"
-                                        class="display table table-striped table-bordered dt-responsive nowrap"
-                                        style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Tajuk Roll Call</th>
-                                                <th>Waktu rollcall</th>
-                                                <th>Waktu rollcall</th>
-                                                <th>Waktu masuk</th>
-                                                <th>Waktu keluar</th>
-                                                <th>lokasi</th>
-                                                <th>Catatan</th>
-                                                <th>Pegawai Sokong</th>
-                                                <th>Pegawai Lulus</th>
-                                                <th>Status</th>
-                                                <th>Tindakan</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($rollcalls as $rollcall)
-                                            <tr>
-                                                <td>{{$rollcall->id}}</td>
-                                                <td>{{$rollcall->tajuk_rollcall}}</td>
-                                                <td>{{$rollcall->mula_rollcall}}</td>
-                                                <td>{{$rollcall->akhir_rollcall}}</td>
-                                                <td>{{$rollcall->waktu_masuk}}</td>
-                                                <td>{{$rollcall->waktu_keluar}}</td>
-                                                <td>{{$rollcall->lokasi}}</td>
-                                                <td>{{$rollcall->catatan}}</td>
-                                                <td>{{$rollcall->pegawai_sokong_id}}</td>
-                                                <td>{{$rollcall->pegawai_lulus_id}}</td>
-                                                <td>{{$rollcall->status}}</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#sokong">
-                                                        Sokong
-                                                    </button>
-                                                    {{-- <a href="" class="btn btn-primary">Sokong</a> --}}
-                                                    {{-- <a href="" class="btn btn-danger">Tolak</a> --}}
-                                                    <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                        data-target="#tolak">
-                                                        Tolak
-                                                    </button>
-
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-            <div>
-                <div class="container-fluid mt--6">
-                    {{-- <div class="card">
-                        <div class="card-header">
-                            <h3 class="mb-0">Filters</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="col-md-12">
-                                <form>
-                                    <div class="row">
-                                        <div class="col mb-4">
-                                            <h4>Tajuk Roll Call</h4>
-                                            <input type="text" class="form-control" placeholder="Tajuk Roll Call">
-                                        </div>
-                                        <div class="col">
-                                            <h4>Lokasi Roll Call</h4>
-                                            <input type="text" class="form-control" placeholder="Lokasi">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <h4>Tarikh Mula</h4>
-                                            <input id="start" type="date" /><br />
-                                        </div>
-                                        <div class="col-sm">
-                                            <h4>Tarikh Akhir</h4>
-                                            <input id="start" type="date" /><br />
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="row float-right">
-                                <div class="col-sm ">
-                                    <button id="clearFilter" class="btn btn-sm btn-danger">Clear Filter</button>
-                                    <button class="btn btn-sm btn-primary " id="filter">Filter</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>               --}}
-                    <div class="row ">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <!-- Card header -->
-                                <div class="card-header border-0">
-                                    <h3 class="mb-0">Senarai Sokong Roll Call</h3>
-                                </div>
-                                <!-- Light table -->
-                                <div class="table-responsive">
-                                    <table id="example"
-                                        class="display table table-striped table-bordered dt-responsive nowrap"
-                                        style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Tajuk Roll Call</th>
-                                                <th>Waktu rollcall</th>
-                                                <th>Waktu rollcall</th>
-                                                <th>Waktu masuk</th>
-                                                <th>Waktu keluar</th>
-                                                <th>lokasi</th>
-                                                <th>Catatan</th>
-                                                <th>Pegawai Sokong</th>
-                                                <th>Pegawai Lulus</th>
-                                                <th>Status</th>
-                                                <th>Tindakan</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {{-- @forelse($rollcalls as $rollcall) --}}
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-
-
-                                                <td>
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal">
-                                                        Lihat
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            {{-- @empty
-                                                <div style="text-align:center;">
-                                                    <td>
-                                                        <h5> Tiada rekod </h5>
-                                                    </td>
-                                                </div>
-                                                @endforelse --}}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
-            <div>
-                <div class="container-fluid mt--6">
-                    {{-- <div class="card">
-                        <div class="card-header">
-                            <h3 class="mb-0">Filters</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="col-md-12">
-                                <form>
-                                    <div class="row">
-                                        <div class="col mb-4">
-                                            <h4>Tajuk Roll Call</h4>
-                                            <input type="text" class="form-control" placeholder="Tajuk Roll Call">
-                                        </div>
-                                        <div class="col">
-                                            <h4>Lokasi Roll Call</h4>
-                                            <input type="text" class="form-control" placeholder="Lokasi">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <h4>Tarikh Mula</h4>
-                                            <input id="start" type="date" /><br />
-                                        </div>
-                                        <div class="col-sm">
-                                            <h4>Tarikh Akhir</h4>
-                                            <input id="start" type="date" /><br />
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="row float-right">
-                                <div class="col-sm ">
-                                    <button id="clearFilter" class="btn btn-sm btn-danger">Clear Filter</button>
-                                    <button class="btn btn-sm btn-primary " id="filter">Filter</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-                    <div class="row ">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <!-- Card header -->
-                                <div class="card-header border-0">
-                                    <h3 class="mb-0">Senarai Sokong Roll Call</h3>
-                                </div>
-                                <!-- Light table -->
-                                <div class="table-responsive">
-                                    <table id="example"
-                                        class="display table table-striped table-bordered dt-responsive nowrap"
-                                        style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Tajuk Roll Call</th>
-                                                <th>Waktu rollcall</th>
-                                                <th>Waktu rollcall</th>
-                                                <th>Waktu masuk</th>
-                                                <th>Waktu keluar</th>
-                                                <th>lokasi</th>
-                                                <th>Catatan</th>
-                                                <th>Pegawai Sokong</th>
-                                                <th>Pegawai Lulus</th>
-                                                <th>Status</th>
-                                                <th>Tindakan</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {{-- @forelse($rollcalls as $rollcall) --}}
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-
-
-                                                <td>
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal">
-                                                        Lihat
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            {{-- @empty
-                                                <div style="text-align:center;">
-                                                    <td>
-                                                        <h5> Tiada rekod </h5>
-                                                    </td>
-                                                </div>
-                                                @endforelse --}}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal Sokong -->
-<div class="modal fade" id="sokong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> Makluman</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Sokong kehadiran roll call penguatkuasa
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="button" class="btn btn-primary">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal Tolak-->
-<div class="modal fade" id="tolak" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> Tolak kehadiran roll call penguatkuasa ?
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Catatan</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="button" class="btn btn-primary">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
-@elseif(auth()->user()->role == 'ketua_bahagian'or auth()->user()->role == 'ketua_jabatan' )
+@elseif(auth()->user()->role == 'ketua_bahagian'or auth()->user()->role == 'ketua_jabatan'or auth()->user()->role == 'penyelia' )
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel"
         aria-labelledby="tabs-icons-text-1-tab">
@@ -1000,12 +666,42 @@
                                           
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                                    data-target="#">
+                                                    data-target="#lihat{{$rollcall->id}}">
                                                     Lihat
                                                 </button>   
                                             </td>
                                         </tr>
-                                      
+                                        {{-- Modal Lihat --}}
+                                        <div class="modal fade " id="lihat{{$rollcall->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"> Makluman</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" value="{{$rollcall->tajuk_rollcall}}" disabled>
+                                                            <input type="text" class="form-control" value="{{$rollcall->mula_rollcall}}-{{$rollcall->akhir_rollcall}}"disabled>
+                                                            <input type="text" class="form-control" value="{{$rollcall->status}}"disabled>
+                                                            <input type="text" class="form-control" value="{{$rollcall->lokasi}}"disabled>
+                                                            <input type="text" class="form-control" value="{{$rollcall->catatan}}"disabled>
+                                                            <input type="text" class="form-control" value="{!!$rollcall->maklumat!!}"disabled>
+                                                            <input type="text" class="form-control" value="{{$rollcall->pegawai_sokong}} - {{$rollcall->pegawai_lulus}} "disabled>
+
+
+
+                                                          </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
+                                                        {{-- <button type="button" class="btn btn-primary">Simpan</button> --}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>             
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -1106,16 +802,40 @@
                                             </td>
                                             <td>{{$pegawai_sokong_rollcall->pegawai_sokong_name}}<br><br>{{$pegawai_sokong_rollcall->pegawai_lulus_name}}</td>
                                             <td>
+                                                {{-- satu if masuk belum ada --}}
                                                 @if($pegawai_sokong_rollcall->masuk !== null)   
-                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                                    data-target="#sokong{{$pegawai_sokong_rollcall->id}}">
-                                                    Sokong
-                                                </button>
-                                                <br><br>
-                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                    data-target="#tolak_sokong{{$pegawai_sokong_rollcall->id}}">
-                                                    Tolak
-                                                </button>
+
+                                                        {{-- semak sokong --}}
+
+                                                       @if($pegawai_sokong_rollcall->sokong === null)
+
+                                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                            data-target="#sokong{{$pegawai_sokong_rollcall->id}}">
+                                                            Sokong
+                                                        </button>
+                                                        <br><br>
+                                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                            data-target="#tolak_sokong{{$pegawai_sokong_rollcall->id}}">
+                                                            Tolak
+                                                        </button>
+                                                        @elseif($pegawai_sokong_rollcall->sokong === 1)
+                                                        <span class="badge badge-pill badge-success">Disahkan Pegawai Sokong</span><br><br>
+                                                       
+                                                            {{-- semak lulus --}}
+
+                                                            @if($pegawai_sokong_rollcall->lulus === null)
+                                                            <span class="badge badge-pill badge-primary">Dalam Proses Pegawai Lulus</span>
+                                                            @elseif($pegawai_sokong_rollcall->lulus === 1)
+                                                            <span class="badge badge-pill badge-success">Diluluskan Pegawai Lulus</span>
+                                                            @elseif($pegawai_sokong_rollcall->lulus === 0)
+                                                            <span class="badge badge-pill badge-danger">Ditolak Pegawai Lulus</span>
+                                                            @endif
+
+                                                        @elseif($pegawai_sokong_rollcall->sokong === 0)
+                                                        <span class="badge badge-pill badge-danger">Ditolak Pegawai Sokong</span><br><br>
+                                                        <span class="badge badge-pill badge-danger">Ditolak kehadiran </span>
+                                                        @endif
+
                                                 @elseif($pegawai_sokong_rollcall->masuk ===null)
                                                 <span class="badge badge-pill badge-primary">Dalam Proses</span>
                                                 <br> <br>
@@ -1287,15 +1007,54 @@
                                             <td>{{$pegawai_lulus_rollcall->pegawai_sokong_name}}<br><br>{{$pegawai_lulus_rollcall->pegawai_lulus_name}}</td>
                                             <td>
                                                 @if($pegawai_lulus_rollcall->masuk !== null)
-                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                                data-target="#lulus{{$pegawai_lulus_rollcall->id}}">
-                                                Lulus
-                                            </button>
-                                            <br><br>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#tolak_lulus{{$pegawai_lulus_rollcall->id}}">
-                                                Tolak
-                                            </button>
+
+                                                   @if($pegawai_sokong_rollcall)
+                                                    {{-- Semak lulus status --}}
+                                                    @if($pegawai_lulus_rollcall->sokong === null)
+
+                                                       <span class="badge badge-pill badge-primary">Dalam Proses Pegawai Lulus</span>
+
+                                                     @elseif($pegawai_lulus_rollcall->sokong === 1)
+
+                                                         @if($pegawai_lulus_rollcall->lulus === null)
+
+                                                            <span class="badge badge-pill badge-success">Disahkan Pegawai Sokong</span><br><br>
+
+                                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                            data-target="#lulus{{$pegawai_lulus_rollcall->id}}">
+                                                            Lulus
+                                                            </button>
+                                                            {{-- <br><br> --}}
+                                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                                data-target="#tolak_lulus{{$pegawai_lulus_rollcall->id}}">
+                                                                Tolak
+                                                            </button>
+
+                                                        @elseif($pegawai_lulus_rollcall->lulus === 1)
+
+                                                            <span class="badge badge-pill badge-success">Disahkan Pegawai Sokong</span><br><br>
+                                                            <span class="badge badge-pill badge-success">Diluluskan Pegawai Lulus</span>
+
+                                                        @elseif($pegawai_lulus_rollcall->lulus === 0)
+
+                                                            <span class="badge badge-pill badge-success">Disahkan Pegawai Sokong</span><br><br>
+                                                            <span class="badge badge-pill badge-danger">Ditolak Pegawai Lulus</span>
+
+                                                        @endif
+
+
+                                                    @elseif($pegawai_lulus_rollcall->sokong === 0)
+                                                    <span class="badge badge-pill badge-danger">Ditolak Pegawai Sokong</span><br><br>
+                                                    <span class="badge badge-pill badge-danger">Ditolak Pegawai Lulus</span>
+
+                                                    @endif
+
+                                                    @elseif($pegawai_lulus_rollcall->lulus === 1)
+                                                    <span class="badge badge-pill badge-success">Disahkan Pegawai Lulus</span><br><br>
+                                                    @elseif($pegawai_lulus_rollcall->lulus === 0)
+                                                    <span class="badge badge-pill badge-danger">Ditolak Pegawai Lulus</span><br><br>
+                                                    @endif
+
                                                 @elseif($pegawai_lulus_rollcall->masuk ===null)
                                                 <span class="badge badge-pill badge-primary">Dalam Proses</span>
                                                 <br> <br>
