@@ -94,9 +94,12 @@ class RollcallController extends Controller
 
         // dd($rollcall_sokong);
 
-        $rollcalls = Rollcall::where('created_at', '>=', $hari)->orderBy('created_at','DESC')->get();
-        
-        //cari nama pegawai dekat KJ and KB
+        $rollcalls = Rollcall::where('created_at', '>=', $hari)
+        ->where('created_at', '>=', $hari)
+        ->orderBy('created_at','DESC')
+        ->get();
+
+         //cari nama pegawai dekat KJ and KB
         foreach ($rollcalls as $ps){
             $pegawai_sokong = User::where("id", $ps ->pegawai_sokong_id)->first()->name;
             $ps->pegawai_sokong = $pegawai_sokong;
@@ -106,10 +109,27 @@ class RollcallController extends Controller
             $pegawai_lulus = User::where("id", $ps ->pegawai_lulus_id)->first()->name;
             $ps->pegawai_lulus = $pegawai_lulus;
         }
+        // foreach ($rollcalls as $gk){
+        //     $userrollcall = Userrollcall::where("id", $gk ->roll_id)->first();
+        //     $gk->roll_id = $roll_id;
+        // }
+
+        // $rollcallsnew = Rollcall::join('userrollcalls','rollcalls.id','=','userrollcalls.roll_id')
+        // ->select('rollcalls.*', 'userrollcalls.*')
+        // ->get();
+        
+
+        // dd($rollcalls);
+
+
+        
+       
 
         //get waktu masuk keluar dari phone
         $rollcall_id = Userrollcall::where('penguatkuasa_id', Auth::user()->id)->get();
         $userrollcalls = [];
+
+        // dd($rollcallObj);
         foreach($rollcall_id as $rid) {
             //array_push($userrollcalls, RollCall::where('id', $rid->roll_id)->first());
             $rollcallObj = RollCall::where('id', $rid->roll_id)->first();
@@ -121,17 +141,18 @@ class RollcallController extends Controller
             //  Create pegawai name
             $rollcallObj->pegawai_sokong_name = User::where('id',$rollcallObj->pegawai_sokong_id)->first()->name;
             $rollcallObj->pegawai_lulus_name = User::where('id',$rollcallObj->pegawai_lulus_id)->first()->name;
+            //get status
+            $rollcallObj->sokong = $rid->sokong;
+            $rollcallObj->lulus = $rid->lulus;
+                    // dd($rollcallObj);
+
 
             //  keterangan
-
             try {
                 $rollcallObj->keterangan= Userrollcall::where('id',$rollcallObj->id)->first()->keterangan;
                 $rollcallObj->lampiran = Userrollcall::where('id',$rollcallObj->id)->first()->file_path;
             } catch (Exception $e) {
             }
-            
-       
-
 
             array_push($userrollcalls, $rollcallObj);
         }
