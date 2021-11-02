@@ -148,10 +148,17 @@
                                                 
                                                 @if($userrollcall->keluar === null)
 
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#sebabtakhadir{{$userrollcall->userrollcall_id}}">
-                                                        Hantar Sebab
-                                                </button>  
+                                                  @if($userrollcall->keterangan === null)
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                            data-target="#sebabtakhadir{{$userrollcall->userrollcall_id}}">
+                                                            Hantar Sebab
+                                                    </button>  
+                                                   @elseif($userrollcall->keterangan !== null)
+                                                   <span class="badge badge-pill badge-danger">Tidak Hadir RollCall</span><br><br>
+
+                                                     Sebab : {{$userrollcall->keterangan}}
+                                                    @endif
+
                                                 @elseif($userrollcall->masuk !== null)
 
                                                     <span class="badge badge-pill badge-success">Hadir Masuk Rollcall</span><br><br>
@@ -743,26 +750,46 @@
                                                        <!-- Light table -->
 
                                                         <div class="table-responsive">
-                                                            <table id="example" class="display table table-striped table-bordered dt-responsive nowrap"
+                                                            <table id="example" class="table table-striped table-bordered nowrap"
                                                                 style="width:100%">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>No</th>
+                                                                        {{-- <th>No</th> --}}
                                                                         <th>Nama Penguatkuasa</th>
                                                                         <th>Waktu Masuk</th>
                                                                         <th>Akhir Keluar</th>                                              
                                                                     </tr>
                                                                 </thead>
+                                                                @foreach($rollcallsnew as $rollcallsbaru)
                                                                 <tbody>
-
+                                                                    <?php if ($rollcallsbaru['roll_id'] == $rollcall->id) { ?>
                                                                     <tr>
-                                                                        <td>{{$loop->index+1}}</td>
-                                                                        <td>{{$rollcall->penguatkuasa_id}}</td>
-                                                                        <td>{{$rollcall->masuk}}</td>
-                                                                        <td>{{$rollcall->keluar}}</td>
-                                                                    </tr>
+                                                                        {{-- <td></td> --}}
+                                                                        <td>{{$rollcallsbaru['penguatkuasa']}}</td>
 
+                                                                        @if($rollcallsbaru['masuk'] === null)
+                                                                        <td>
+                                                                            <span class="badge badge-pill badge-primary">Dalam Proses</span>
+                                                                        </td>
+                                                                        @elseif($rollcallsbaru['masuk'] !== null)
+                                                                        <td>{{$rollcallsbaru['masuk']}}</td>
+                                                                        @endif
+
+                                                                        @if($rollcallsbaru['keluar'] === null)
+                                                                        <td>
+                                                                            <span class="badge badge-pill badge-primary">Dalam Proses</span>
+                                                                        </td>
+                                                                        @elseif($rollcallsbaru['keluar'] !== null)
+                                                                        <td>{{$rollcallsbaru['keluar']}}</td>                                                                                                
+                                                                        @endif
+
+
+                                                                    </tr>
+                                                                    <?php } ?>
                                                                 </tbody>
+                                                                
+                                                                @endforeach
+
                                                                 
                                                             </table>
                                                             

@@ -275,6 +275,7 @@
                         $('#rollcall_maklumat').html(data.maklumat);
                         var penguatkuasas = "<ol>";
                         data.user_rollcall.forEach((obj) => {
+
                             penguatkuasas += "<li>" + obj.penguatkuasa.name + "-" +
                                 obj.penguatkuasa.nric + "</li>";
                         });

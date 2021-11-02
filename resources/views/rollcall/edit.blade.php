@@ -237,11 +237,10 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Kakitangan</th>
-                                            <th>No Pekerja</th>
-                                            <th>NRIC </th>
-                                            <th>Email</th>
-                                            <th>Waktu Masuk</th>
-                                            <th>Waktu Keluar</th>
+                                            <th>No Pekerja | NRIC </th>   
+                                            <th>Waktu Masuk </th><th> Waktu Keluar</th>
+                                            <th>Status </th>
+
                                             <th>Tindakan</th>
 
                                         </tr>
@@ -252,13 +251,39 @@
                                         <tr>
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{$userrollcall->penguatkuasa['name']}}</td>
-                                            <td>{{$userrollcall->penguatkuasa['user_code']}}</td>
-                                            <td>{{$userrollcall->penguatkuasa['nric']}}</td>
-                                            <td>{{$userrollcall->penguatkuasa['email']}}</td>
-                                            <td>SCAN NRIC</td>
-                                            <td>SCAN NRIC</td>
+                                            <td>{{$userrollcall->penguatkuasa['user_code']}}<br><br>{{$userrollcall->penguatkuasa['nric']}}</td>
 
-                                            <td> <button onclick="buang({{ $userrollcall->id }})"class="btn btn-danger btn-sm">Buang<i class="ni ni-basket"></i></button> </td>
+                                            @if($userrollcall['masuk'] === null)
+                                            <td><span class="badge badge-pill badge-primary">Dalam Proses</span></td>
+                                            @elseif($userrollcall['masuk'] !==null)
+                                            <td>{{$userrollcall['masuk']}}</td>
+                                            @endif
+                                            @if($userrollcall['keluar'] === null)
+                                            <td><span class="badge badge-pill badge-primary">Dalam Proses</span></td>
+                                            @elseif($userrollcall['keluar'] !== null)
+                                            <td>{{$userrollcall['keluar']}}</td>
+                                            @endif
+                                           
+                                            @if($userrollcall['sokong'] === null)
+                                            <td><span class="badge badge-pill badge-primary">Dalam Proses</span></td>
+                                            @elseif($userrollcall['sokong'] ===1)
+                                            <td><span class="badge badge-pill badge-success">Disokong</span><br><br>
+                                                @if($userrollcall['lulus'] === null)
+                                               <span class="badge badge-pill badge-primary">Dalam Proses</span>
+                                                @elseif($userrollcall['lulus'] ===1)
+                                               <span class="badge badge-pill badge-success">Diluluskan</span>
+                                                @elseif($userrollcall['lulus'] ===0)
+                                               <span class="badge badge-pill badge-danger">Ditolak</span>
+                                                @endif
+                                            </td>
+                                            @elseif($userrollcall['sokong'] ===0)
+                                            <td><span class="badge badge-pill badge-danger">Ditolak</span><br><br>
+                                                <span class="badge badge-pill badge-danger">Ditolak</span>
+                                            </td>
+
+                                            @endif
+                                          
+                                            <td> <button onclick="buang({{ $userrollcall->id }})"class="btn btn-danger btn-sm"><i class="ni ni-basket"></i></button> </td>
                                          
                                         </tr>
 

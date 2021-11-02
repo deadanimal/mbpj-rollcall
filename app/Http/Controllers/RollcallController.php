@@ -95,7 +95,6 @@ class RollcallController extends Controller
         // dd($rollcall_sokong);
 
         $rollcalls = Rollcall::where('created_at', '>=', $hari)
-        ->where('created_at', '>=', $hari)
         ->orderBy('created_at','DESC')
         ->get();
 
@@ -114,16 +113,21 @@ class RollcallController extends Controller
         //     $gk->roll_id = $roll_id;
         // }
 
-        // $rollcallsnew = Rollcall::join('userrollcalls','rollcalls.id','=','userrollcalls.roll_id')
-        // ->select('rollcalls.*', 'userrollcalls.*')
-        // ->get();
+        // $roll_id = $request->$userrollcall->roll_id;  
+        
+        $rollcallsnew = Rollcall::join('userrollcalls','rollcalls.id','=','userrollcalls.roll_id')
+        ->select('rollcalls.*', 'userrollcalls.*')
+        // ->where('rollcalls.id', $roll_id)
+        ->get();
+
+        foreach ($rollcallsnew as $gpn){
+            $penguatkuasa = User::where("id", $gpn ->penguatkuasa_id)->first()->name;
+            $gpn->penguatkuasa = $penguatkuasa;
+        }
         
 
-        // dd($rollcalls);
+        // dd($rollcallsnew);
 
-
-        
-       
 
         //get waktu masuk keluar dari phone
         $rollcall_id = Userrollcall::where('penguatkuasa_id', Auth::user()->id)->get();
@@ -144,6 +148,9 @@ class RollcallController extends Controller
             //get status
             $rollcallObj->sokong = $rid->sokong;
             $rollcallObj->lulus = $rid->lulus;
+
+            //get status
+            $rollcallObj->keterangan = $rid->keterangan;
                     // dd($rollcallObj);
 
 
@@ -161,7 +168,9 @@ class RollcallController extends Controller
     
 
         return view ('rollcall.index',[
-            'rollcalls'=>$rollcalls,  
+            'rollcalls'=>$rollcalls, 
+            'rollcallsnew'=>$rollcallsnew,  
+ 
             'users'=>$users,
             'dibuka'=>$dibuka,
             'ditangguh'=>$ditangguh,
