@@ -29,6 +29,22 @@ class DashboardController extends Controller
         if ($role == 'penguatkuasa') {
 
             $rollcalls = Rollcall::all();
+            $current_user = Auth::user()->id;
+
+            $kehadiran = Userrollcall::where('penguatkuasa_id', $current_user)
+            ->count();
+
+            $kehadiranterima = Userrollcall::where([['sokong', '1'], ['lulus', '1']])->where('penguatkuasa_id', $current_user)
+            ->count();
+
+            $kehadiranditolaks = Userrollcall::where('lulus', '0')->where('penguatkuasa_id', $current_user)
+            ->count();
+
+            // $kehadiranditolakl = Userrollcall::where('lulus', '0')
+            // ->where('penguatkuasa_id', $current_user)
+            // ->count();
+
+            
 
             if($request->ajax()) {
                 $datas = Rollcall::all();
@@ -47,6 +63,11 @@ class DashboardController extends Controller
             }
             return view ('dashboard.penguatkuasa_dashboard',[              
                 'rollcalls'=>$rollcalls,  
+                'kehadiran'=>$kehadiran,  
+                'kehadiranterima'=>$kehadiranterima, 
+                'kehadiranditolaks'=>$kehadiranditolaks, 
+                // 'kehadiranditolakl'=>$kehadiranditolakl, 
+
                 
             ]);
             // return view ('dashboard.penguatkuasa_dashboard');

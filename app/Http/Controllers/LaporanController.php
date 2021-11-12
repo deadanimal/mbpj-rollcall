@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Laporan;
+use App\Models\Userrollcall;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Auth;
+
 
 class LaporanController extends Controller
 {
@@ -14,7 +18,41 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        return view ('laporan.index');
+        $current_user = Auth::user()->id;
+
+        $null_kehadiran = Userrollcall::whereNull('keluar')
+                    ->select(DB::raw('count(keluar) as jumlah_tidak_hadir'), DB::raw("CONCAT_WS('-',MONTHNAME(created_at),YEAR(created_at)) as monthname"))
+                    ->groupBy('monthname')
+                    ->where('penguatkuasa_id', $current_user)
+                    ->get();
+
+        $kehadiran = Userrollcall::where('penguatkuasa_id', $current_user)
+                    ->select(DB::raw('count(*) as jumlah'), DB::raw("CONCAT_WS('-',MONTHNAME(created_at),YEAR(created_at)) as monthname"))
+                    ->groupBy('monthname')
+                    ->get();
+
+        $kehadiran_diterima = Userrollcall::where([
+            ['sokong', '1'], ['lulus', '1']
+        ])->where('penguatkuasa_id', $current_user)
+        ->select(DB::raw('count(sokong) as kehadiran_diterima'), DB::raw("CONCAT_WS('-',MONTHNAME(created_at),YEAR(created_at)) as monthname"))
+        ->groupBy('monthname')
+        ->get();
+
+        $kehadiran_ditolak = Userrollcall::where('sokong', '0')->whereOr('lulus', '0')->where('penguatkuasa_id', $current_user)
+        ->select(DB::raw('count(keluar) as kehadiran_ditolak'), DB::raw("CONCAT_WS('-',MONTHNAME(created_at),YEAR(created_at)) as monthname"))
+        ->groupBy('monthname')
+        ->get();
+
+        $arraykehadiran = [];
+        foreach ($kehadiran as $kehadirans) {
+            $arraykehadiran[] = ['monthname' => $kehadirans->monthname, 'semua kehadiran' => $kehadirans->jumlah, 'kehadiran diterima' => $kehadirans->jumlah, 'kehadiran ditolak' => $kehadirans->jumlah, 'kehadiran tidak hadir' => $kehadirans->jumlah, ];
+        }
+        
+                    // dd($arraykehadiran);
+
+        return view ('laporan.index', [
+            'kehadiran'=>$arraykehadiran,
+        ]);
     }
 
     /**

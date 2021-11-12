@@ -182,7 +182,7 @@
                                         <tr>
                                             <td>{{ $loop->index + 1 }}</td>
                                             {{-- <td>{{ $audit->id }}</td> --}}
-                                            <td>{{ $audit->name}}<br><br>{{ $audit->peranan}}</td>
+                                            <td>{{ $audit->name}} - {{ $audit->peranan}}</td>
                                             {{-- <td>{{ $audit->model_name }}</td> --}}
                                             <td>{{ $audit->created_at }}</td>
                                             {{-- <td>{{ $audit->description }}</td> --}}
