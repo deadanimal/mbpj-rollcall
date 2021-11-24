@@ -9,6 +9,12 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserrollcallController;
 use App\Http\Controllers\Select2SearchController;
 use App\Http\Controllers\JadualController;
+use App\Http\Controllers\SebabController;
+use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\KumpulanController;
+
+
+
 
 
 Route::get('/', function () {
@@ -24,6 +30,10 @@ Route::resource('laporans',LaporanController::class)->middleware(['auth']);
 Route::resource('users',UserController::class)->middleware(['auth']);
 Route::resource('userrollcalls',UserrollcallController::class)->middleware(['auth']);
 Route::resource('jaduals',JadualController::class)->middleware(['auth']);
+Route::resource('sebab',SebabController::class)->middleware(['auth']);
+Route::resource('kumpulan',KumpulanController::class)->middleware(['auth']);
+
+
 
 
 Route::resource('Select2Search',Select2SearchController::class)->middleware(['auth']);
@@ -51,7 +61,12 @@ Route::post('/tolak_sokong',[RollcallController::class,'tolak_sokong']);
 Route::get('/lulus/{id}',[RollcallController::class,'lulus']);
 Route::post('/tolak_lulus',[RollcallController::class,'tolak_lulus']);
 
+//Filter Report
+// Route::get('/filter_laporan_hadir/{id}',[RollcallController::class,'filter_laporan_hadir']);
+Route::get('/filter_laporan_hadir/{id}',[LaporanController::class,'filter_laporan_hadir']);
 
+//Forgot Password
+Route::post('change-password', [ChangePasswordController::class,'store'])->name('change.password');
 
 
 require __DIR__.'/auth.php';

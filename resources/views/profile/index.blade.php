@@ -84,13 +84,10 @@
                         <div class="col-8">
                             <h3 class="mb-0">Makluman Kakitangan</h3>
                         </div>
-                        <div class="col-4 text-right">
-                            <a href="#!" class="btn btn-sm btn-primary">Kemaskini</a>
-                        </div>
+                      
                     </div>
                 </div>
                 <div class="card-body">
-                    <form>
                         {{-- <h6 class="heading-small text-muted mb-4">User information</h6> --}}
                         <div class="pl-lg-4">
                             <div class="row">
@@ -142,20 +139,69 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="input-first-name">Kemaskini Kata Laluan
-                                        </label>
-                                        <input type="text" id="input-first-name" class="form-control"
-                                            placeholder="{{Auth()->user()->password}}" value="Kata Laluan Baru">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="input-last-name">Ulang Kata Laluan
-                                            Baru</label>
-                                        <input type="text" id="input-last-name" class="form-control"
-                                            placeholder="{{Auth()->user()->password}}" value="Ulang Kata Laluan Baru">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                
+                                        <div class="card-body">
+                                            <form method="POST" action="{{ route('change.password') }}">
+                                                @csrf 
+                        
+                                                @foreach ($errors->all() as $error)
+                                                    <p class="text-danger">{{ $error }}</p>
+                                                @endforeach 
+                                                @if (\Session::has('success'))
+                                                <div class="alert alert-success">
+                                                    <ul>
+                                                        <li>{!! \Session::get('success') !!}</li>
+                                                    </ul>
+                                                </div>
+                                                @endif
+                        
+                                                <div class="form-group row">
+                                                    <label for="password" class="col-md-4 col-form-label text-md-right">Kata Laluan Semasa</label>
+                        
+                                                    <div class="col-md-6">
+                                                        <input id="myInput" type="password" class="form-control" value="{{Auth()->user()->password}}"><br>
+                                                        <input type="checkbox" onclick="myFunction()">  Lihat Kata Laluan
+
+                                                        <script>
+                                                            function myFunction() {
+                                                              var x = document.getElementById("myInput");
+                                                              if (x.type === "password") {
+                                                                x.type = "text";
+                                                              } else {
+                                                                x.type = "password";
+                                                              }
+                                                            }
+                                                        </script>
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="form-group row">
+                                                    <label for="password" class="col-md-4 col-form-label text-md-right">Kata laluan Baru</label>
+                        
+                                                    <div class="col-md-6">
+                                                        <input id="new_password" type="password" class="form-control" name="new_password" autocomplete="current-password">
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="form-group row">
+                                                    <label for="password" class="col-md-4 col-form-label text-md-right">Sah Kata Laluan</label>
+                            
+                                                    <div class="col-md-6">
+                                                        <input id="new_confirm_password" type="password" class="form-control" name="new_confirm_password" autocomplete="current-password">
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="form-group row mb-0">
+                                                    <div class="col-md-8 offset-md-4">
+                                                        <button type="submit" class="btn btn-primary float-right">
+                                                            Kemaskini
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +212,8 @@
 
 
     </div>
-
+    
+    
     <!-- Footer -->
     <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
@@ -180,4 +227,6 @@
         </div>
     </footer>
 </div>
+{{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
+    {{-- @include('sweet::alert') --}}
 @endsection

@@ -6,6 +6,8 @@ use App\Models\Rollcall;
 use App\Models\Userrollcall;
 use App\Models\Audit;
 use App\Models\User;
+use App\Models\Sebab;
+
 use Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -21,6 +23,8 @@ class RollcallController extends Controller
     public function index(Request $request , Rollcall $rollcall)
     {
         $users = User::all();
+        $sebab = Sebab::all();
+
 
         // Card status
         $dibuka = DB::table('rollcalls')
@@ -168,7 +172,10 @@ class RollcallController extends Controller
     
 
         return view ('rollcall.index',[
-            'rollcalls'=>$rollcalls, 
+            'rollcalls'=>$rollcalls,
+            //sebab
+            'sebab'=>$sebab, 
+ 
             'rollcallsnew'=>$rollcallsnew,  
  
             'users'=>$users,
@@ -215,6 +222,9 @@ class RollcallController extends Controller
         $rollcall->pegawai_sokong_id = $request-> pegawai_sokong_id;
         $rollcall->pegawai_lulus_id = $request-> pegawai_lulus_id;
         $rollcall->maklumat = $request-> maklumat;
+
+        $rollcall->siri_rollcall = $this->generateNomborSiri();
+
         $rollcall->save();
 
         // Audit trail
@@ -403,5 +413,13 @@ class RollcallController extends Controller
 
         $redirected_url= '/rollcalls/';
         return redirect($redirected_url);        
+    }
+
+    public function generateNomborSiri() {
+        //logic 
+        $string_depan = "RL";
+        $string_belakang = sprintf("%'.06d", count(Rollcall::all()));
+
+        return $string_depan.$string_belakang;
     }
 }

@@ -9,8 +9,6 @@
 
 </style>
 
-
-
 @section('content')
 
 <!-- Resources -->
@@ -124,7 +122,114 @@
         options.addURL = false;
         chart.exporting.setFormatOptions("pdf", options);
     });
+</script>
 
+{{-- lain2 --}}
+<script>
+    am4core.ready(function () {
+
+        am4core.useTheme(am4themes_animated);
+        am4core.addLicense('ch-custom-attribution');
+
+        var chart = am4core.create("chartdivkb", am4charts.XYChart);
+
+        // var data = {
+        //     !!json_encode($kehadiran) !!
+        // };
+        // chart.data = data;
+
+
+        chart.data = [{
+          "year": "2021",
+          "KehadiranRollcall": 2.5,
+          "KehadiranRollcallTolak": 2.5,
+          "KehadiranRollcalltakhadir": 2.1,
+
+        }, {
+          "year": "2022",
+          "KehadiranRollcall": 2.6,
+          "KehadiranRollcallTolak": 2.7,
+          "KehadiranRollcalltakhadir": 2.2,
+
+        }, {
+          "year": "2023",
+          "KehadiranRollcall": 2.8,
+          "KehadiranRollcallTolak": 2.9,
+          "KehadiranRollcalltakhadir": 2.4,
+
+        }]
+
+        var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.dataFields.category = "monthname";
+        categoryAxis.renderer.grid.template.location = 0;
+
+
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.renderer.inside = true;
+        valueAxis.renderer.labels.template.disabled = true;
+        valueAxis.min = 0;
+
+        function createSeries(field, name) {
+
+            var series = chart.series.push(new am4charts.ColumnSeries());
+            series.name = name;
+            series.dataFields.valueY = field;
+            series.dataFields.categoryX = "monthname";
+            series.sequencedInterpolation = true;
+
+            series.stacked = true;
+
+            series.columns.template.width = am4core.percent(60);
+            series.columns.template.tooltipText =
+                "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
+
+            var labelBullet = series.bullets.push(new am4charts.LabelBullet());
+            labelBullet.label.text = "{valueY}";
+            labelBullet.locationY = 0.5;
+            labelBullet.label.hideOversized = true;
+
+            return series;
+        }
+
+        // createSeries("Johor", "Johor");
+        // createSeries("Kedah", "Kedah");
+        // createSeries("Kelantan", "Kelantan");
+
+        createSeries("semua kehadiran", "Kehadiran Rollcall");
+        createSeries("kehadiran diterima", "Kehadiran Rollcall Di Terima");
+        createSeries("kehadiran ditolak", "Kehadiran Rollcall Di Tolak");
+        createSeries("kehadiran tidak hadir", "Kehadiran Roll Call Tidak hadir");
+
+
+        // Legend
+        chart.legend = new am4charts.Legend();
+
+        // Enable export
+        chart.exporting.menu = new am4core.ExportMenu();
+        chart.exporting.menu.items = [{
+            "label": "...",
+            "menu": [{
+                    "type": "png",
+                    "label": "PNG"
+                },
+                {
+                    "type": "pdf",
+                    "label": "PDF"
+                },
+            ]
+        }];
+        chart.exporting.menu.align = "right";
+        chart.exporting.menu.verticalAlign = "top";
+        chart.exporting.filePrefix = "Laporan Kehadiran Roll Call";
+        var title = chart.titles.create();
+        title.text = "Laporan Kehadiran Roll Call";
+        title.fontSize = 25;
+        title.marginBottom = 30;
+
+        var options = chart.exporting.getFormatOptions("pdf");
+        options.addURL = false;
+        chart.exporting.setFormatOptions("pdf", options);
+    });
 </script>
 
 <div>
@@ -174,32 +279,114 @@
             </div>
         </div>
     </div>
-    @elseif(auth()->user()->role == 'ketua_bahagian')
+    @elseif(auth()->user()->role == 'ketua_bahagian' or auth()->user()->role == 'ketua_jabatan')
     <div class="container-fluid mt--6">
         <div class="row">
             <div class="col-xl-12">
 
                 <div class="card">
-                    <div id="chartdiv"></div>
+                    <div id="chartdivkb"></div>
 
                 </div>
 
             </div>
         </div>
-    </div>
-    @elseif(auth()->user()->role == 'ketua_jabatan')
-    <div class="container-fluid mt--6">
-        <div class="row">
-            <div class="col-xl-12">
-
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">Jana Laporan</h3>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+                    <form method="POST" action="/filter_laporan_hadir">
+                        @csrf
+                        <div class="row">
+                            <div class="col">
+                                <h4>Nama Penguatkuasa</h4>
+                                <select id="jana_laporan" onchange="janaLaporan()" name ="nama_kakitangan" required placeholder="Enter nama_kakitangan" class="form-control">
+                                    @foreach ($user_hadir as $user_hadirs)                                                   
+                                    <option hidden selected > Nama Kakitangan</option>
+                                    <option value="{{$user_hadirs->id}}">
+                                        {{$user_hadirs->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row float-right">
+                            <div class="col-sm ">
+                                <br>
+                                <a id="submit" class="btn btn-primary" href="">Jana Laporan</a>
+                            </div>
+                        </div>
+             
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            
+            <div class="col-md-12">
                 <div class="card">
-                    <div id="chartdiv"></div>
+                    <!-- Card header -->
+                    <div class="card-header border-0">
+                        <h3 class="mb-0">Kehadiran Roll Call</h3>
+                        <div class="card-body px-0">
+                            <!-- Light table -->
+                            <div class="table-responsive py-4">
+                                <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
+                                    style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Roll Call</th>
+                                            <th>Nama kakitangan</th>
+                                            <th>Status Hadir</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($lapor_hadir as $lapor_hadirs)
+                                        <tr>
+                                            <td>
+                                                {{$loop->index+1}}
+                                            </td>
+                                            <td>
+                                                {{$lapor_hadirs->nama_rollcall->tajuk_rollcall}}
+                                            </td>
+                                            <td>
+                                                {{$lapor_hadirs->nama_kakitangan->name}}
+                                            </td>
+                                            <td>
+                                                @if($lapor_hadirs->lulus ===1)
+                                               
+                                                <span class="badge badge-pill badge-success">Hadir</span>
+                                           
+                                                @elseif($lapor_hadirs->lulus ===0)
+                                            
+                                                    <span class="badge badge-pill badge-danger">Tidak Hadir</span>
+                                            
+                                                @elseif($lapor_hadirs->lulus ===null)
+                                            
+                                                    <span class="badge badge-pill badge-warning">Belum Hadir</span>
+                                            
+                                                @endif
 
+                                            </td>
+                                    
+                                          
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </div>
+
+      
+
     </div>
+   
     @elseif(auth()->user()->role == 'naziran')
     <div class="container-fluid mt--6">
         <div class="row">
@@ -235,6 +422,12 @@
 </div>
 </div>
 
-<div class="container-fluid">
+<script type="text/javascript">
+    function janaLaporan() {
+        let selected_id = $("#jana_laporan option:selected").val();
+        $("#submit").attr("href", "/filter_laporan_hadir/" + selected_id);
+
+    }
+</script>
 
     @endsection

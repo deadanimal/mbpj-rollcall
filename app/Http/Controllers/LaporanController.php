@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Laporan;
 use App\Models\Userrollcall;
+
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 use Auth;
+use PDF;
 
 
 class LaporanController extends Controller
@@ -48,10 +53,18 @@ class LaporanController extends Controller
             $arraykehadiran[] = ['monthname' => $kehadirans->monthname, 'semua kehadiran' => $kehadirans->jumlah, 'kehadiran diterima' => $kehadirans->jumlah, 'kehadiran ditolak' => $kehadirans->jumlah, 'kehadiran tidak hadir' => $kehadirans->jumlah, ];
         }
         
-                    // dd($arraykehadiran);
+        // dd($arraykehadiran);
+
+
+        //Laporan Kehadiran
+        // get User kehadiran untuk P,KB,KJ
+        $lapor_hadir=Userrollcall::All();
+        $user_hadir=User::All();
 
         return view ('laporan.index', [
             'kehadiran'=>$arraykehadiran,
+            'lapor_hadir'=>$lapor_hadir,
+            'user_hadir'=>$user_hadir,
         ]);
     }
 
@@ -119,5 +132,35 @@ class LaporanController extends Controller
     public function destroy(Laporan $laporan)
     {
         //
+    }
+    public function filter_laporan_hadir(Request $request, $id)
+    {
+
+        $tajuk_rollcall = UserRollcall::where('penguatkuasa_id', $id)->get();
+        $kakitangan = User::where('id', $id)->first();
+        $hadir = count(UserRollcall::where('penguatkuasa_id',$id)->where('lulus', 1)->get());
+        $tidak_hadir = count(UserRollcall::where('penguatkuasa_id',$id)->where('lulus', 0)->get());
+        $belum_hadir = count(UserRollcall::where('penguatkuasa_id',$id)->where('lulus', null)->get());
+
+        $currentdate = Carbon::now()->format('Y-m-d ');
+
+        //cetakan
+        $pdf = PDF::loadView('laporan.report', [
+            "kakitangan" => $kakitangan,
+            "hadir" => $hadir,
+            "tidak_hadir" => $tidak_hadir,
+            "belum_hadir" => $belum_hadir,
+            "report_ind" => $tajuk_rollcall,
+            "currentdate"=>$currentdate,
+
+        ])->setPaper('a4');
+
+        $pdf->save('report.pdf');
+
+        return view('laporan.pdf_viewer', [
+            "url"=> '/report.pdf'
+        ]);
+
+    
     }
 }

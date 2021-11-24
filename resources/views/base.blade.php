@@ -81,6 +81,30 @@
                                 <span class="nav-link-text">Pengurusan Roll Call</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#utiliti" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
+                                <i class="ni ni-chat-round text-red"></i>
+                                <span class="nav-link-text">Utiliti</span>
+                            </a>
+                            <div class="collapse" id="utiliti">
+                                <ul class="nav nav-sm flex-column">
+                                  <li class="nav-item">
+                                      <a href="/sebab" class="nav-link">
+                                      <span class="sidenav-mini-icon"></span>
+                                      <span class="sidenav-normal"> Sebab</span>
+                                      </a>
+                                  </li>
+        
+                                  <li class="nav-item">
+                                      <a href="/kumpulan" class="nav-link">
+                                      <span class="sidenav-mini-icon"> </span>
+                                      <span class="sidenav-normal"> Kumpulan </span>
+                                      </a>
+                                  </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
                     </ul>
                     <!-- Nav items lain-lain custom -->
                     @elseif(auth()->user()->role == 'naziran')
@@ -109,6 +133,29 @@
                                 <span class="nav-link-text">Laporan</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#utiliti" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
+                                <i class="ni ni-chat-round text-red"></i>
+                                <span class="nav-link-text">Utiliti</span>
+                            </a>
+                            <div class="collapse" id="utiliti">
+                                <ul class="nav nav-sm flex-column">
+                                  <li class="nav-item">
+                                      <a href="/sebab" class="nav-link">
+                                      <span class="sidenav-mini-icon"></span>
+                                      <span class="sidenav-normal"> Sebab</span>
+                                      </a>
+                                  </li>
+        
+                                  <li class="nav-item">
+                                      <a href="/kumpulan" class="nav-link">
+                                      <span class="sidenav-mini-icon"> </span>
+                                      <span class="sidenav-normal"> Kumpulan </span>
+                                      </a>
+                                  </li>
+                                </ul>
+                            </div>
+                        </li>           
                     </ul>
                     <!-- Nav items dalaman -->
                     @else

@@ -205,14 +205,28 @@
                                                         <form method="POST" action="/simpan_sebab/{{$userrollcall->userrollcall_id}}/">
                                                             @csrf
                                                             
-                                                            <label for="exampleFormControlTextarea1">Keterangan</label>
-                                                            <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1 "  placeholder="Sebab Tidak Hadir Roll Call"></textarea><br><br>
+                                                             <div class="col-md-12 ">
+                                                                <div class="form-group ">
+                                                                    <label for="status">Sebab Tidak Hadir</label>
+                                                                    <div class="input-group input-group-merge">
+                                                                        <select class="form-control" name="keterangan" require>
+                                                                        @foreach ($sebab as $sebabs)
+                                                                        <option value="{{$sebabs->sebab}}">{{$sebabs->sebab}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 ">
+                                                                <div class="form-group ">
+                                                                    <label for="avatar">Lampiran Sebab Tidak Hadir:</label>
+                                                                    <div class="input-group input-group-merge">
+                                                                        <input type="file" id="avatar" name="file_path" accept="image/png, image/jpeg">
+                                                                    </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                     
-                                                            <label for="avatar">Lampiran Sebab Tidak Hadir:</label>
-
-                                                            <input type="file" id="avatar" name="file_path" accept="image/png, image/jpeg">
-                                                        
-
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                                                                 <button type="submit" class="btn btn-primary">Kemaskini</button>
