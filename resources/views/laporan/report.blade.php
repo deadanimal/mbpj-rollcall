@@ -1,6 +1,6 @@
 <div>
     <div style="width: 100%" style="">
-        <img src="/Users/user/Desktop/kezmo/mbpjrollcall/mbpj_rollcall/public/argon/img/mbpj.png" width="100" height="100" style="margin-left: 40%;">
+        <img src="C:\laragon\www\rollcall\public\argon\img\mbpj.png" width="100" height="100" style="margin-left: 40%;">
     </div>
     <div>
         <h2 class="h2 text-white d-inline-block mb-0" style="margin-left: 25%;">Sistem Pengurusan Roll Call</h2>
@@ -22,18 +22,35 @@
     <table cellpadding="0" cellspacing="0" style="width:100%; margin-left:5.4pt; border-collapse:collapse;">
         <thead>
             <tr style="height:12pt;">
-                <td colspan="4" style="width: 371.25pt; border-bottom: 1pt solid rgb(181, 209, 152); padding: 4pt 4pt 3.5pt; vertical-align: top; background-color: rgb(80, 126, 37); text-align: center;">
-                    <p style="margin-top: 0pt; margin-bottom: 0pt; font-size: 12pt; text-align: left;"><strong><span style="font-family:'Superclarendon Regular'; color:#fefffe;"> Senarai Roll Call Penguatkuasa</span></strong></p><br>
+                <td colspan="4" style="width: 371.25pt; border-bottom: 1pt solid rgb(181, 209, 152); padding: 4pt 4pt 3.5pt; vertical-align: top; background-color: rgb(44, 58, 189); text-align: center;">
+                    <p style="margin-top: 0pt; margin-bottom: 0pt; font-size: 12pt; text-align: center;"><strong><span style="font-family:'Superclarendon Regular'; color:#fefffe;"> Senarai Roll Call Penguatkuasa</span></strong></p>
                 </td>
+             
             </tr>
-        </thead>
+        </thead><br><br>
+        <tr style="height:14.65pt;">
+            <td style="width:100%; border-top:1pt solid #b5d198; padding:3.5pt 4pt 4pt; vertical-align:top; background-color: rgb(116, 127, 226); text-align: center;">
+                <p style="margin-top: 0pt; margin-bottom: 0pt; font-size: 12pt; text-align: center;">&nbsp; Tajuk Roll Call</p>
+            </td>
+            <td style="width:100%; border-top:1pt solid #b5d198; padding:3.5pt 4pt 4pt; vertical-align:top; background-color: rgb(116, 127, 226); text-align: center;">
+                <p style="margin-top: 0pt; margin-bottom: 0pt; font-size: 12pt; text-align: center;">&nbsp;Status </p>
+            </td>
+            <td style="width:100%; border-top:1pt solid #b5d198; padding:3.5pt 4pt 4pt; vertical-align:top; background-color: rgb(116, 127, 226); text-align: center;">
+                <p style="margin-top: 0pt; margin-bottom: 0pt; font-size: 12pt; text-align: center;">&nbsp; Mula Roll Call</p>
+            </td>
+            <td style="width:100%; border-top:1pt solid #b5d198; padding:3.5pt 4pt 4pt; vertical-align:top; background-color: rgb(116, 127, 226); text-align: center;">
+                <p style="margin-top: 0pt; margin-bottom: 0pt; font-size: 12pt; text-align: center;">&nbsp; Akhir Roll Call</p>
+            </td>
+        </tr>
         <tbody>
             @foreach($report_ind as $report_inds)
             <tr style="height:14.65pt;">
                 <td style="width:100%; border-top:1pt solid #b5d198; padding:3.5pt 4pt 4pt; vertical-align:top;">
-                    <p style="margin-top: 0pt; margin-bottom: 0pt; font-size: 12pt; text-align: left;">&nbsp; {{$report_inds->nama_rollcall->tajuk_rollcall}}</p>
+                    {{-- {{isset($lapor_hadirs->nama_rollcall->tajuk_rollcall)? $lapor_hadirs->nama_rollcall->tajuk_rollcall : "" }} --}}
+
+                    <p style="margin-top: 0pt; margin-bottom: 0pt; font-size: 12pt; text-align: center;">&nbsp; {{isset($report_inds->nama_rollcall->tajuk_rollcall)?$report_inds->nama_rollcall->tajuk_rollcall :""}}</p>
                 </td>
-                <td style="width:100%; border-top:1pt solid #b5d198; padding:3.5pt 4pt 4pt; vertical-align:top;">
+                <td style="width:100%; border-top:1pt solid #b5d198; padding:3.5pt 4pt 4pt; vertical-align:top; text-align: center;">
                     
                     @if ($report_inds->lulus===1)
                     <span class="badge badge-pill badge-primary">Hadir</span>
@@ -43,6 +60,12 @@
                     <span class="badge badge-pill badge-primary">Belum Hadir</span>
 
                     @endif
+                </td>
+                <td style="width:100%; border-top:1pt solid #b5d198; padding:3.5pt 4pt 4pt; vertical-align:top;">
+                    <p style="margin-top: 0pt; margin-bottom: 0pt; font-size: 12pt; text-align: center;">&nbsp; {{isset($report_inds->nama_rollcall->mula_rollcall)?$report_inds->nama_rollcall->mula_rollcall :""}}</p>
+                </td>
+                <td style="width:100%; border-top:1pt solid #b5d198; padding:3.5pt 4pt 4pt; vertical-align:top;">
+                    <p style="margin-top: 0pt; margin-bottom: 0pt; font-size: 12pt; text-align: center;">&nbsp; {{isset($report_inds->nama_rollcall->akhir_rollcall)?$report_inds->nama_rollcall->akhir_rollcall :""}}</p>
                 </td>
             </tr>
             @endforeach

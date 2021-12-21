@@ -26,8 +26,8 @@
             <div class="col-md-12">
                 <div class="card">
                       <!-- Card header -->
-                      <div class="card-header">
-                        <h3 class="mb-0">Kemaskini Jadual Roll Call</h3>
+                      <div class="card-header bg-default">
+                        <h3 class="text-white mb-0">Kemaskini Jadual Roll Call</h3>
                     </div>
                     <!-- Card body -->
                     <div class="card-body">
@@ -62,15 +62,15 @@
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Makluman</h5>
+                                        <div class="modal-header bg-default">
+                                            <h5 class="text-white modal-title" id="exampleModalLabel">Makluman</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            Kemaskini
-                                        </div>
+                                            Anda Pasti Untuk Kemaskini ?            
+                                       </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary btn-sm"
                                                 data-dismiss="modal">Tutup</button>

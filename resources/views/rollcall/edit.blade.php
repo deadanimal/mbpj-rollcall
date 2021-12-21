@@ -11,14 +11,16 @@
                         <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                 <li class="breadcrumb-item"><a href="/rollcalls"><i class="fas fa-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="">Pengurusan</a></li>
+                                <li class="breadcrumb-item"><a href="/rollcalls">Pengurusan</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Roll Call</li>
                             </ol>
                         </nav>
                     </div>
                     <div class="col-lg-12 col text-right">
-                        <a type="button" class="btn btn-neutral" data-toggle="modal" data-target="#tambahkakitangan"> +
-                            Tambah Kakitangan Roll Call</a>
+                        <a type="button" class="btn btn-neutral btn-sm" data-toggle="modal" data-target="#tambahkakitangan"> +
+                            Tambah Penguatkuasa Roll Call</a>
+                        <a type="button" class="btn btn-neutral btn-sm" data-toggle="modal" data-target="#tambahbahagian"> +
+                                Tambah Bahagian</a>
                     </div>
                 </div>
             </div>
@@ -32,8 +34,8 @@
                     <!-- Input groups -->
                     <div class="card">
                         <!-- Card header -->
-                        <div class="card-header">
-                            <h3 class="mb-0">Kemaskini Jadual Roll Call</h3>
+                        <div class="card-header bg-default">
+                            <h3 class="text-white mb-0">Kemaskini Jadual Roll Call</h3>
                         </div>
                         <!-- Card body -->
                         <div class="card-body">
@@ -185,29 +187,30 @@
                                                         id="maklumat" name="maklumat" value="{{$rollcall->maklumat}}"></textarea>
                                                     </div>  
                                         </div>
-                                        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                                        <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal"
                                         data-target="#exampleModal">
                                         Kemaskini
-                                    </button>                        
+                                    </button>      
+                  
                                 </div>
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Makluman</h5>
+                                                <div class="modal-header bg-default">
+                                                    <h5 class="text-white modal-title" id="exampleModalLabel">Makluman</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    Kemaskini
+                                                    Kemaskini Roll Call ?
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
+                                                    <button type="button" class="btn btn-secondary btn-sm"
                                                         data-dismiss="modal">Tutup</button>
-                                                    <button type="submit" class="btn btn-primary float-right">Kemaskini</button>
+                                                    <button type="submit" class="btn btn-primary btn-sm float-right">Kemaskini</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -219,114 +222,124 @@
                 </div>
             </div>
         </div>
+    </div>
     <div class="container-fluid mt--10">
         <div class="row ">
             <div class="col-md-12">
+
+            <button style="margin-bottom: 10px" class="btn btn-danger btn-sm delete_all " data-url="{{ url('penguatkuasaDeleteAll') }}">Hapus Pilihan</button>
+            </div>
+            <div class="col-md-12">
                 <div class="card">
                     <!-- Card header -->
-                    <div class="card-header border-0">
-                        <h3 class="mb-0">Senarai Kakitangan </h3>
-                        <div class="col-md-6 header float-right mb--12">                 
-                        </div>
-                        <div class="card-body px-0">
-                            <!-- Light table -->
-                            <div class="table-responsive">
-                                <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
-                                    style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Kakitangan</th>
-                                            <th>No Pekerja | NRIC </th>   
-                                            <th>Waktu Masuk </th><th> Waktu Keluar</th>
-                                            <th>Status </th>
+                    <div class="card-header bg-default border-0">
+                        <h3 class="text-white mb-0">Senarai Penguatkuasa Terlibat </h3>
+                    </div>
+                    <div class="col-md-6 header float-right mb--12">                 
+                    </div>
+                    <div class="card-body px-0">
+                        <!-- Light table -->
 
-                                            <th>Tindakan</th>
+                        <div class="table-responsive">
+                            <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
+                                style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th width="50px"><input type="checkbox" id="master"></th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{-- {{$userrollcalls}} --}}
-                                        @foreach($userrollcalls as $userrollcall)
-                                        <tr>
-                                            <td>{{$loop->index+1}}</td>
-                                            <td>{{$userrollcall->penguatkuasa['name']}}</td>
-                                            <td>{{$userrollcall->penguatkuasa['user_code']}}<br><br>{{$userrollcall->penguatkuasa['nric']}}</td>
+                                        <th>No</th>
+                                        <th>Nama Penguatkuasa</th>
+                                        <th>No Pekerja | NRIC </th>   
+                                        <th>Waktu Masuk </th><th> Waktu Keluar</th>
+                                        <th>Status </th>
 
-                                            @if($userrollcall['masuk'] === null)
-                                            <td><span class="badge badge-pill badge-primary">Dalam Proses</span></td>
-                                            @elseif($userrollcall['masuk'] !==null)
-                                            <td>{{$userrollcall['masuk']}}</td>
+                                        <th>Tindakan</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{-- {{$userrollcalls}} --}}
+                                    @foreach($userrollcalls as $userrollcall)
+                                    <tr>
+                                        <td><input type="checkbox" class="sub_chk" data-id="{{$userrollcall->id}}"></td>
+
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$userrollcall->penguatkuasa['name']}}</td>
+                                        <td>{{$userrollcall->penguatkuasa['user_code']}}<br><br>{{$userrollcall->penguatkuasa['nric']}}</td>
+
+                                        @if($userrollcall['masuk'] === null)
+                                        <td><span class="badge badge-pill badge-primary">Dalam Proses</span></td>
+                                        @elseif($userrollcall['masuk'] !==null)
+                                        <td>{{$userrollcall['masuk']}}</td>
+                                        @endif
+                                        @if($userrollcall['keluar'] === null)
+                                        <td><span class="badge badge-pill badge-primary">Dalam Proses</span></td>
+                                        @elseif($userrollcall['keluar'] !== null)
+                                        <td>{{$userrollcall['keluar']}}</td>
+                                        @endif
+                                        
+                                        @if($userrollcall['sokong'] === null)
+                                        <td><span class="badge badge-pill badge-primary">Dalam Proses</span></td>
+                                        @elseif($userrollcall['sokong'] ===1)
+                                        <td><span class="badge badge-pill badge-success">Disokong</span><br><br>
+                                            @if($userrollcall['lulus'] === null)
+                                            <span class="badge badge-pill badge-primary">Dalam Proses</span>
+                                            @elseif($userrollcall['lulus'] ===1)
+                                            <span class="badge badge-pill badge-success">Diluluskan</span>
+                                            @elseif($userrollcall['lulus'] ===0)
+                                            <span class="badge badge-pill badge-danger">Ditolak</span>
                                             @endif
-                                            @if($userrollcall['keluar'] === null)
-                                            <td><span class="badge badge-pill badge-primary">Dalam Proses</span></td>
-                                            @elseif($userrollcall['keluar'] !== null)
-                                            <td>{{$userrollcall['keluar']}}</td>
-                                            @endif
-                                           
-                                            @if($userrollcall['sokong'] === null)
-                                            <td><span class="badge badge-pill badge-primary">Dalam Proses</span></td>
-                                            @elseif($userrollcall['sokong'] ===1)
-                                            <td><span class="badge badge-pill badge-success">Disokong</span><br><br>
-                                                @if($userrollcall['lulus'] === null)
-                                               <span class="badge badge-pill badge-primary">Dalam Proses</span>
-                                                @elseif($userrollcall['lulus'] ===1)
-                                               <span class="badge badge-pill badge-success">Diluluskan</span>
-                                                @elseif($userrollcall['lulus'] ===0)
-                                               <span class="badge badge-pill badge-danger">Ditolak</span>
-                                                @endif
-                                            </td>
-                                            @elseif($userrollcall['sokong'] ===0)
-                                            <td><span class="badge badge-pill badge-danger">Ditolak</span><br><br>
-                                                <span class="badge badge-pill badge-danger">Ditolak</span>
-                                            </td>
+                                        </td>
+                                        @elseif($userrollcall['sokong'] ===0)
+                                        <td><span class="badge badge-pill badge-danger">Ditolak</span><br><br>
+                                            <span class="badge badge-pill badge-danger">Ditolak</span>
+                                        </td>
 
-                                            @endif
-                                          
-                                            <td> <button onclick="buang({{ $userrollcall->id }})"class="btn btn-danger btn-sm"><i class="ni ni-basket"></i></button> </td>
-                                         
-                                        </tr>
+                                        @endif
+                                        
+                                        <td> <button onclick="buang({{ $userrollcall->id }})"class="btn btn-danger btn-sm"><i class="ni ni-basket"></i></button> </td>
+                                        
+                                    </tr>
 
-                                        <script>
-                                            function buang(id) {
-                                                swal({
-                                                    title: 'Makluman?',
-                                                    text: "Buang Kakitangan !",
-                                                    type: 'warning',
-                                                    showCancelButton: true,
-                                                    confirmButtonColor: '#3085d6',
-                                                    cancelButtonColor: '#d33',
-                                                    confirmButtonText: 'Buang',
-                                                    cancelButtonText: 'Tutup',
+                                    <script>
+                                        function buang(id) {
+                                            swal({
+                                                title: 'Makluman?',
+                                                text: "Hapus Penguatkuasa !",
+                                                type: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#3085d6',
+                                                cancelButtonColor: '#d33',
+                                                confirmButtonText: 'Buang',
+                                                cancelButtonText: 'Tutup',
 
-                                                }).then(result => {
-                                                    console.log("result", result);
-                                                    if (result.value == true) {
-                                                        console.log("id", id);
-                                                        $.ajax({
-                                                            url: "/userrollcalls/"+id,
-                                                            type: "POST",
-                                                            data: {
-                                                                "id": id,
-                                                                "_token": "{{ csrf_token() }}",
-                                                                "_method": 'delete'
-                                                            },
-                                                            success: function(data) {
-                                                                location.reload();
-                                                            },
-                                                        });
-                                                        
-                                                    } else if (result.dismiss == "cancel") {
-                                                        console.log("dismiss");
-                                                    }
-                                                })
-                                            }
+                                            }).then(result => {
+                                                console.log("result", result);
+                                                if (result.value == true) {
+                                                    console.log("id", id);
+                                                    $.ajax({
+                                                        url: "/userrollcalls/"+id,
+                                                        type: "POST",
+                                                        data: {
+                                                            "id": id,
+                                                            "_token": "{{ csrf_token() }}",
+                                                            "_method": 'delete'
+                                                        },
+                                                        success: function(data) {
+                                                            location.reload();
+                                                        },
+                                                    });
+                                                    
+                                                } else if (result.dismiss == "cancel") {
+                                                    console.log("dismiss");
+                                                }
+                                            })
+                                        }
 
-                                        </script>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </script>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -357,8 +370,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                            <button type="button" class="btn btn-primary">Kemaskini</button>
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Tutup</button>
+                            <button type="button" class="btn btn-primary btn-sm">Kemaskini</button>
                         </div>
                     </div>
                 </div>
@@ -367,12 +380,11 @@
     </div>
     <!-- Modal -->
     <div  class="modal fade" id="tambahkakitangan" tabindex="-1" role="dialog" 
-    {{-- <div class="modal fade" id="tambahkakitangan" tabindex="-1" role="dialog" aria-labelledby="tambahkakitanganLabel" --}}
         aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="tambahkakitanganLabel"> Tambah Kakitangan Roll Call</h5>
+                <div class="modal-header bg-default">
+                    <h5 class="text-white modal-title" id="tambahkakitanganLabel"> Tambah Penguatkuasa Roll Call</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -403,24 +415,22 @@
 
                                         <tr>
 
-                                            <th>No Kakitangan</th>
-                                            {{-- <th>Nama</th> --}}
+                                            <th>Nama Penguatkuasa</th>
                                             <th>Tindakan</th>
                                         </tr>
                                         <tr>             
                                             <td>
-                                                {{-- <input type="text" name="penguatkuasa_id" required placeholder="Enter penguatkuasa_id" class="form-control"  /> --}}
-                                                <select name ="penguatkuasa_id[]" required placeholder="Enter penguatkuasa_id" class="form-control">
+                                                <select name ="penguatkuasa_id[]" required placeholder="Enter penguatkuasa_id" class="form-control" required>
                                                     @foreach ($kakitangan as $kakitangan)                                                   
                                                     <option hidden selected > Pilih Penguatkuasa </option>
                                                     <option value="{{$kakitangan->id}}">
-                                                        {{$kakitangan->name}} - {{$kakitangan->role}} </option>
+                                                        {{$kakitangan->name}}  </option>
                                                     @endforeach
                                                 </select>
                                             </td> 
                                             {{-- <td><select id="livesearch" class="livesearch form-control" name="livesearch"></select></td>                               --}}
                                             <td><input type="hidden" name="roll_id" class="form-control" value="{{$rollcall->id}}"/>
-                                            <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary float-right">Tambah Kakitangan</button></td>
+                                            <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary btn-sm">Tambah </button></td>
     
                                         </tr>
                                         {{-- <script type="text/javascript">
@@ -447,13 +457,11 @@
                                                 }
                                             });
                                         </script> --}}
-
         
                                     </table>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                                        {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Tutup</button>
+                                        <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
 
                                     </div>   
 
@@ -464,6 +472,55 @@
                         </div>
                     </div>
                 </div>  
+            </div>
+        </div>
+    </div>
+
+     <!-- Modal -->
+     <div class="modal fade" id="tambahbahagian" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-default">
+                    <h5 class="text-white modal-title" id="tambahbahagianLabel"> Tambah Bahagian</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card-wrapper">
+                                <form method="POST" action="/simpanbahagian">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="kumpulan">Pilih Kumpulan</label><br>
+                                                <select name="id_kumpulan" class="form-control custom-select" required>
+                                                    <option value="">Pilih Kumpulan</option>
+                                                    @foreach ($kumpulan as $kumpulans)
+                                                        <option value="{{ $kumpulans->id }}">
+                                                            {{ $kumpulans->nama_kumpulan }}</option>
+                                                    @endforeach
+                                                </select>
+
+
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="roll_id" class="form-control"
+                                                    value="{{ $rollcall->id }}" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Tutup</button>
+                                        <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+
+                                    </div>   
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -485,25 +542,25 @@
 {{-- Script --}}
 @section('script')
 <script
-    src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
+    src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
 </script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/select2/dist/js/select2.min.js">
-</script>
-<script
-    src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
-</script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/moment.min.js">
-</script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datetimepicker.js">
-</script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/nouislider/distribute/nouislider.min.js">
-</script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/quill/dist/quill.min.js">
-</script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/dropzone/dist/min/dropzone.min.js">
+<script src="/assets/vendor/select2/dist/js/select2.min.js">
 </script>
 <script
-    src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js">
+    src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
+</script>
+<script src="/assets/vendor/moment.min.js">
+</script>
+<script src="/assets/vendor/bootstrap-datetimepicker.js">
+</script>
+<script src="/assets/vendor/nouislider/distribute/nouislider.min.js">
+</script>
+<script src="/assets/vendor/quill/dist/quill.min.js">
+</script>
+<script src="/assets/vendor/dropzone/dist/min/dropzone.min.js">
+</script>
+<script
+    src="/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js">
 </script>
 <script type="text/javascript">
     $(function () {
@@ -536,11 +593,11 @@
     });
 
 </script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/js/demo.min.js">
+<script src="/assets/js/demo.min.js">
 </script>
 
 
-
+{{-- //ckeditor encode data --}}
 <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 <script type="text/javascript">
 
@@ -559,10 +616,116 @@ $(window).on('load', function(){
         //     '][penguatkuasa_id]" placeholder="Enter penguatkuasa_id" class="form-control" /></td><td><button type="button" class="btn btn-danger float-right remove-input-field">Tolak Kakitangan</button></td></tr>'
         //     );
 
-        $("#dynamicAddRemove").append('<tr><td><select name="penguatkuasa_id[]"  placeholder="Enter penguatkuasa_id" class="form-control">@foreach ($users as $user) <option value="{{$user->id}}"> {{$user->name}} - {{$user->role}} </option> @endforeach  </select></td><td><button type="button" class="btn btn-danger float-right remove-input-field">Tolak Kakitangan</button></td></tr>');
+        $("#dynamicAddRemove").append('<tr><td><select name="penguatkuasa_id[]"  placeholder="Enter penguatkuasa_id" class="form-control">@foreach ($users as $user) <option value="{{$user->id}}"> {{$user->name}} - {{$user->role}} </option> @endforeach  </select></td><td><button type="button" class="btn btn-danger btn-sm remove-input-field"> Hapus</button></td></tr>');
     });
     $(document).on('click', '.remove-input-field', function () {
         $(this).parents('tr').remove();
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $('#master').on('click', function(e) {
+         if($(this).is(':checked',true))  
+         {
+            $(".sub_chk").prop('checked', true);  
+         } else {  
+            $(".sub_chk").prop('checked',false);  
+         }  
+        });
+
+
+        $('.delete_all').on('click', function(e) {
+
+
+            var allVals = [];  
+            $(".sub_chk:checked").each(function() {  
+                allVals.push($(this).attr('data-id'));
+            });  
+
+
+            if(allVals.length <=0)  
+            {  
+                alert("Sila Tandakan Pilihan Senarai Hapus Penguatkuasa Yang Diperlukan.");  
+            }  else {  
+
+
+                var check = confirm("Anda Pasti Untuk Hapus Semua Pilihan Anda?");  
+                if(check == true){  
+
+
+                    var join_selected_values = allVals.join(","); 
+
+
+                    $.ajax({
+                        url: $(this).data('url'),
+                        type: 'DELETE',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: 'ids='+join_selected_values,
+                        success: function (data) {
+                            if (data['success']) {
+                                $(".sub_chk:checked").each(function() {  
+                                    $(this).parents("tr").remove();
+                                });
+                                alert(data['success']);
+                            } else if (data['error']) {
+                                alert(data['error']);
+                            } else {
+                                alert('Whoops Something went wrong!!');
+                            }
+                        },
+                        error: function (data) {
+                            alert(data.responseText);
+                        }
+                    });
+
+
+                  $.each(allVals, function( index, value ) {
+                      $('table tr').filter("[data-row-id='" + value + "']").remove();
+                  });
+                }  
+            }  
+        });
+
+
+        $('[data-toggle=confirmation]').confirmation({
+            rootSelector: '[data-toggle=confirmation]',
+            onConfirm: function (event, element) {
+                element.trigger('confirm');
+            }
+        });
+
+
+        $(document).on('confirm', function (e) {
+            var ele = e.target;
+            e.preventDefault();
+
+
+            $.ajax({
+                url: ele.href,
+                type: 'DELETE',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                success: function (data) {
+                    if (data['success']) {
+                        $("#" + data['tr']).slideUp("slow");
+                        alert(data['success']);
+                    } else if (data['error']) {
+                        alert(data['error']);
+                    } else {
+                        alert('Whoops Something went wrong!!');
+                    }
+
+                    window.location.reload();
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            });
+
+
+            return false;
+        });
     });
 </script>
 

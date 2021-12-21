@@ -25,29 +25,29 @@
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header">
-                    <h5 class="h3 mb-3">Kemaskini kumpulan Roll Call</h5>
-                    <div class="card-body">
-                        <form method="POST" action="/kumpulan">
-                            @csrf
-                            <!-- Input groups with icon -->
+                <div class="card-header bg-default">
+                    <h5 class="text-white h3 mb-3">Kemaskini kumpulan Roll Call</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="/kumpulan">
+                        @csrf
+                        <!-- Input groups with icon -->
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="kumpulan">Kemaskini</label>
-                                        <div class="input-group input-group-merge">
-                                            <input class="form-control" name="nama_kumpulan" required placeholder="kumpulan" type="text">
-                                           
-                                           
-                                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="kumpulan">Kemaskini</label>
+                                    <div class="input-group input-group-merge">
+                                        <input class="form-control" name="nama_kumpulan" required placeholder="kumpulan" type="text">
+                                        
+                                        
                                     </div>
                                 </div>
                             </div>
-                            <button  class="btn btn-primary float-right">Tambah</button>
+                        </div>
+                        <button  class="btn btn-primary btn-sm float-right">Tambah</button>
 
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

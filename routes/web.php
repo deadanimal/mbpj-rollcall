@@ -9,12 +9,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserrollcallController;
 use App\Http\Controllers\Select2SearchController;
 use App\Http\Controllers\JadualController;
+use App\Http\Controllers\RekodController;
 use App\Http\Controllers\SebabController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\KumpulanController;
-
-
-
+use App\Http\Controllers\UserKumpulanController;
 
 
 Route::get('/', function () {
@@ -30,9 +29,10 @@ Route::resource('laporans',LaporanController::class)->middleware(['auth']);
 Route::resource('users',UserController::class)->middleware(['auth']);
 Route::resource('userrollcalls',UserrollcallController::class)->middleware(['auth']);
 Route::resource('jaduals',JadualController::class)->middleware(['auth']);
+Route::resource('rekod',RekodController::class)->middleware(['auth']);
 Route::resource('sebab',SebabController::class)->middleware(['auth']);
 Route::resource('kumpulan',KumpulanController::class)->middleware(['auth']);
-
+Route::resource('userkumpulan',UserKumpulanController::class)->middleware(['auth']);
 
 
 
@@ -61,12 +61,26 @@ Route::post('/tolak_sokong',[RollcallController::class,'tolak_sokong']);
 Route::get('/lulus/{id}',[RollcallController::class,'lulus']);
 Route::post('/tolak_lulus',[RollcallController::class,'tolak_lulus']);
 
-//Filter Report
-// Route::get('/filter_laporan_hadir/{id}',[RollcallController::class,'filter_laporan_hadir']);
+//Filter
 Route::get('/filter_laporan_hadir/{id}',[LaporanController::class,'filter_laporan_hadir']);
+Route::get('/filter_laporan_hadir_bahagian/{id}',[LaporanController::class,'filter_laporan_hadir_bahagian']);
 
-//Forgot Password
+
+//Change Password
 Route::post('change-password', [ChangePasswordController::class,'store'])->name('change.password');
+
+
+Route::post('/simpanbahagian',[RollcallController::class,'simpanbahagian']);
+
+Route::get('/delete_pengguna_kumpulan/{id_user}/{id_kumpulan}',[UserKumpulanController::class,'delete_pengguna_kumpulan']);
+
+Route::delete('penguatkuasaDeleteAll',[RollcallController::class, 'deleteAll']);
+Route::post('PegawaiSokongAll',[RollcallController::class, 'SokongAll']);
+Route::post('TolakSokongAll',[RollcallController::class, 'TolakSokongAll']);
+
+Route::post('PegawaiLulusAll',[RollcallController::class, 'LulusAll']);
+
+
 
 
 require __DIR__.'/auth.php';

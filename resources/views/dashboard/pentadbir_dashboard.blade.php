@@ -158,54 +158,55 @@
         </div>
         <div class="row">
             <div class="col-xl-12">
-                <div class="card bg-default">
+                <div class="card ">
                     <!-- Card header -->
-                    <div class="card-header border-0">
-                        <h3 class="mb-0">Log Aktiviti Sistem Roll Call</h3>
-                        <div class="card-body px-0">
+                    <div class="card-header bg-default ">
+                        <h3 class="text-white mb-0">Log Aktiviti Sistem Roll Call</h3>
+                    </div>
+                    <div class="card-body px-0">
 
-                            <div class="table-responsive py-4">
-                                <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
-                                    style="width:100%">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama<br><br>Peranan</th>
-                                            <th>Tarikh</th>
-                                            <th>Makluman</th>
+                        <div class="table-responsive py-4">
+                            <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
+                                style="width:100%">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama<br><br>Peranan</th>
+                                        <th>Tarikh</th>
+                                        <th>Makluman</th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                        @foreach ($audits as $audit)
-                                        <tr>
-                                            <td>{{ $loop->index + 1 }}</td>
-                                            {{-- <td>{{ $audit->id }}</td> --}}
-                                            <td>{{ $audit->name}} - {{ $audit->peranan}}</td>
-                                            {{-- <td>{{ $audit->model_name }}</td> --}}
-                                            <td>{{ $audit->created_at }}</td>
-                                            {{-- <td>{{ $audit->description }}</td> --}}
+                                    @foreach ($audits as $audit)
+                                    <tr>
+                                        <td>{{ $loop->index + 1 }}</td>
+                                        {{-- <td>{{ $audit->id }}</td> --}}
+                                        <td>{{ $audit->name}} - {{ $audit->peranan}}</td>
+                                        {{-- <td>{{ $audit->model_name }}</td> --}}
+                                        <td>{{ $audit->created_at }}</td>
+                                        {{-- <td>{{ $audit->description }}</td> --}}
 
-                                            @if($audit->description =='Log Masuk')
-                                            <td>
-                                                <span class="badge badge-pill badge-success">Log Masuk</span>
-                                            </td>
-                                            @elseif($audit->description =='Log Keluar')
-                                            <td>
-                                                <span class="badge badge-pill badge-danger">Log Keluar</span>
-                                            </td>
-                                            @else
-                                            <td>
-                                                {{$audit->description}}
-                                            </td>
-                                            @endif
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                        @if($audit->description =='Log Masuk')
+                                        <td>
+                                            <span class="badge badge-pill badge-success">Log Masuk</span>
+                                        </td>
+                                        @elseif($audit->description =='Log Keluar')
+                                        <td>
+                                            <span class="badge badge-pill badge-danger">Log Keluar</span>
+                                        </td>
+                                        @else
+                                        <td>
+                                            {{$audit->description}}
+                                        </td>
+                                        @endif
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

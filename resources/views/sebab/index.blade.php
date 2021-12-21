@@ -44,83 +44,83 @@
             <div class="col-md-12">
                 <div class="card">
                     <!-- Card header -->
-                    <div class="card-header border-0">
-                        <h3 class="mb-0">Senarai Sebab Tidak Hadir</h3>
-                        <div class="card-body px-0">
-                            <!-- Light table -->
-                            <div class="table-responsive py-4">
-                                <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
-                                    style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Sebab Roll Call</th>
-                                            <th>Tindakan</th>
+                    <div class="card-header bg-default border-0">
+                        <h3 class="text-white mb-0">Senarai Sebab Tidak Hadir</h3>
+                    </div>
+                    <div class="card-body px-0">
+                        <!-- Light table -->
+                        <div class="table-responsive py-4">
+                            <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
+                                style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Sebab Roll Call</th>
+                                        <th>Tindakan</th>
 
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($sebab as $sebabs)
-                                        <tr>
-                                            <td>
-                                                {{$loop->index+1}}
-                                            </td>
-                                            <td>
-                                                {{$sebabs->sebab}}
-                                            </td>
-                                            <td>
-                                                <a href="/sebab/{{$sebabs->id}}/edit"
-                                                    class="btn btn-primary btn-sm"> kemaskini <i
-                                                        class="ni ni-single-copy-04"></i>
-                                                </a>
-                                                <br>
-                                                <button onclick="buang({{$sebabs->id}})" class="btn btn-danger btn-sm">Buang <i class="ni ni-basket"></i></button><br><br>
-                                            </td>
-                                        </tr>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($sebab as $sebabs)
+                                    <tr>
+                                        <td>
+                                            {{$loop->index+1}}
+                                        </td>
+                                        <td>
+                                            {{$sebabs->sebab}}
+                                        </td>
+                                        <td>
+                                            <a href="/sebab/{{$sebabs->id}}/edit"
+                                                class="btn btn-primary btn-sm"> kemaskini <i
+                                                    class="ni ni-single-copy-04"></i>
+                                            </a>
+                                            <br>
+                                            <button onclick="buang({{$sebabs->id}})" class="btn btn-danger btn-sm">Hapus<i class="ni ni-basket"></i></button><br><br>
+                                        </td>
+                                    </tr>
 
-                                        <script>
-                                            function buang(id) {
-                                                swal({
-                                                    title: 'Makluman?',
-                                                    text: "Buang Sebab Tidak Hadir?!",
-                                                    type: 'warning',
-                                                    showCancelButton: true,
-                                                    confirmButtonColor: '#3085d6',
-                                                    cancelButtonColor: '#d33',
-                                                    confirmButtonText: 'Buang',
-                                                    cancelButtonText: 'Tutup',
+                                    <script>
+                                        function buang(id) {
+                                            swal({
+                                                title: 'Makluman?',
+                                                text: "Buang Sebab Tidak Hadir?!",
+                                                type: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#3085d6',
+                                                cancelButtonColor: '#d33',
+                                                confirmButtonText: 'Buang',
+                                                cancelButtonText: 'Tutup',
 
-                                                }).then(result => {
-                                                    console.log("result", result);
-                                                    if (result.value == true) {
-                                                        console.log("id", id);
-                                                        $.ajax({
-                                                            url: "sebab/" + id,
-                                                            type: "POST",
-                                                            data: {
-                                                                "id": id,
-                                                                "_token": "{{ csrf_token() }}",
-                                                                "_method": 'delete'
-                                                            },
-                                                            success: function (data) {
-                                                                location.reload();
-                                                            },
-                                                        });
+                                            }).then(result => {
+                                                console.log("result", result);
+                                                if (result.value == true) {
+                                                    console.log("id", id);
+                                                    $.ajax({
+                                                        url: "sebab/" + id,
+                                                        type: "POST",
+                                                        data: {
+                                                            "id": id,
+                                                            "_token": "{{ csrf_token() }}",
+                                                            "_method": 'delete'
+                                                        },
+                                                        success: function (data) {
+                                                            location.reload();
+                                                        },
+                                                    });
 
-                                                    } else if (result.dismiss == "cancel") {
-                                                        console.log("dismiss");
-                                                    }
-                                                })
-                                            }
+                                                } else if (result.dismiss == "cancel") {
+                                                    console.log("dismiss");
+                                                }
+                                            })
+                                        }
 
-                                        </script>
+                                    </script>
 
-                                    
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -135,85 +135,86 @@
             <div class="col-md-12">
                 <div class="card">
                     <!-- Card header -->
-                    <div class="card-header border-0">
-                        <h3 class="mb-0">Senarai Sebab Tidak Hadir</h3>
-                        <div class="card-body px-0">
-                            <!-- Light table -->
-                            <div class="table-responsive py-4">
-                                <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
-                                    style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Sebab Roll Call</th>
-                                            <th>Tindakan</th>
+                    <div class=" card-header bg-default  border-0" >
+                        <h3 class="text-white mb-0">Senarai Sebab Tidak Hadir</h3>
+                    </div>
+                    <div class="card-body px-0">
+                        <!-- Light table -->
+                        <div class="table-responsive py-4">
+                            <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
+                                style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Sebab Roll Call</th>
+                                        <th>Tindakan</th>
 
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($sebab as $sebabs)
-                                        <tr>
-                                            <td>
-                                                {{$loop->index+1}}
-                                            </td>
-                                            <td>
-                                                {{$sebabs->sebab}}
-                                            </td>
-                                            <td>
-                                                <a href="/sebab/{{$sebabs->id}}/edit"
-                                                    class="btn btn-primary btn-sm"> kemaskini <i
-                                                        class="ni ni-single-copy-04"></i>
-                                                </a>
-                                                <br>
-                                                <button onclick="buang({{$sebabs->id}})" class="btn btn-danger btn-sm">Buang <i class="ni ni-basket"></i></button><br><br>
-                                            </td>
-                                        </tr>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($sebab as $sebabs)
+                                    <tr>
+                                        <td>
+                                            {{$loop->index+1}}
+                                        </td>
+                                        <td>
+                                            {{$sebabs->sebab}}
+                                        </td>
+                                        <td>
+                                            <a href="/sebab/{{$sebabs->id}}/edit"
+                                                class="btn btn-primary btn-sm"> kemaskini <i
+                                                    class="ni ni-single-copy-04"></i>
+                                            </a>
+                                            <br>
+                                            <button onclick="buang({{$sebabs->id}})" class="btn btn-danger btn-sm">Hapus <i class="ni ni-basket"></i></button><br><br>
+                                        </td>
+                                    </tr>
 
-                                        <script>
-                                            function buang(id) {
-                                                swal({
-                                                    title: 'Makluman?',
-                                                    text: "Buang Sebab Tidak Hadir?!",
-                                                    type: 'warning',
-                                                    showCancelButton: true,
-                                                    confirmButtonColor: '#3085d6',
-                                                    cancelButtonColor: '#d33',
-                                                    confirmButtonText: 'Buang',
-                                                    cancelButtonText: 'Tutup',
+                                    <script>
+                                        function buang(id) {
+                                            swal({
+                                                title: 'Makluman?',
+                                                text: "Buang Sebab Tidak Hadir?!",
+                                                type: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#3085d6',
+                                                cancelButtonColor: '#d33',
+                                                confirmButtonText: 'Buang',
+                                                cancelButtonText: 'Tutup',
 
-                                                }).then(result => {
-                                                    console.log("result", result);
-                                                    if (result.value == true) {
-                                                        console.log("id", id);
-                                                        $.ajax({
-                                                            url: "sebab/" + id,
-                                                            type: "POST",
-                                                            data: {
-                                                                "id": id,
-                                                                "_token": "{{ csrf_token() }}",
-                                                                "_method": 'delete'
-                                                            },
-                                                            success: function (data) {
-                                                                location.reload();
-                                                            },
-                                                        });
+                                            }).then(result => {
+                                                console.log("result", result);
+                                                if (result.value == true) {
+                                                    console.log("id", id);
+                                                    $.ajax({
+                                                        url: "sebab/" + id,
+                                                        type: "POST",
+                                                        data: {
+                                                            "id": id,
+                                                            "_token": "{{ csrf_token() }}",
+                                                            "_method": 'delete'
+                                                        },
+                                                        success: function (data) {
+                                                            location.reload();
+                                                        },
+                                                    });
 
-                                                    } else if (result.dismiss == "cancel") {
-                                                        console.log("dismiss");
-                                                    }
-                                                })
-                                            }
+                                                } else if (result.dismiss == "cancel") {
+                                                    console.log("dismiss");
+                                                }
+                                            })
+                                        }
 
-                                        </script>
+                                    </script>
 
-                                    
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+                
                 </div>
             </div>
         </div>

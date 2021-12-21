@@ -16,17 +16,17 @@ class Userrollcall extends Model
         'penguatkuasa_id'
     ];
 
-    protected $with = ['nama_rollcall','nama_kakitangan'];
+    public $with=['rollcall'];
 
     public function penguatkuasa()
     {
         return $this->belongsTo(User::class);
     }  
 
-    public function rollcall()
-    {
-        return $this->belongsTo(Rollcall::class);
-    }
+    // public function rollcall()
+    // {
+    //     return $this->belongsTo(Rollcall::class);
+    // }
 
     //nama rollcall
     public function nama_rollcall() 
@@ -38,4 +38,10 @@ class Userrollcall extends Model
         return $this->belongsTo(User::class, 'penguatkuasa_id');
     }
 
+    public function rollcall() {
+        return $this->belongsTo(Rollcall::class, 'roll_id')
+;    }
+    // public function user_rollcall() {
+    //     return $this->belongsTo(UserRollcall::class,  'id_user');
+    // }
 }
