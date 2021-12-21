@@ -9,6 +9,7 @@ use App\Models\User;
 class Rollcall extends Model
 {
     use HasFactory;
+    protected $guarded =['id'];
 
     protected $dates = ['mula_rollcall', 'akhir_rollcall'];
 

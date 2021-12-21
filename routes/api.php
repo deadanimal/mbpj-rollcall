@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MobileController;
+use App\Http\Controllers\CheckinController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,3 +21,6 @@ use App\Http\Controllers\MobileController;
 // });
 
 Route::apiResource('mobile',MobileController::class);
+
+Route::resource('checkin',CheckinController::class);
+

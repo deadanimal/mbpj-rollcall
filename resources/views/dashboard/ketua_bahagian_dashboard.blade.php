@@ -103,7 +103,8 @@
 {{-- calendar --}}
 <div class="container-fluid mt--6">
     <div class="card">
-        <div class="card-header">
+        <div class="card-header bg-default">
+            <h3 class="text-white mb-0 text-center">Takwim Roll Call</h3>
         </div>
         <div class="card-body">
             <div id='calendar'></div>
@@ -114,8 +115,8 @@
 <div id="calendarModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Maklumat Roll Call</h5>
+            <div class="modal-header bg-default">
+                <h5 class="text-white modal-title">Maklumat Roll Call</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

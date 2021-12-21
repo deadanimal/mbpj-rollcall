@@ -44,8 +44,9 @@
             <div class="col-md-12">
                 <div class="card">
                     <!-- Card header -->
-                    <div class="card-header border-0">
-                        <h3 class="mb-0">kumpulan</h3>
+                    <div class="card-header bg-default border-0">
+                        <h3 class="text-white mb-0">kumpulan</h3>
+                    </div>
                         <div class="card-body px-0">
                             <!-- Light table -->
                             <div class="table-responsive py-4">
@@ -65,7 +66,7 @@
                                                 {{$loop->index+1}}
                                             </td>
                                             <td>
-                                                {{$kumpulans->kumpulan}}
+                                                {{$kumpulans->nama_kumpulan}}
                                             </td>
                                             <td>
                                                 <a href="/kumpulan/{{$kumpulans->id}}/edit"
@@ -120,7 +121,6 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -133,8 +133,9 @@
             <div class="col-md-12">
                 <div class="card">
                     <!-- Card header -->
-                    <div class="card-header border-0">
-                        <h3 class="mb-0">kumpulan</h3>
+                    <div class="card-header bg-default border-0">
+                        <h3 class="text-white mb-0">Senarai Kumpulan</h3>
+                    </div>
                         <div class="card-body px-0">
                             <!-- Light table -->
                             <div class="table-responsive py-4">
@@ -211,7 +212,120 @@
                                 </table>
                             </div>
                         </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="container-fluid">
+        <div >
+            @if(auth()->user()->role == 'naziran')
+            <div class="col-lg-12 col text-right">
+                <a href="/userkumpulan/create" class="btn btn-sm btn-neutral">+ Pengguna Kumpulan</a>
+            </div>
+            @elseif(auth()->user()->role == 'pentadbir_sistem')
+            <div class="col-lg-12 col text-right">
+                <a href="/userkumpulan/create" class="btn btn-sm btn-neutral">+ Pengguna Kumpulan</a>
+            </div>
+            @else
+            --
+            @endif
+            <br>
+        </div>
+    </div>
+<div>
+    <div class="container-fluid mt--12">
+        <div class="row ">
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- Card header -->
+                    <div class="card-header bg-default border-0">
+                        <h3 class="text-white mb-0">Senarai Pengguna Kumpulan</h3>
                     </div>
+                        <div class="card-body px-0">
+                            <!-- Light table -->
+                            <div class="table-responsive py-4">
+                                <table id="example" class="display table table-striped table-bordered dt-responsive nowrap"
+                                    style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Kumpulan</th>
+                                            <th>Senarai Penguatkuasa</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($kumpulan as $kump)
+                                        <tr>
+                                            <td>
+                                                {{$loop->index+1}}
+                                            </td>
+                                            <td>
+                                                {{$kump->nama_kumpulan}}
+                                            </td>
+                                            <td>  
+                                             @if (count($kump->user_kumpulan) > 0)
+
+                                                @foreach ($kump->user_kumpulan as $user)
+                                                <li>
+
+                                                 <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#hapus{{$user->user_info->id}}">
+                                                    Tekan Untuk Hapus
+                                                </button>
+                                                
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="hapus{{$user->user_info->id}}" tabindex="-1" role="dialog" aria-labelledby="hapusLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header bg-default">
+                                                        <h5 class="text-white modal-title" id="hapusLabel">Makluman</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        <h4>Anda Pasti Untuk Buang ? : </h4><br>
+                                                        <h4 class="text-red text-center">{{$user->user_info->name}}</h4>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Tutup</button>
+                                                        <a href="/delete_pengguna_kumpulan/{{$user->user_info->id}}/{{$kump->id}}" class="btn btn-danger btn-sm">Tekan Untuk Hapus</a>
+
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+
+                                                {{$user->user_info->name}}
+                                                
+                                                </li>
+
+                                                @endforeach
+                                            @else
+                                            <a  href="/userkumpulan/create" class="badge badge-pill badge-primary">Sila Tambah Penguatkuasa</a>
+
+                                            @endif
+                                            </td>
+                                                {{-- @if (count($kump->user_kumpulan) > 0) --}}
+                                                {{-- <a href="/userkumpulan/{{$kump->user_kumpulan[0]->id}}/edit"
+                                                    class="btn btn-primary btn-sm"> kemaskini <i
+                                                        class="ni ni-single-copy-04"></i>
+                                                </a> --}}
+
+                                                {{-- @else
+                                                <span class="badge badge-pill badge-danger">Sila Tambah Penguatkuasa</span>
+
+                                                @endif --}}
+                                              
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -236,5 +350,13 @@
 @endif
 </div>
 
+
+@endsection
+@section ('script')
+<script>
+    $(document).ready(function () {
+        var table = $('table.display').DataTable();
+    });
+</script>
 
 @endsection

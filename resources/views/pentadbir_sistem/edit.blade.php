@@ -29,8 +29,8 @@
                     <!-- Input groups -->
                     <div class="card">
                         <!-- Card header -->
-                        <div class="card-header">
-                            <h3 class="mb-0">Kemaskini Pengurusan Pengguna</h3>
+                        <div class="card-header bg-default">
+                            <h3 class="text-white mb-0">Kemaskini Pengurusan Pengguna</h3>
                         </div>
                         <!-- Card body -->
                         <div class="card-body">
@@ -111,8 +111,8 @@
                                     <div class="col-md-6 ">
                                         <div class="nav">
 
-                                            <td><a href="/users/ " class="btn btn-success ">Kembali</a></td>
-                                            <button type="button" class="btn btn-primary " data-toggle="modal"
+                                            <td><a href="/users/ " class="btn btn-secondary btn-sm  ">Kembali</a></td>
+                                            <button type="button" class="btn btn-primary btn-sm  " data-toggle="modal"
                                                 data-target="#exampleModalLong">
                                                     Kemaskini    
                                            </button>
@@ -133,11 +133,12 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    Kemaskini Peranan Pengguna ??
+                                                    Kemaskini  Pengguna ?
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <input type="submit" class="btn btn-success">
-                                                    <button type="button" class="btn btn-danger"data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-danger"data-dismiss="modal">Tutup</button>
+
+                                                    <button type="submit" class="btn btn-success">Hantar</button>
                                                 </div>
                                             </div>
                                         </div>

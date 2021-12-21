@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kumpulan;
+use App\Models\UserKumpulan;
+
+
 use Illuminate\Http\Request;
 
 class KumpulanController extends Controller

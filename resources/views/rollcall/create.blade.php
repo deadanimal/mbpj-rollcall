@@ -10,8 +10,8 @@
                     <h6 class="h2 text-white d-inline-block mb-0">Roll Call</h6>
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="#">roll call</a></li>
+                            <li class="breadcrumb-item"><a href="/rollcalls"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="/rollcalls">roll call</a></li>
                             <li class="breadcrumb-item active" aria-current="page">roll call</li>
                         </ol>
                     </nav>
@@ -24,8 +24,9 @@
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header">
-                    <h5 class="h3 mb-3">Roll Call</h5>
+                <div class="card-header bg-default">
+                    <h5 class="text-white h3 mb-3">Tambah Roll Call</h5>
+                </div>
                     <div class="card-body">
                         <form method="POST" action="/rollcalls">
                             @csrf
@@ -83,7 +84,7 @@
                                     <div class="form-group">
                                         <label for="mula_rollcall">Pilih waktu mula</label>
                                         <div class="input-group date" id="datetimepicker1">
-                                            <input type="text" class="form-control" name="mula_rollcall" required>
+                                            <input type="text" class="form-control" name="mula_rollcall"  required>
                                             <span class="input-group-addon input-group-append">
                                                 <button class="btn btn-outline-primary" type="button"
                                                     id="button-addon2"> <span class="fa fa-calendar"></span></button>
@@ -145,9 +146,10 @@
                                                 name="maklumat"></textarea>
                                     </div>
                                 </div>
+                                <button  onclick="tambah_rollcall()" class="btn btn-primary btn-sm float-right">Tambah Roll Call</button>
+
                             </div>
 
-                            <button  onclick="tambah_rollcall()" class="btn btn-primary float-right">Tambah Roll Call</button>
 
                             <script>
                             function tambah_rollcall() {
@@ -159,7 +161,7 @@
                             }
                             </script>
                     </div>
-                </div>
+
             </div>
         </div>
         <footer class="footer pt-0">
@@ -209,23 +211,23 @@
 {{-- Script --}}
 @section('script')
 <script
-    src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
+    src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
 </script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/select2/dist/js/select2.min.js">
-</script>
-<script
-    src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
-</script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/moment.min.js"></script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-datetimepicker.js">
-</script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/nouislider/distribute/nouislider.min.js">
-</script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/quill/dist/quill.min.js"></script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/dropzone/dist/min/dropzone.min.js">
+<script src="/assets/vendor/select2/dist/js/select2.min.js">
 </script>
 <script
-    src="https://demos.creative-tim.com/argon-dashboard-pro/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js">
+    src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
+</script>
+<script src="/assets/vendor/moment.min.js"></script>
+<script src="/assets/vendor/bootstrap-datetimepicker.js">
+</script>
+<script src="/assets/vendor/nouislider/distribute/nouislider.min.js">
+</script>
+<script src="/assets/vendor/quill/dist/quill.min.js"></script>
+<script src="/assets/vendor/dropzone/dist/min/dropzone.min.js">
+</script>
+<script
+    src="/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js">
 </script>
 <script type="text/javascript">
     $(function () {
@@ -258,7 +260,7 @@
     });
 
 </script>
-<script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/js/demo.min.js"></script>
+<script src="/assets/js/demo.min.js"></script>
 <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {

@@ -26,8 +26,8 @@
             <div class="col-md-12">
                 <div class="card">
                       <!-- Card header -->
-                      <div class="card-header">
-                        <h3 class="mb-0">Kemaskini Jadual Roll Call</h3>
+                      <div class="card-header bg-default">
+                        <h3 class="text-white mb-0">Kemaskini Jadual Roll Call</h3>
                     </div>
                     <!-- Card body -->
                     <div class="card-body">
@@ -52,7 +52,7 @@
                         
                             <div class="row">
                                 <div class="col-md-12"> 
-                                    <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                                    <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal"
                                     data-target="#exampleModal">
                                     Kemaskini
                                 </button>                        
@@ -62,8 +62,8 @@
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Makluman</h5>
+                                        <div class="modal-header bg-default">
+                                            <h5 class="text-white modal-title" id="exampleModalLabel">Makluman</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -72,9 +72,9 @@
                                             Kemaskini
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
+                                            <button type="button" class="btn btn-secondary btn-sm"
                                                 data-dismiss="modal">Tutup</button>
-                                            <button type="submit" class="btn btn-primary float-right">Kemaskini</button>
+                                            <button type="submit" class="btn btn-primary btn-sm float-right">Kemaskini</button>
                                         </div>
                                     </div>
                                 </div>

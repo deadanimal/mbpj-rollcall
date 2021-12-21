@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Laporan;
 use App\Models\Userrollcall;
+use App\Models\Kumpulan;
+use App\Models\UserKumpulan;
+
+
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,6 +16,7 @@ use Carbon\Carbon;
 
 use Auth;
 use PDF;
+
 
 
 class LaporanController extends Controller
@@ -23,6 +28,7 @@ class LaporanController extends Controller
      */
     public function index()
     {
+        $kumpulan = Kumpulan::all();
         $current_user = Auth::user()->id;
 
         $null_kehadiran = Userrollcall::whereNull('keluar')
@@ -53,18 +59,19 @@ class LaporanController extends Controller
             $arraykehadiran[] = ['monthname' => $kehadirans->monthname, 'semua kehadiran' => $kehadirans->jumlah, 'kehadiran diterima' => $kehadirans->jumlah, 'kehadiran ditolak' => $kehadirans->jumlah, 'kehadiran tidak hadir' => $kehadirans->jumlah, ];
         }
         
-        // dd($arraykehadiran);
+                    // dd($kehadiran);
 
-
-        //Laporan Kehadiran
+         //Laporan Kehadiran
         // get User kehadiran untuk P,KB,KJ
         $lapor_hadir=Userrollcall::All();
-        $user_hadir=User::All();
+        $user_hadir=User::orderBy('name','ASC')->get();
 
         return view ('laporan.index', [
             'kehadiran'=>$arraykehadiran,
             'lapor_hadir'=>$lapor_hadir,
             'user_hadir'=>$user_hadir,
+            'kumpulan'=>$kumpulan,
+
         ]);
     }
 
@@ -159,6 +166,32 @@ class LaporanController extends Controller
 
         return view('laporan.pdf_viewer', [
             "url"=> '/report.pdf'
+        ]);
+
+    
+    }
+    public function filter_laporan_hadir_bahagian(Request $request, $id)
+    {
+
+
+        $kumpulan = Kumpulan::where('id',$id)->first();
+  
+
+        $currentdate = Carbon::now()->format('Y-m-d ');
+
+        //cetakan
+        $pdf = PDF::loadView('laporan.reportbahagian', [
+
+            "currentdate"=>$currentdate,
+            "kumpulan"=>$kumpulan,
+
+
+        ])->setPaper('a4');
+
+        $pdf->save('reportbahagian.pdf');
+
+        return view('laporan.pdf_viewer', [
+            "url"=> '/reportbahagian.pdf'
         ]);
 
     

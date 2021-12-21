@@ -8,10 +8,15 @@ use App\Models\Audit;
 use App\Models\User;
 use App\Models\Sebab;
 
+use App\Models\Kumpulan;
+use App\Models\UserKumpulan;
+
+
 use Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Exception;
+// use DB;
 
 
 
@@ -24,7 +29,6 @@ class RollcallController extends Controller
     {
         $users = User::all();
         $sebab = Sebab::all();
-
 
         // Card status
         $dibuka = DB::table('rollcalls')
@@ -83,7 +87,7 @@ class RollcallController extends Controller
 
         foreach ($rollcall_lulus_baru as $psn){
             $rollcall_lulus_name = User::where("id", $psn ->pegawai_sokong_id)->first()->name;
-            $psn->pegawai_sokong_name = $rollcall_sokong_name;
+            $psn->pegawai_lulus_name = $rollcall_lulus_name;
             $pemohon = User::where("id", $psn ->penguatkuasa_id)->first()->name;
             $psn->nama_pemohon = $pemohon;
         }
@@ -172,11 +176,11 @@ class RollcallController extends Controller
     
 
         return view ('rollcall.index',[
-            'rollcalls'=>$rollcalls,
-            //sebab
-            'sebab'=>$sebab, 
- 
+            'rollcalls'=>$rollcalls, 
             'rollcallsnew'=>$rollcallsnew,  
+
+            'sebab'=>$sebab,
+
  
             'users'=>$users,
             'dibuka'=>$dibuka,
@@ -188,10 +192,6 @@ class RollcallController extends Controller
             // 'rollcall_lulus'=> $rollcall_lulus,
             'rollcall_lulus_baru'=>$rollcall_lulus_baru,
             'rollcall_sokong_baru'=>$rollcall_sokong_baru,
-
-
-         
- 
     ]);
 
     }
@@ -199,7 +199,9 @@ class RollcallController extends Controller
     public function create()
     {
 
-        $pegawai = User::whereIn('role', array('penyelia','ketua_bahagian','ketua_jabatan'))->get();     
+        $pegawai = User::whereIn('role', array('penyelia','ketua_bahagian','ketua_jabatan'))
+        ->orderBy('name','ASC')
+        ->get();     
 
         return view('rollcall.create',[
             'pegawai'=>$pegawai,
@@ -210,22 +212,27 @@ class RollcallController extends Controller
 
     public function store(Request $request)
     {
-        $rollcall = new Rollcall;
-        $mula_rollcall = date("Y-m-d H:i:s", strtotime($request->mula_rollcall));  
-        $akhir_rollcall = date("Y-m-d H:i:s", strtotime($request->akhir_rollcall));  
-        $rollcall->mula_rollcall = $mula_rollcall;
-        $rollcall->akhir_rollcall = $akhir_rollcall;
-        $rollcall->tajuk_rollcall = $request-> tajuk_rollcall; 
-        $rollcall->lokasi = $request-> lokasi;
-        $rollcall->catatan = $request-> catatan;
-        $rollcall->status = $request-> status;
-        $rollcall->pegawai_sokong_id = $request-> pegawai_sokong_id;
-        $rollcall->pegawai_lulus_id = $request-> pegawai_lulus_id;
-        $rollcall->maklumat = $request-> maklumat;
+        // $rollcall = new Rollcall;
+        // $mula_rollcall = date("Y-m-d H:i:s", strtotime($request->mula_rollcall));  
+        // $akhir_rollcall = date("Y-m-d H:i:s", strtotime($request->akhir_rollcall));  
+        // $rollcall->mula_rollcall = $mula_rollcall;
+        // $rollcall->akhir_rollcall = $akhir_rollcall;
+        // $rollcall->tajuk_rollcall = $request-> tajuk_rollcall; 
+        // $rollcall->lokasi = $request-> lokasi;
+        // $rollcall->catatan = $request-> catatan;
+        // $rollcall->status = $request-> status;
+        // $rollcall->pegawai_sokong_id = $request-> pegawai_sokong_id;
+        // $rollcall->pegawai_lulus_id = $request-> pegawai_lulus_id;
+        // $rollcall->maklumat = $request-> maklumat;
+        // $rollcall->siri_rollcall = $this->generateNomborSiri();
 
-        $rollcall->siri_rollcall = $this->generateNomborSiri();
+        $request['mula_rollcall'] =  date("Y-m-d H:i:s", strtotime($request->mula_rollcall)); 
+        $request['akhir_rollcall'] = date("Y-m-d H:i:s", strtotime($request->akhir_rollcall)); 
+        $request['siri_rollcall'] = $this->generateNomborSiri();
 
-        $rollcall->save();
+        Rollcall::create($request->all());
+
+        //$rollcall->save();
 
         // Audit trail
         $audit = new Audit;
@@ -233,7 +240,7 @@ class RollcallController extends Controller
         $audit->name = $request->user()->name;
         $audit->peranan = $request->user()->role;
         $audit->nric =$request->user()->nric;
-        $audit->description = 'Tambah Roll Call Tajuk: '.$rollcall->tajuk_rollcall;
+        $audit->description = 'Tambah Roll Call Tajuk: '.$request->tajuk_rollcall;
         $audit->save(); 
 
         $redirected_url= '/rollcalls/';
@@ -250,14 +257,20 @@ class RollcallController extends Controller
     public function edit(Rollcall $rollcall)
     {
 
+        $kumpulan = Kumpulan::all();
+
         // Create  option on select penguatkuasa in tambah
-        $kakitangan = User::whereIn('role', array('penguatkuasa'))->get(); 
+        $kakitangan = User::whereIn('role', array('penguatkuasa'))
+        ->orderBy('name','ASC')
+        ->get(); 
 
         // Create  option on select penguatkuasa addmore
         $users = User::whereIn('role', array('penguatkuasa'))->get();     
  
         // Create  option on select pegawai 
-        $pegawai = User::whereIn('role', array('penyelia','ketua_bahagian','ketua_jabatan'))->get(); 
+        $pegawai = User::whereIn('role', array('penyelia','ketua_bahagian','ketua_jabatan'))
+        ->orderBy('name','ASC')
+        ->get(); 
 
         //  Create pegawai name
         $pegawai_sokong = User::where('id',$rollcall->pegawai_sokong_id)->first();   
@@ -283,6 +296,8 @@ class RollcallController extends Controller
             'pegawai_lulus' => $pegawai_lulus,
             'kakitangan'=> $kakitangan,
             'pegawai'=> $pegawai,
+            'kumpulan'=> $kumpulan,
+
 
         ]);
     }
@@ -414,7 +429,6 @@ class RollcallController extends Controller
         $redirected_url= '/rollcalls/';
         return redirect($redirected_url);        
     }
-
     public function generateNomborSiri() {
         //logic 
         $string_depan = "RL";
@@ -422,4 +436,84 @@ class RollcallController extends Controller
 
         return $string_depan.$string_belakang;
     }
+    public function simpanbahagian(Request $request)
+    {
+        $rollcall_pegawai=Rollcall::where('id','=',$request->roll_id)->first();
+
+        $kumpulan = Kumpulan::where('id', $request->id_kumpulan)->first();
+
+        foreach($kumpulan->user_kumpulan as $ui) {
+
+            $simpanbahagian = new Userrollcall;
+            $simpanbahagian->penguatkuasa_id = $ui->user_info->id;
+            $simpanbahagian->roll_id = $request->roll_id;
+            $simpanbahagian->pegawai_sokong_id = $rollcall_pegawai->pegawai_sokong_id;
+            $simpanbahagian->pegawai_lulus_id = $rollcall_pegawai->pegawai_lulus_id;
+
+            $simpanbahagian -> save();   
+        }   
+
+        return back()->with('success', 'Bahagian Berjaya Ditambah.');
+     
+    }
+    public function deleteAll(Request $request)
+    {
+        $ids = $request->ids;
+        DB::table("userrollcalls")->whereIn('id',explode(",",$ids))->delete();
+        return response()->json(['success'=>"Kemaskini Berjaya."]);
+    }
+    public function SokongAll(Request $request)
+    {
+        $ids = $request->ids;
+        $array_ids = explode(",", $ids);
+        // dd($array_ids);
+
+        foreach($array_ids as $id) {
+            $userrollcall = Userrollcall::where('id', $id)->first();
+            $userrollcall-> sokong = true;
+            $userrollcall-> tarikh_sokong = Carbon::now()->format('Y-m-d H:i:s');
+            $userrollcall->save();
+        }
+
+    
+        //DB::table("pegawai_sokong_rollcall")->whereIn('id',explode(",",$ids))->post();
+
+        // $userrollcall = Userrollcall::where('id', $id)->first()
+        // $userrollcall-> sokong = true;
+        // $userrollcall-> tarikh_sokong = Carbon::now()->format('Y-m-d H:i:s');
+        // $userrollcall->save();
+
+        return response()->json(['success'=>" Kemaskini Berjaya."]);
+    }
+    // public function TolakSokongAll(Request $request)
+    // // {
+    // //     $ids = $request->ids;
+    // //     $array_ids = explode(",", $ids);
+    // //     // dd($array_ids);
+
+    // //     foreach($array_ids as $id) {
+    // //         $userrollcall = Userrollcall::where('id', $id)->first();
+    // //         $userrollcall-> sokong = false;
+    // //         $userrollcall-> tarikh_sokong = Carbon::now()->format('Y-m-d H:i:s');
+    // //         $userrollcall->save();
+    // //     }
+
+
+    // //     return response()->json(['success'=>" Kemaskini Berjaya."]);
+    // // }
+    public function LulusAll(Request $request)
+    {
+        $ids = $request->ids;
+        $array_ids = explode(",", $ids);
+
+        foreach($array_ids as $id) {
+            $userrollcall = Userrollcall::where('id', $id)->first();
+            $userrollcall-> lulus = true;
+            $userrollcall-> tarikh_lulus = Carbon::now()->format('Y-m-d H:i:s');
+            $userrollcall->save();
+        }
+
+        return response()->json(['success'=>" Kemaskini Berjaya."]);
+    }
+  
 }

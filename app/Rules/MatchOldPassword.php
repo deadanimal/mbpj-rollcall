@@ -1,23 +1,12 @@
 <?php
-
+  
 namespace App\Rules;
-
+  
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
-
-
+  
 class MatchOldPassword implements Rule
 {
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
     /**
      * Determine if the validation rule passes.
      *
@@ -29,7 +18,7 @@ class MatchOldPassword implements Rule
     {
         return Hash::check($value, auth()->user()->password);
     }
-
+   
     /**
      * Get the validation error message.
      *

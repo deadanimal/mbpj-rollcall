@@ -16,8 +16,8 @@ class CreateUser extends Migration
             Schema::table('users', function (Blueprint $table) {
                 $table->integer('user_code')->nullable();
                 $table->integer('department_code')->nullable();
-                $table->integer('nric')->nullable();
-                $table->integer('phone')->nullable();
+                $table->string('nric')->nullable();
+                $table->string('phone')->nullable();
         
             });
     }
