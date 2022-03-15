@@ -1,0 +1,187 @@
+@extends('base')
+
+@section('content')
+
+<div>
+    <div class="header bg-primary pb-6">
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-center py-4">
+                    <div class="col-lg-6 col-7">
+                        <h6 class="h2 text-white d-inline-block mb-0">Kemaskini</h6>
+                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                <li class="breadcrumb-item"><a href="/users"><i class="fas fa-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="">Pengurusan</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Pengguna</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if(auth()->user()->role == 'pentadbir_sistem'or auth()->user()->role == 'naziran' )
+    <div class="container-fluid mt--6">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card-wrapper">
+                    <!-- Input groups -->
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header bg-default">
+                            <h3 class="text-white mb-0">Kemaskini Pengurusan Pengguna</h3>
+                        </div>
+                        <!-- Card body -->
+                        <div class="card-body">
+                            <form method="POST" action="/users/{{$user->id}}">
+                                @csrf
+                                @method('PUT')
+                                <!-- Input groups with icon -->
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Nama</label>
+                                            <div class="input-group input-group-merge">
+                                                <input class="form-control" value="{{$user->name}}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">No Pengenalan</label>
+                                            <div class="input-group input-group-merge">
+                                                <input class="form-control" value="{{$user->nric}}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">No Telefon</label>
+                                            <div class="input-group input-group-merge">
+                                                <input class="form-control" value="{{$user->phone}}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Email</label>
+                                            <div class="input-group input-group-merge">
+                                                <input class="form-control" value="{{$user->email}}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">No Pekerja</label>
+                                            <div class="input-group input-group-merge">
+                                                <input class="form-control" value="{{$user->user_code}}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Jabatan</label>
+                                            <div class="input-group input-group-merge">
+                                                <input class="form-control" value="{{$user->department_code}}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="status">Status</label>
+                                            <select name="status">
+                                                @foreach ($status as $key => $value)
+                                                <option value="{{ $key }}">{{ $value }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <div class="form-group">
+                                            <label for="role">Peranan</label>
+                                            <select name="role"  > 
+                                                @foreach ($roles as $key => $value)
+                                                <option value="{{ $key }}">{{ $value }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <div class="nav">
+
+                                            <td><a href="/users/ " class="btn btn-secondary btn-sm  ">Kembali</a></td>
+                                            <button type="button" class="btn btn-primary btn-sm  " data-toggle="modal"
+                                                data-target="#exampleModalLong">
+                                                    Kemaskini    
+                                           </button>
+                                        </div>
+                                    </div>
+                                    <!-- Button trigger modal -->
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-default">
+                                                    <h5 class="modal-title text-white" id="exampleModalLongTitle">Kemaskini Peranan
+                                                        Pengguna</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Kemaskini  Pengguna ?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger btn-sm"data-dismiss="modal">Tutup</button>
+
+                                                    <button type="submit" class="btn btn-success btn-sm">Hantar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @elseif(auth()->user()->role == '')
+    <div>
+        <div class="container-fluid mt--12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header border-0">
+                            <h3 class="mb-0">Modul ini tidak dibekalkan kepada anda. Sila hubungi pentadbir
+                                sistem anda.</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @endif  <div>
+        <div class="container-fluid mt--12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header border-0">
+                            <h3 class="mb-0">Modul ini tidak dibekalkan kepada anda. Sila hubungi pentadbir
+                                sistem anda.</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
