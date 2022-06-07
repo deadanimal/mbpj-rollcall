@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Audit;
+use App\Models\PrUser;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Audit;
+use Illuminate\Support\Facades\Hash;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -41,9 +44,9 @@ class AuthenticatedSessionController extends Controller
         $audit->name = $user->name;
         $audit->peranan = $user->role;
         $audit->nric = $user->nric;
-        $audit->description =  'Log Masuk';
-        
-        $audit->save();        
+        $audit->description = 'Log Masuk';
+
+        $audit->save();
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
@@ -65,7 +68,7 @@ class AuthenticatedSessionController extends Controller
         $audit->name = $user->name;
         $audit->peranan = $user->role;
         $audit->nric = $user->nric;
-        $audit->description =  'Log Keluar'; 
+        $audit->description = 'Log Keluar';
         $audit->save();
 
         Auth::guard('web')->logout();
@@ -76,4 +79,52 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    public function new_store(LoginRequest $request)
+    {
+
+        $userLocal = User::where('nric', $request->nric)
+            ->where('password', Hash::make($request->password))
+            ->first();
+
+        if ($userLocal == null) {
+            $userOracle = PrUser::where('USERPASSWORD', md5($request->password))
+                ->where('USERNAME', $request->nric)
+                ->first();
+        }
+
+        if ($userOracle != null) {
+            $userLocal = User::where('nric', $request->nric)->first();
+        }
+
+        if ($userOracle != null && $userLocal != null) {
+            User::where('nric', $request->nric)
+                ->update([
+                    'status' => 'aktif',
+                    'password' => Hash::make($request->password),
+                ]);
+        }
+
+        if ($userOracle != null && $userLocal == null) {
+            $userLocal = User::create([
+                'name' => $userOracle->NAME,
+                'email' => $userOracle->EMAIL,
+                'user_code' => $userOracle->CUSTOMERID,
+                'department_code' => $userOracle->DEPARTMENTCODE,
+                'nric' => $userOracle->USERNAME,
+                'phone' => $userOracle->MOBILE_PHONE,
+                'role' => 'kakitangan',
+                'status' => 'aktif',
+                'password' => Hash::make($request->password),
+            ]);
+            Auth::login($userLocal);
+            return redirect('/dashboard');
+        }
+
+        $request->authenticate();
+        $request->session()->regenerate();
+        return redirect()->intended(RouteServiceProvider::HOME);
+
+    }
+
 }

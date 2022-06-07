@@ -70,9 +70,20 @@
                                                         //document.getElementById('maelhensem').innerText = 'lollll';
                                                         id = `${decodedText}`;
                                                         // console.log('id', id)
-                                                        var url = '/keputusan_qr?qr=' + id;
+                                                        // var url = '/scanQr';
                                                         // maelhensem.innerHTML = decodedText;
                                                         // document.location.href = url;
+                                                        $.ajax({
+                                                           method: "POST",
+                                                           url: '/scanQr',
+                                                           data: {
+                                                                "_token": "{{ csrf_token() }}",
+                                                                "nric": id,
+                                                        },
+                                                        }).done(function(response) {
+                                                            alert("Rekod Disimpan");
+                                                            location.reload();
+                                                        });
                                                     }
                                                 }
                                                 var html5QrcodeScanner = new Html5QrcodeScanner(
@@ -203,9 +214,9 @@
                                         <div class="form-group ">
                                             <label for="status">Status</label>
                                             <div class="input-group input-group-merge">
-                                                <select class="form-select form-select-sm col-12" name="status" require>
+                                                <select class="form-control" name="status" require>
                                                 @foreach ($status as $key => $value)
-                                                <option value="{{ $key }}">{{ $value }}</option>
+                                                <option {{$rollcall->status == $key ? 'selected':''}} value="{{ $key }}">{{ $value }}</option>
                                                 @endforeach
                                             </select>
                                             </div>
@@ -213,7 +224,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="pegawai_sokong_id">Pilih pegawai sokong</label>
                                             <div class="input-group input-group-merge">
@@ -240,8 +251,8 @@
                                                 </select>
                                             </div>
                                         </div>
+                                    </div> --}}
                                     <!-- Button trigger modal -->   
-                                    </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="Perkara">Kemaskini Makluman Roll Call</label>
@@ -312,7 +323,8 @@
 
                                         <th>No</th>
                                         <th>Nama Penguatkuasa</th>
-                                        <th>No Pekerja | NRIC </th>   
+                                        <th>No Pekerja | NRIC </th>  
+                                        <th>Pegawai Sokong <br> Pegawai Lulus</th> 
                                         <th>Waktu Masuk </th><th> Waktu Keluar</th>
                                         <th>Status </th>
 
@@ -329,7 +341,7 @@
                                         <td>{{$loop->index+1}}</td>
                                         <td>{{$userrollcall->penguatkuasa['name']}}</td>
                                         <td>{{$userrollcall->penguatkuasa['user_code']}}<br><br>{{$userrollcall->penguatkuasa['nric']}}</td>
-
+                                        <td>{{$userrollcall->pegawaiSokong->name ?? 'Tidak Wujud'}} <br> {{$userrollcall->pegawaiLulus->name ?? 'Tidak Wujud'}}</td>
                                         @if($userrollcall['masuk'] === null)
                                         <td><span class="badge badge-pill badge-primary">Dalam Proses</span></td>
                                         @elseif($userrollcall['masuk'] !==null)
