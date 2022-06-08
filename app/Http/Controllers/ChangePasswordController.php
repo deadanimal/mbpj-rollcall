@@ -1,17 +1,15 @@
 <?php
-   
-namespace App\Http\Controllers;
-   
-use Illuminate\Http\Request;
-use App\Rules\MatchOldPassword;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 
-use Illuminate\Support\Facades\Validator;
+namespace App\Http\Controllers;
+
+use App\Models\PrUser;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
-  
 class ChangePasswordController extends Controller
 {
     /**
@@ -23,7 +21,7 @@ class ChangePasswordController extends Controller
     {
         $this->middleware('auth');
     }
-   
+
     /**
      * Show the application dashboard.
      *
@@ -32,8 +30,8 @@ class ChangePasswordController extends Controller
     public function index()
     {
         return view('changePassword');
-    } 
-   
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -43,18 +41,18 @@ class ChangePasswordController extends Controller
     {
         // $request->validate([
 
-        $rules =[
+        $rules = [
             // 'current_password' => ['required', new MatchOldPassword],
             // 'new_password' => ['required','min:8'],
             'new_password' => [
-                        'required',
-                        'string',
-                        Password::min(8)
-                            ->mixedCase()
-                            ->numbers()
-                            ->symbols()
-                            ->uncompromised(),
-                    ],
+                'required',
+                'string',
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(),
+            ],
             'new_confirm_password' => ['same:new_password'],
         ];
 
@@ -75,7 +73,7 @@ class ChangePasswordController extends Controller
         // ];
 
         $validator = Validator::make($request->all(), $rules, $messages = [
-            'min'=>'Kata laluan yang dimasukkan mesti tidak kurang 8 abjad',
+            'min' => 'Kata laluan yang dimasukkan mesti tidak kurang 8 abjad',
             'required' => 'Sila masukkan kata laluan baru jika ingin kemaskini',
             'same' => 'Kata laluan yang dimasukkan tidak sama',
             // 'new_password.Password::min(8)' => 'AAAAA',
@@ -85,9 +83,13 @@ class ChangePasswordController extends Controller
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator->errors());
         };
-   
-        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
-   
-        return redirect()->back()->with ('success','Kata Laluan Berjaya Dikemaskini.');
+
+        PrUser::where('USERNAME', auth()->user()->nric)->update([
+            'USERPASSWORD' => md5($request->new_password),
+        ]);
+
+        User::find(auth()->user()->id)->update(['password' => Hash::make($request->new_password)]);
+
+        return redirect()->back()->with('success', 'Kata Laluan Berjaya Dikemaskini.');
     }
 }

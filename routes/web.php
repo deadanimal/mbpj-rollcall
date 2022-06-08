@@ -19,8 +19,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/test', [QrcodeController::class, 'test']);
-
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
 Route::resource('profiles', ProfileController::class)->middleware(['auth']);
