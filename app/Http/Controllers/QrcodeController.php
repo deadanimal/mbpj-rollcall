@@ -15,11 +15,11 @@ class QrcodeController extends Controller
         $userRoll = Userrollcall::where('penguatkuasa_id', $user->id)->first();
 
         if ($userRoll->masuk === null) {
-            Userrollcall::where('penguatkuasa_id', $user->id)->update([
+            Userrollcall::where([['penguatkuasa_id', $user->id], ['roll_id', $request->rollcall_id]])->update([
                 'masuk' => now(),
             ]);
         } else {
-            Userrollcall::where('penguatkuasa_id', $user->id)->update([
+            Userrollcall::where([['penguatkuasa_id', $user->id], ['roll_id', $request->rollcall_id]])->update([
                 'keluar' => now(),
             ]);
         }
