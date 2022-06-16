@@ -21,6 +21,10 @@ class QrcodeController extends Controller
         } else {
             Userrollcall::where([['penguatkuasa_id', $user->id], ['roll_id', $request->rollcall_id]])->update([
                 'keluar' => now(),
+                'sokong' => 1,
+                'lulus' => 1,
+                'tarikh_sokong' => now(),
+                'tarikh_lulus' => now(),
             ]);
         }
         return response()->json();

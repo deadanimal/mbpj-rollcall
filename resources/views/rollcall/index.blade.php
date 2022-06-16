@@ -158,7 +158,8 @@
                                                         @endif
 
                                                         @if ($userrollcall->keluar === null)
-                                                            <span class="badge badge-pill badge-primary">Dalam Proses</span>
+                                                            <span class="badge badge-pill badge-primary">Dalam
+                                                                Proses</span>
 
                                                             {{-- <input type="datetime-local" onchange="MasaAkhir({{$userrollcall->userrollcall_id}},this)" value={{$userrollcall->mula}}> --}}
                                                         @elseif($userrollcall->keluar !== null)
@@ -227,7 +228,8 @@
                                                                 <span class="badge badge-pill badge-primary">Semakan
                                                                     Pegawai</span>
                                                             @elseif($userrollcall->lulus === 1)
-                                                                <span class="badge badge-pill badge-success">Diluskan</span>
+                                                                <span
+                                                                    class="badge badge-pill badge-success">Diluskan</span>
                                                             @elseif($userrollcall->lulus === 0)
                                                                 <span class="badge badge-pill badge-danger">Ditolak</span>
                                                             @endif
@@ -285,8 +287,9 @@
                                                 </div>
                                                 <!-- Modal -->
                                                 <div class="modal fade"
-                                                    id="sebabtakhadir{{ $userrollcall->userrollcall_id }}" tabindex="-1"
-                                                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    id="sebabtakhadir{{ $userrollcall->userrollcall_id }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -519,7 +522,8 @@
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header bg-default">
-                                                        <h5 class="text-white modal-title" id="exampleModalLabel"> Makluman
+                                                        <h5 class="text-white modal-title" id="exampleModalLabel">
+                                                            Makluman
                                                         </h5>
 
                                                         <button type="button" class="close" data-dismiss="modal"
@@ -1108,7 +1112,8 @@
                                     </div>
                                     <!-- Light table -->
                                     <div class="table-responsive">
-                                        <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
+                                        <table id="example"
+                                            class="table table-striped table-bordered dt-responsive nowrap"
                                             style="width:100%">
                                             <thead>
                                                 <tr>
@@ -1176,8 +1181,8 @@
                                                                         class="badge badge-pill badge-warning">DITANGGUH</span>
                                                                 @endif
                                                             </h5>
-                                                            <button type="button" class="close"
-                                                                data-dismiss="modal" aria-label="Close">
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
@@ -1457,8 +1462,12 @@
                                             <tbody>
                                                 @foreach ($rollcall_sokong_baru as $pegawai_sokong_rollcall)
                                                     <tr>
-                                                        <td><input type="checkbox" class="sub_chk"
-                                                                data-id="{{ $pegawai_sokong_rollcall->id }}"></td>
+                                                        @if ($pegawai_sokong_rollcall->sokong === null)
+                                                            <td><input type="checkbox" class="sub_chk"
+                                                                    data-id="{{ $pegawai_sokong_rollcall->id }}"></td>
+                                                        @else
+                                                            <td><input type="checkbox" disabled></td>
+                                                        @endif
                                                         {{-- <td><input type="checkbox" class="sub_chk" data-id="{{$pegawai_sokong_rollcall->id}}"></td> --}}
 
                                                         <td>{{ $loop->index + 1 }}</td>
@@ -1718,9 +1727,12 @@
                                             <tbody>
                                                 @foreach ($rollcall_lulus_baru as $pegawai_lulus_rollcall)
                                                     <tr>
-                                                        <td><input type="checkbox" class="sub_chk"
-                                                                data-id="{{ $pegawai_lulus_rollcall->id }}"></td>
-
+                                                        @if ($pegawai_sokong_rollcall->sokong === null)
+                                                            <td><input type="checkbox" class="sub_chk"
+                                                                    data-id="{{ $pegawai_lulus_rollcall->id }}"></td>
+                                                        @else
+                                                            <td><input type="checkbox" disabled></td>
+                                                        @endif
                                                         <td>{{ $loop->index + 1 }}</td>
                                                         <td>{{ $pegawai_lulus_rollcall->siri_rollcall }} -
                                                             {{ $pegawai_lulus_rollcall->tajuk_rollcall }}
@@ -1864,8 +1876,8 @@
                                                     </div>
                                                     <!-- Modal Tolak-->
                                                     <div class="modal fade"
-                                                        id="tolak_lulus{{ $pegawai_lulus_rollcall->id }}" tabindex="-1"
-                                                        role="dialog" aria-labelledby="exampleModalLabel"
+                                                        id="tolak_lulus{{ $pegawai_lulus_rollcall->id }}"
+                                                        tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
