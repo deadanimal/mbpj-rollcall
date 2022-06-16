@@ -165,8 +165,8 @@ class RollcallController extends Controller
             $rollcallObj->masuk = $rid->masuk;
             $rollcallObj->keluar = $rid->keluar;
             //  Create pegawai name
-            $rollcallObj->pegawai_sokong_name = User::where('id', $rollcallObj->pegawai_sokong_id)->first()->name;
-            $rollcallObj->pegawai_lulus_name = User::where('id', $rollcallObj->pegawai_lulus_id)->first()->name;
+            $rollcallObj->pegawai_sokong_name = User::where('id', $rollcallObj->pegawai_sokong_id)->first()->name ?? 'Tiada';
+            $rollcallObj->pegawai_lulus_name = User::where('id', $rollcallObj->pegawai_lulus_id)->first()->name ?? 'Tiada';
             //get status
             $rollcallObj->sokong = $rid->sokong;
             $rollcallObj->lulus = $rid->lulus;

@@ -59,6 +59,7 @@
                                                 }
                                                 function onScanSuccess(decodedText, decodedResult) {
                                                     console.log('onScanSuccess')
+                                                    var rollcall_id  = @json($rollcall->id);
                                                 
                                                     if (decodedText !== lastResult) {
                                                         ++countResults;
@@ -79,6 +80,7 @@
                                                            data: {
                                                                 "_token": "{{ csrf_token() }}",
                                                                 "nric": id,
+                                                                "rollcall_id": rollcall_id,
                                                         },
                                                         }).done(function(response) {
                                                             alert("Rekod Disimpan");
