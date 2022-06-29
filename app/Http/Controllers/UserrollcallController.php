@@ -143,7 +143,10 @@ class UserrollcallController extends Controller
         $sebab->keterangan = $request->keterangan;
 
         $path = $request->file('file_path')->store('public/sebab');
-        $sebab->file_path = $path;
+
+        $actualPath = explode('/', $path);
+
+        $sebab->file_path = "/sebab/" . $actualPath[2];
 
         // $sebab->file_path = $request->file_path;
 
