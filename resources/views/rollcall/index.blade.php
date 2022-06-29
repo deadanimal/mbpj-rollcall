@@ -141,7 +141,6 @@
 
                                                     </td>
                                                     {{-- <td>{{$userrollcall->id}}</td> --}}
-
                                                     <td>{{ $userrollcall->mula_rollcall }}
                                                         <br><br>{{ $userrollcall->akhir_rollcall }}
                                                     </td>
@@ -986,27 +985,33 @@
                                                                                     <td>{{ $rollcallsbaru['penguatkuasa'] }}
                                                                                     </td>
 
-                                                                                    @if ($rollcallsbaru['masuk'] === null)
-                                                                                        <td>
+                                                                                    <td>
+                                                                                        @if ($rollcallsbaru->keterangan !== null)
+                                                                                            <span
+                                                                                                class="badge badge-pill badge-danger">Tidak
+                                                                                                Hadir</span>
+                                                                                        @elseif($rollcallsbaru['masuk'] === null)
                                                                                             <span
                                                                                                 class="badge badge-pill badge-primary">Dalam
                                                                                                 Proses</span>
-                                                                                        </td>
-                                                                                    @elseif($rollcallsbaru['masuk'] !== null)
-                                                                                        <td>{{ $rollcallsbaru['masuk'] }}
-                                                                                        </td>
-                                                                                    @endif
+                                                                                        @else
+                                                                                            {{ $rollcallsbaru['masuk'] }}
+                                                                                        @endif
+                                                                                    </td>
 
-                                                                                    @if ($rollcallsbaru['keluar'] === null)
-                                                                                        <td>
+                                                                                    <td>
+                                                                                        @if ($rollcallsbaru->keterangan !== null)
+                                                                                            <span
+                                                                                                class="badge badge-pill badge-danger">Tidak
+                                                                                                Hadir</span>
+                                                                                        @elseif($rollcallsbaru['keluar'] === null)
                                                                                             <span
                                                                                                 class="badge badge-pill badge-primary">Dalam
                                                                                                 Proses</span>
-                                                                                        </td>
-                                                                                    @elseif($rollcallsbaru['keluar'] !== null)
-                                                                                        <td>{{ $rollcallsbaru['keluar'] }}
-                                                                                        </td>
-                                                                                    @endif
+                                                                                        @else
+                                                                                            {{ $rollcallsbaru['keluar'] }}
+                                                                                        @endif
+                                                                                    </td>
                                                                                     <td>
                                                                                         @if ($rollcallsbaru['keterangan'] === null)
                                                                                             <span
@@ -1024,7 +1029,7 @@
                                                                                                 Rekod</span>
                                                                                         @elseif($rollcallsbaru['file_path'] !== null)
                                                                                             <a type="button"
-                                                                                                href="storage/{{ $rollcallsbaru['file_path'] }}"
+                                                                                                href="{{ $rollcallsbaru['file_path'] }}"
                                                                                                 target="_blank"
                                                                                                 class="btn btn-sm btn-primary">Muat
                                                                                                 Turun</a>
@@ -2121,119 +2126,10 @@
 
     {{-- Tolak Sokong All --}}
     {{-- <script type="text/javascript">
-    $(document).ready(function () {
-
-
-        $('#masterTolakSokong').on('click', function(e) {
-         if($(this).is(':checked',true))  
-         {
-            $(".sub_chk").prop('checked', true);  
-         } else {  
-            $(".sub_chk").prop('checked',false);  
-         }  
-        });
-
-
-        $('.tolak_sokong_all').on('click', function(e) {
-
-
-            var allVals = [];  
-            $(".sub_chk:checked").each(function() {  
-                allVals.push($(this).attr('data-id'));
-            });  
-
-
-            if(allVals.length <=0)  
-            {  
-                alert("Sila Tandakan Pilihan Senarai Tolak Roll Call Yang Diperlukan ");  
-            }  else {  
-
-
-                var check = confirm("Anda Pasti Untuk Tolak Semua Pilihan Anda?");  
-                if(check == true){  
-
-
-                    var join_selected_values = allVals.join(","); 
-                    alert(join_selected_values);
-
-
-                    $.ajax({
-                        url: $(this).data('url'),
-                        type: 'POST',
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        data: 'ids='+join_selected_values,
-                        success: function (data) {
-                            if (data['success']) {
-                                $(".sub_chk:checked").each(function() {  
-                                    $(this).parents("tr").remove();
-                                });
-                                alert(data['success']);
-                            } else if (data['error']) {
-                                alert(data['error']);
-                            } else {
-                                alert('Whoops Something went wrong!!');
-                            }
-
-                            window.location.reload();
-                        },
-                        error: function (data) {
-                            alert(data.responseText);
-                        }
-                    });
-
-
-                  $.each(allVals, function( index, value ) {
-                      $('table tr').filter("[data-row-id='" + value + "']").remove();
-                  });
-                }  
-            }  
-        });
-
-
-        $('[data-toggle=confirmation]').confirmation({
-            rootSelector: '[data-toggle=confirmation]',
-            onConfirm: function (event, element) {
-                element.trigger('confirm');
-            }
-        });
-
-
-        $(document).on('confirm', function (e) {
-            var ele = e.target;
-            e.preventDefault();
-
-
-            $.ajax({
-                url: ele.href,
-                type: 'POST',
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                success: function (data) {
-                    if (data['success']) {
-                        $("#" + data['tr']).slideUp("slow");
-                        alert(data['success']);
-                    } else if (data['error']) {
-                        alert(data['error']);
-                    } else {
-                        alert('Whoops Something went wrong!!');
-                    }
-
-                    window.location.reload();
-                },
-                error: function (data) {
-                    alert(data.responseText);
-                }
-            });
-
-
-            return false;
-        });
-    });
-</script> --}}
-
-    <script type="text/javascript">
         $(document).ready(function() {
 
-            $('#masterLulus').on('click', function(e) {
+
+            $('#masterTolakSokong').on('click', function(e) {
                 if ($(this).is(':checked', true)) {
                     $(".sub_chk").prop('checked', true);
                 } else {
@@ -2242,7 +2138,7 @@
             });
 
 
-            $('.lulus_all').on('click', function(e) {
+            $('.tolak_sokong_all').on('click', function(e) {
 
 
                 var allVals = [];
@@ -2252,11 +2148,11 @@
 
 
                 if (allVals.length <= 0) {
-                    alert("Sila Tandakan Pilihan Senarai Lulus Roll Call Yang Diperlukan ");
+                    alert("Sila Tandakan Pilihan Senarai Tolak Roll Call Yang Diperlukan ");
                 } else {
 
 
-                    var check = confirm("Anda Pasti Untuk Lulus Semua Pilihan Anda?");
+                    var check = confirm("Anda Pasti Untuk Tolak Semua Pilihan Anda?");
                     if (check == true) {
 
 
@@ -2299,12 +2195,12 @@
             });
 
 
-            // $('[data-toggle=confirmation]').confirmation({
-            //     rootSelector: '[data-toggle=confirmation]',
-            //     onConfirm: function(event, element) {
-            //         element.trigger('confirm');
-            //     }
-            // });
+            $('[data-toggle=confirmation]').confirmation({
+                rootSelector: '[data-toggle=confirmation]',
+                onConfirm: function(event, element) {
+                    element.trigger('confirm');
+                }
+            });
 
 
             $(document).on('confirm', function(e) {
@@ -2339,5 +2235,117 @@
                 return false;
             });
         });
+
+
+        <
+        script type = "text/javascript" >
+            $(document).ready(function() {
+
+                $('#masterLulus').on('click', function(e) {
+                    if ($(this).is(':checked', true)) {
+                        $(".sub_chk").prop('checked', true);
+                    } else {
+                        $(".sub_chk").prop('checked', false);
+                    }
+                });
+
+
+                $('.lulus_all').on('click', function(e) {
+
+
+                    var allVals = [];
+                    $(".sub_chk:checked").each(function() {
+                        allVals.push($(this).attr('data-id'));
+                    });
+
+
+                    if (allVals.length <= 0) {
+                        alert("Sila Tandakan Pilihan Senarai Lulus Roll Call Yang Diperlukan ");
+                    } else {
+
+
+                        var check = confirm("Anda Pasti Untuk Lulus Semua Pilihan Anda?");
+                        if (check == true) {
+
+
+                            var join_selected_values = allVals.join(",");
+                            alert(join_selected_values);
+
+
+                            $.ajax({
+                                url: $(this).data('url'),
+                                type: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                data: 'ids=' + join_selected_values,
+                                success: function(data) {
+                                    if (data['success']) {
+                                        $(".sub_chk:checked").each(function() {
+                                            $(this).parents("tr").remove();
+                                        });
+                                        alert(data['success']);
+                                    } else if (data['error']) {
+                                        alert(data['error']);
+                                    } else {
+                                        alert('Whoops Something went wrong!!');
+                                    }
+
+                                    window.location.reload();
+                                },
+                                error: function(data) {
+                                    alert(data.responseText);
+                                }
+                            });
+
+
+                            $.each(allVals, function(index, value) {
+                                $('table tr').filter("[data-row-id='" + value + "']").remove();
+                            });
+                        }
+                    }
+                });
+
+
+                // $('[data-toggle=confirmation]').confirmation({
+                //     rootSelector: '[data-toggle=confirmation]',
+                //     onConfirm: function(event, element) {
+                //         element.trigger('confirm');
+                //     }
+                // });
+
+
+                $(document).on('confirm', function(e) {
+                    var ele = e.target;
+                    e.preventDefault();
+
+
+                    $.ajax({
+                        url: ele.href,
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data) {
+                            if (data['success']) {
+                                $("#" + data['tr']).slideUp("slow");
+                                alert(data['success']);
+                            } else if (data['error']) {
+                                alert(data['error']);
+                            } else {
+                                alert('Whoops Something went wrong!!');
+                            }
+
+                            window.location.reload();
+                        },
+                        error: function(data) {
+                            alert(data.responseText);
+                        }
+                    });
+
+
+                    return false;
+                });
+            });
     </script>
-@endsection
+    @endsection
