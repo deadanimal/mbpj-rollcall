@@ -10,11 +10,7 @@ class Userrollcall extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-
-        'penguatkuasa_id',
-    ];
-
+    protected $guarded = ['id'];
     public $with = ['rollcall'];
 
     public function penguatkuasa()

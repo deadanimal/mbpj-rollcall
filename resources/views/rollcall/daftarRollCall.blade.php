@@ -217,7 +217,6 @@
                                                                          <input class="form-control"
                                                                              value="{{ $userrollcall->keterangan }}"
                                                                              disabled> <br>
-                                                                         {{ $userrollcall->file_path }}
 
                                                                      </div>
                                                                  </div>
@@ -226,7 +225,7 @@
                                                                  <div class="form-group">
                                                                      <label>Lampiran</label><br>
                                                                      <a type="button"
-                                                                         href="storage/{{ $userrollcall->file_path }}"
+                                                                         href="{{ $userrollcall->lampiran }}"
                                                                          target="_blank" class="btn btn-primary">
                                                                          Muat Turun</a>
                                                                      <br>

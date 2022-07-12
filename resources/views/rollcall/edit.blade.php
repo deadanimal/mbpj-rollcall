@@ -27,6 +27,12 @@
                                 data-target="#lihatqrcode" onclick="runQR()"> Imbas QRCODE
                                 <i class="ni ni-square-pin"></i>
                             </button>
+                            <form action="/testscanQr" method="POST">
+                                @csrf
+                                <input type="hidden" name="rollcall_id" value="{{ $rollcall->id }}">
+                                <input type="hidden" name="nric" value="951210085123">
+                                <button class="btn btn-primary" type="submit">Test </button>
+                            </form>
                             <!-- Modal -->
                             <div class="modal fade" id="lihatqrcode" tabindex="-1" role="dialog"
                                 aria-labelledby="lihatqrcodeLabel" aria-hidden="true">
@@ -54,10 +60,10 @@
                                         </div>
                                     </div>
 
+
                                     <script type="text/javascript" src="https://unpkg.com/html5-qrcode"></script>
                                     <script>
                                         var resultContainer = document.getElementById('qr-reader-results');
-                                        console.log('resultContainer', resultContainer)
                                         var lastResult, countResults = 0;
 
                                         function ismaelPegawai(url) {
@@ -65,22 +71,14 @@
                                         }
 
                                         function onScanSuccess(decodedText, decodedResult) {
-                                            console.log('onScanSuccess')
                                             var rollcall_id = @json($rollcall->id);
 
                                             if (decodedText !== lastResult) {
                                                 ++countResults;
                                                 lastResult = decodedText;
-                                                // Handle on success condition with the decoded message.
-                                                // document.getElementById('maelhensem').innerText = 'lollll';
-                                                console.log(`Scan result ${decodedText}`, decodedResult);
-                                                // document.getElementById('maelhensem').innerText = 'lollll';
-                                                //document.getElementById('maelhensem').innerText = 'lollll';
+
                                                 id = `${decodedText}`;
-                                                // console.log('id', id)
-                                                // var url = '/scanQr';
-                                                // maelhensem.innerHTML = decodedText;
-                                                // document.location.href = url;
+
                                                 $.ajax({
                                                     method: "POST",
                                                     url: '/scanQr',
@@ -426,9 +424,7 @@
                                                             cancelButtonText: 'Tutup',
 
                                                         }).then(result => {
-                                                            console.log("result", result);
                                                             if (result.value == true) {
-                                                                console.log("id", id);
                                                                 $.ajax({
                                                                     url: "/userrollcalls/" + id,
                                                                     type: "POST",
@@ -442,9 +438,7 @@
                                                                     },
                                                                 });
 
-                                                            } else if (result.dismiss == "cancel") {
-                                                                console.log("dismiss");
-                                                            }
+                                                            } else if (result.dismiss == "cancel") {}
                                                         })
                                                     }
                                                 </script>

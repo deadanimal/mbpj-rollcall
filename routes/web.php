@@ -76,6 +76,9 @@ Route::post('TolakSokongAll', [RollcallController::class, 'TolakSokongAll']);
 Route::post('PegawaiLulusAll', [RollcallController::class, 'LulusAll']);
 
 Route::post('/scanQr', [QrcodeController::class, 'scanQr']);
+
+Route::post('/testscanQr', [QrcodeController::class, 'scanQr']);
+
 Route::get('qrcode/{id}', [RollcallController::class, 'generate'])->name('generate');
 
 Route::view('/pengurusan_pengguna', 'pengurusanPengguna', [
@@ -89,5 +92,7 @@ Route::get('/daftar-roll-call', [RollcallController::class, 'index']);
 Route::get('/btn-keluar-roll-call/{userrollcall}', [RollcallController::class, 'btnKeluarRollcall']);
 
 Route::post('/btn-log-keluar-semua', [RollcallController::class, 'btnKeluarSemua']);
+
+Route::post('/update_role_in_naziran', [UserController::class, 'updateRole_naziran']);
 
 require __DIR__ . '/auth.php';

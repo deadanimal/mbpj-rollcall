@@ -56,11 +56,41 @@
                                                     {{ $user->nric }}
                                                 </td>
                                                 <td>
-                                                    <button onclick="showQR({{ $user->nric }})" type="button"
-                                                        class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#exampleModal">
-                                                        QR Code
-                                                    </button>
+                                                    <div class="row">
+                                                        <div class="col-2">
+                                                            <button onclick="showQR({{ $user->nric }})" type="button"
+                                                                class="btn btn-primary" data-toggle="modal"
+                                                                data-target="#exampleModal">
+                                                                QR Code
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-10">
+                                                            @if ($user->role != 'pentadbir_sistem')
+                                                                <select class="form-control d-inline"
+                                                                    onchange="tukarRole({{ $user->id }}, this)">
+                                                                    <option
+                                                                        {{ $user->role == 'naziran' ? 'selected' : '' }}
+                                                                        value="naziran">Naziran</option>
+                                                                    <option
+                                                                        {{ $user->role == 'penyelia' ? 'selected' : '' }}
+                                                                        value="penyelia">Penyelia</option>
+                                                                    <option
+                                                                        {{ $user->role == 'penguatkuasa' ? 'selected' : '' }}
+                                                                        value="penguatkuasa">Penguatkuasa</option>
+                                                                    <option
+                                                                        {{ $user->role == 'ketua_jabatan' ? 'selected' : '' }}
+                                                                        value="ketua_jabatan">Ketua Jabatan</option>
+                                                                    <option
+                                                                        {{ $user->role == 'ketua_bahagian' ? 'selected' : '' }}
+                                                                        value="ketua_bahagian">Ketua Bahagian</option>
+                                                                </select>
+                                                            @else
+                                                                <input type="text" value="Pentadbir Sistem" readonly>
+                                                            @endif
+
+                                                        </div>
+                                                    </div>
+
                                                     <!-- Modal -->
                                                     <div class="modal fade" tabindex="-1"
                                                         aria-labelledby="exampleModalLabel" id="exampleModal"
@@ -87,6 +117,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -110,6 +142,21 @@
             new QRCode(document.getElementById("qrcode"), "" + nric);
             $(".qrcode > img").css({
                 "margin": "auto"
+            });
+
+        }
+
+        function tukarRole(user_id, newRole) {
+            $.ajax({
+                method: "POST",
+                url: "/update_role_in_naziran",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "user_id": user_id,
+                    "newRole": newRole.value
+                },
+            }).done(function(response) {
+                alert("Update Berjaya");
             });
 
         }
