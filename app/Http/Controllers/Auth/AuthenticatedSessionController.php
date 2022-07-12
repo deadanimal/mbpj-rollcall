@@ -117,12 +117,29 @@ class AuthenticatedSessionController extends Controller
                 'status' => 'aktif',
                 'password' => Hash::make($request->password),
             ]);
+            $user = $userLocal;
+            $audit = new Audit;
+            $audit->user_id = $user->id;
+            $audit->name = $user->name;
+            $audit->peranan = $user->role;
+            $audit->description = 'Log Masuk';
+            $audit->save();
+
             Auth::login($userLocal);
             return redirect('/dashboard');
         }
 
         $request->authenticate();
         $request->session()->regenerate();
+
+        $user = auth()->user();
+        $audit = new Audit;
+        $audit->user_id = $user->id;
+        $audit->name = $user->name;
+        $audit->peranan = $user->role;
+        $audit->description = 'Log Masuk';
+        $audit->save();
+
         return redirect()->intended(RouteServiceProvider::HOME);
 
     }

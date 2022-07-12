@@ -410,28 +410,17 @@ class RollcallController extends Controller
 
             }
 
-            // try {
-            //     $pgi->tarikh = $userekedatangansokong->tarikh;
-            //     $pgi->clockintime = $userekedatangansokong->clockintime;
-            //     $pgi->clockouttime = $userekedatangansokong->clockouttime;
-            //     $pgi->statusdesc = $userekedatangansokong->statusdesc;
-            //     $pgi->totalworkinghour = $userekedatangansokong->totalworkinghour;
-            //     $pgi->totalotduration  = $userekedatangansokong->totalotduration;
-            //     $pgi->waktuanjal  = $userekedatangansokong->waktuanjal;
-            // }
-            // catch(Exception $e) {
-            //     $pgi->tarikh = 'Tiada Rekod';
-            //     $pgi->clockintime = 'Tiada Rekod';
-            //     $pgi->clockouttime = 'Tiada Rekod';
-            //     $pgi->statusdesc = 'Tiada Rekod';
-            //     $pgi->totalworkinghour = 'Tiada Rekod';
-            //     $pgi->totalotduration  = 'Tiada Rekod';
-            //     $pgi->waktuanjal  = 'Tiada Rekod';
-            // }
         }
-        // dd($rollcall_lulus_baru);
 
-        return view('rollcall.index', [
+        $getUrl = explode('/', url()->current());
+
+        if ($getUrl[3] == "daftar-roll-call") {
+            $view = "rollcall.daftarRollCall";
+        } else {
+            $view = "rollcall.index";
+        }
+
+        return view($view, [
             'rollcalls' => $rollcalls,
             'rollcallsnew' => $rollcallsnew,
             'sebab' => $sebab,
@@ -448,7 +437,7 @@ class RollcallController extends Controller
 
             'customerid' => $customerid,
 
-            'jumlahpenguatkuasahadir' => $jumlahpenguatkuasahadir,
+            // 'jumlahpenguatkuasahadir' => $jumlahpenguatkuasahadir,
 
         ]);
 
@@ -518,10 +507,14 @@ class RollcallController extends Controller
         $kumpulan = Kumpulan::all();
 
         // Create  option on select penguatkuasa in tambah
-        $kakitangan = User::whereIn('role', array('penguatkuasa'))
+        $kakitangan = User::whereIn('role', array('penguatkuasa', 'penyelia', 'ketua_bahagian', 'naziran'))
             ->where('department_code', 'like', '11%')
             ->orderBy('name', 'ASC')
             ->get();
+        // $kakitangan = User::whereIn('role', array('penguatkuasa'))
+        //     ->where('department_code', 'like', '11%')
+        //     ->orderBy('name', 'ASC')
+        //     ->get();
 
         // Create  option on select penguatkuasa addmore
         $users = User::whereIn('role', array('penguatkuasa'))
@@ -743,21 +736,7 @@ class RollcallController extends Controller
 
         return response()->json(['success' => " Kemaskini Berjaya."]);
     }
-    // public function TolakSokongAll(Request $request)
-    // // {
-    // //     $ids = $request->ids;
-    // //     $array_ids = explode(",", $ids);
-    // //     // dd($array_ids);
 
-    // //     foreach($array_ids as $id) {
-    // //         $userrollcall = Userrollcall::where('id', $id)->first();
-    // //         $userrollcall-> sokong = false;
-    // //         $userrollcall-> tarikh_sokong = Carbon::now()->format('Y-m-d H:i:s');
-    // //         $userrollcall->save();
-    // //     }
-
-    // //     return response()->json(['success'=>" Kemaskini Berjaya."]);
-    // // }
     public function LulusAll(Request $request)
     {
         $ids = $request->ids;
@@ -773,7 +752,6 @@ class RollcallController extends Controller
         return response()->json(['success' => " Kemaskini Berjaya."]);
     }
 
-    // kira jumlah kehadiran at lihat
     public function kiraJumlahTidakHadir($rollcall_id)
     {
         $rollcallsnew = Rollcall::join('userrollcalls', 'rollcalls.id', '=', 'userrollcalls.roll_id')
@@ -797,5 +775,4 @@ class RollcallController extends Controller
         $qrcode = QrCode::size(400)->generate();
         return view('qrcode', compact('qrcode'));
     }
-
 }
