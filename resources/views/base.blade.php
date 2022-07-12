@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="/AdvSelect/virtual-select.min.css" />
 
     @yield('head')
-
+    @notifyCss
 </head>
 
 <body>
@@ -296,9 +296,9 @@
                 </div>
             </div>
         </nav>
-
         @yield('content')
     </div>
+    @notifyJs
 
     <!-- Argon Scripts -->
     <script src="/assets/vendor/jquery/dist/jquery.min.js"></script>

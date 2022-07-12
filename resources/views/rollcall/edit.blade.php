@@ -251,34 +251,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            {{-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="pegawai_sokong_id">Pilih pegawai sokong</label>
-                                            <div class="input-group input-group-merge">
-                                                <select name="pegawai_sokong_id" class="form-control">
-                                                    <option  hidden value="{{$rollcall->pegawai_sokong_id}}" selected>{{$rollcall->pegawai_sokong_name}}</option>
-                                                    @foreach ($pegawai as $pegawai1)
-                                                    <option value="{{$pegawai1->id}}">
-                                                        {{$pegawai1->name}} - {{$pegawai1->role}} </option>
-                                                    @endforeach
-                                                </select>       
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="pegawai_lulus_id">Pilih pegawai lulus</label>
-                                            <div class="input-group input-group-merge">
-                                                <select name ="pegawai_lulus_id" class="form-control">
-                                                    <option  hidden value="{{$rollcall->pegawai_lulus_id}}" selected>{{$rollcall->pegawai_lulus_name}}</option>
-                                                    @foreach ($pegawai as $pegawai2)
-                                                    <option value="{{$pegawai2->id}}">
-                                                        {{$pegawai2->name}} - {{$pegawai2->role}} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div> --}}
+
                                             <!-- Button trigger modal -->
                                             <div class="col-md-12">
                                                 <div class="form-group">
@@ -318,6 +291,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+
                                         </div>
                                     </form>
                                 </div>
@@ -332,6 +307,15 @@
 
                         <button style="margin-bottom: 10px" class="btn btn-danger btn-sm delete_all "
                             data-url="{{ url('penguatkuasaDeleteAll') }}">Hapus Pilihan</button>
+                        <form action="/btn-log-keluar-semua" class="d-inline" method="POST">
+                            @csrf
+                            @foreach ($userrollcalls as $urc)
+                                @if (isset($urc->masuk) && !isset($urc->keluar))
+                                    <input type="hidden" name="userrollcalls[]" value="{{ $urc->id }}">
+                                @endif
+                            @endforeach
+                            <button style="margin-bottom: 10px" class="btn btn-primary btn-sm">Keluar Semua</button>
+                        </form>
                     </div>
                     <div class="col-md-12">
                         <div class="card">
@@ -343,6 +327,7 @@
                             </div>
                             <div class="card-body px-0">
                                 <!-- Light table -->
+                                <x:notify-messages />
 
                                 <div class="table-responsive">
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
@@ -416,7 +401,15 @@
 
                                                     <td> <button
                                                             onclick="buang({{ $userrollcall->id }})"class="btn btn-danger btn-sm"><i
-                                                                class="ni ni-basket"></i></button> </td>
+                                                                class="ni ni-basket"></i></button>
+
+                                                        @if (auth()->user()->role == 'naziran')
+                                                            @if (isset($userrollcall->masuk) && !isset($userrollcall->keluar))
+                                                                <a class="btn btn-primary btn-sm"
+                                                                    href="/btn-keluar-roll-call/{{ $userrollcall->id }}">Keluar</a>
+                                                            @endif
+                                                        @endif
+                                                    </td>
 
                                                 </tr>
 

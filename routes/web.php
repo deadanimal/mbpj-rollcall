@@ -85,4 +85,9 @@ Route::view('/pengurusan_pengguna', 'pengurusanPengguna', [
 Route::get('/printqr/{nric}', [QrcodeController::class, 'printqr']);
 
 Route::get('/daftar-roll-call', [RollcallController::class, 'index']);
+
+Route::get('/btn-keluar-roll-call/{userrollcall}', [RollcallController::class, 'btnKeluarRollcall']);
+
+Route::post('/btn-log-keluar-semua', [RollcallController::class, 'btnKeluarSemua']);
+
 require __DIR__ . '/auth.php';

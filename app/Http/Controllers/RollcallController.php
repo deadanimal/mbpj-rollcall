@@ -737,6 +737,29 @@ class RollcallController extends Controller
         return response()->json(['success' => " Kemaskini Berjaya."]);
     }
 
+    public function btnKeluarRollcall(Userrollcall $userrollcall)
+    {
+        $userrollcall->keluar = now()->format('Y-m-d H:i:s');
+        $userrollcall->save();
+        return back();
+    }
+
+    public function btnKeluarSemua(Request $request)
+    {
+        if ($request->userrollcalls != null) {
+            foreach ($request->userrollcalls as $urc) {
+                $userRC = Userrollcall::find($urc);
+                $userRC->keluar = now()->format('Y-m-d H:i:s');
+                $userRC->save();
+            }
+        } else {
+            notify()->error('Tiada Pengguna yang perlu keluar');
+
+            return back();
+        }
+        return back();
+    }
+
     public function LulusAll(Request $request)
     {
         $ids = $request->ids;
