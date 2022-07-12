@@ -13,6 +13,7 @@ use App\Http\Controllers\SebabController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserKumpulanController;
 use App\Http\Controllers\UserrollcallController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -76,5 +77,17 @@ Route::post('PegawaiLulusAll', [RollcallController::class, 'LulusAll']);
 
 Route::post('/scanQr', [QrcodeController::class, 'scanQr']);
 Route::get('qrcode/{id}', [RollcallController::class, 'generate'])->name('generate');
+
+Route::view('/pengurusan_pengguna', 'pengurusanPengguna', [
+    'users' => User::all(),
+]);
+
+Route::get('/printqr/{nric}', [QrcodeController::class, 'printqr']);
+
+Route::get('/daftar-roll-call', [RollcallController::class, 'index']);
+
+Route::get('/btn-keluar-roll-call/{userrollcall}', [RollcallController::class, 'btnKeluarRollcall']);
+
+Route::post('/btn-log-keluar-semua', [RollcallController::class, 'btnKeluarSemua']);
 
 require __DIR__ . '/auth.php';

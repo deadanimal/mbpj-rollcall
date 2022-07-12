@@ -51,11 +51,15 @@ class UserrollcallController extends Controller
         // $userrollcall->penguatkuasa_id = $request->penguatkuasa_id;
 
         // $userrollcall -> save();
-
         if ($request->penguatkuasa_id) {
-            foreach ($request->penguatkuasa_id as $key => $value) {
+            $penguatkuasa_id = explode(',', $request->penguatkuasa_id);
+            foreach ($penguatkuasa_id as $value) {
                 $userPenguatkuasa = User::find($value);
-                $kumpulan = Kumpulan::find($userPenguatkuasa->user_kumpulan->id_kumpulan);
+
+                if ($userPenguatkuasa->user_kumpulan != null) {
+                    $kumpulan = Kumpulan::find($userPenguatkuasa->user_kumpulan->id_kumpulan);
+                }
+
                 $userrollcall = new Userrollcall;
 
                 $userrollcall->roll_id = $request->roll_id;
@@ -64,7 +68,6 @@ class UserrollcallController extends Controller
                 $userrollcall->pegawai_lulus_id = $kumpulan->pegawai_lulus_id ?? 0;
 
                 $userrollcall->save();
-
                 // Audit trail
                 $audit = new Audit;
                 $audit->user_id = $request->user()->id;

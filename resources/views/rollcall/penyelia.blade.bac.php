@@ -1,6 +1,4 @@
-
-
-@elseif(auth()->user()->role == 'penyelia' )
+@if(auth()->user()->role == 'penyelia' )
 <div class="card-body">
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel"
@@ -334,4 +332,3 @@
         </div>
     </div>
 </div>
-

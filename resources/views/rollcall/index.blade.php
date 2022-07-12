@@ -2082,12 +2082,7 @@
             });
 
 
-            // $('[data-toggle=confirmation]').confirmation({
-            //     rootSelector: '[data-toggle=confirmation]',
-            //     onConfirm: function(event, element) {
-            //         element.trigger('confirm');
-            //     }
-            // });
+
 
 
             $(document).on('confirm', function(e) {
@@ -2195,12 +2190,6 @@
             });
 
 
-            $('[data-toggle=confirmation]').confirmation({
-                rootSelector: '[data-toggle=confirmation]',
-                onConfirm: function(event, element) {
-                    element.trigger('confirm');
-                }
-            });
 
 
             $(document).on('confirm', function(e) {
@@ -2307,12 +2296,7 @@
                 });
 
 
-                // $('[data-toggle=confirmation]').confirmation({
-                //     rootSelector: '[data-toggle=confirmation]',
-                //     onConfirm: function(event, element) {
-                //         element.trigger('confirm');
-                //     }
-                // });
+
 
 
                 $(document).on('confirm', function(e) {

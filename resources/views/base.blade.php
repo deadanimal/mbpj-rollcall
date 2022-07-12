@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    {{-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> --}}
+
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,9 +13,10 @@
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('argon') }}/img/mbpj.png ">
     <!-- Fonts -->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+
     <!-- Icons -->
     <link rel="stylesheet" href="/assets/vendor/nucleo/css/nucleo.css" type="text/css">
     <link rel="stylesheet" href="/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
@@ -30,8 +31,11 @@
     {{-- QrCode --}}
     <script src="/js/qrcode.min.js"></script>
 
-    @yield('head')
+    {{-- AdvSelect --}}
+    <link rel="stylesheet" href="/AdvSelect/virtual-select.min.css" />
 
+    @yield('head')
+    @notifyCss
 </head>
 
 <body>
@@ -120,6 +124,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="/daftar-roll-call">
+                                    <i class="ni ni-calendar-grid-58 text-red"></i>
+                                    <span class="nav-link-text">Roll Call</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="/rollcalls">
                                     <i class="ni ni-calendar-grid-58 text-red"></i>
                                     <span class="nav-link-text">Pengurusan Roll Call</span>
@@ -163,6 +173,14 @@
                                                 <span class="sidenav-normal"> Kumpulan </span>
                                             </a>
                                         </li>
+
+                                        <li class="nav-item">
+                                            <a href="/pengurusan_pengguna" class="nav-link">
+                                                <span class="sidenav-mini-icon"> </span>
+                                                <span class="sidenav-normal"> Pengurusan Pengguna </span>
+                                            </a>
+                                        </li>
+
                                     </ul>
                                 </div>
                             </li>
@@ -171,7 +189,7 @@
 
                         </ul>
                         <!-- Nav items dalaman -->
-                    @else
+                    @elseif(auth()->user()->role == 'penyelia' || auth()->user()->role == 'ketua_bahagian')
                         <ul class="navbar-nav">
                             <li class="nav-item">
                                 <a class="nav-link" href="/dashboard">
@@ -180,9 +198,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="/daftar-roll-call">
+                                    <i class="ni ni-calendar-grid-58 text-info"></i>
+                                    <span class="nav-link-text">Roll Call</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="/rollcalls">
                                     <i class="ni ni-chart-pie-35 text-info"></i>
-                                    <span class="nav-link-text"> Roll Call</span>
+                                    <span class="nav-link-text">Pengurusan Roll Call</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -191,6 +215,26 @@
                                     <span class="nav-link-text">Laporan</span>
                                 </a>
                             </li>
+                        @else
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/dashboard">
+                                        <i class="ni ni-archive-2 text-info"></i>
+                                        <span class="nav-link-text">Dashboard</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/rollcalls">
+                                        <i class="ni ni-chart-pie-35 text-info"></i>
+                                        <span class="nav-link-text"> Roll Call</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/laporans">
+                                        <i class="ni ni-chart-bar-32 text-info"></i>
+                                        <span class="nav-link-text">Laporan</span>
+                                    </a>
+                                </li>
                     @endif
                 </div>
             </div>
@@ -252,9 +296,10 @@
                 </div>
             </div>
         </nav>
-
         @yield('content')
     </div>
+    @notifyJs
+
     <!-- Argon Scripts -->
     <script src="/assets/vendor/jquery/dist/jquery.min.js"></script>
     <script src="/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -286,38 +331,12 @@
         $(document).ready(function() {
             var table = $('#example').DataTable({});
         });
-        // Facebook Pixel Code Don't Delete
-        // ! function (f, b, e, v, n, t, s) {
-        //     if (f.fbq) return;
-        //     n = f.fbq = function () {
-        //         n.callMethod ?
-        //             n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-        //     };
-        //     if (!f._fbq) f._fbq = n;
-        //     n.push = n;
-        //     n.loaded = !0;
-        //     n.version = '2.0';
-        //     n.queue = [];
-        //     t = b.createElement(e);
-        //     t.async = !0;
-        //     t.src = v;
-        //     s = b.getElementsByTagName(e)[0];
-        //     s.parentNode.insertBefore(t, s)
-        // }(window,
-        //     document, 'script', '//connect.facebook.net/en_US/fbevents.js');
-
-        // try {
-        //     fbq('init', '111649226022273');
-        //     fbq('track', "PageView");
-
-        // } catch (err) {
-        //     console.log('Facebook Track Error:', err);
-        // }
     </script>
 
     @yield('script')
 
-
+    {{-- AdvSelect --}}
+    <script src="/AdvSelect/virtual-select.min.js"></script>
 </body>
 
 </html>
