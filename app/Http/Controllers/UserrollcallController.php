@@ -140,8 +140,6 @@ class UserrollcallController extends Controller
     public function simpan_sebab(Request $request)
     {
 
-        // dd($request);
-        // $sebab = Userrollcall::where('id','=',$id)->first();
         $sebab = Userrollcall::find($request->id);
         $sebab->keterangan = $request->keterangan;
 
@@ -150,7 +148,6 @@ class UserrollcallController extends Controller
         $actualPath = explode('/', $path);
 
         $sebab->file_path = "/sebab/" . $actualPath[2];
-
         // $sebab->file_path = $request->file_path;
 
         $sebab->save();

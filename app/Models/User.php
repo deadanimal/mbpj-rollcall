@@ -12,11 +12,7 @@ class User extends Authenticatable
 
     public $with = ['user_rollcall_report'];
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = ['id'];
 
     protected $hidden = [
         'password',

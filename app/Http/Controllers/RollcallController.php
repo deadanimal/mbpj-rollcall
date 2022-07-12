@@ -177,14 +177,14 @@ class RollcallController extends Controller
 
             //  keterangan
             try {
-                $rollcallObj->keterangan = Userrollcall::where('id', $rollcallObj->id)->first()->keterangan;
-                $rollcallObj->lampiran = Userrollcall::where('id', $rollcallObj->id)->first()->file_path;
+                $rollcallObj->keterangan = Userrollcall::where('roll_id', $rollcallObj->id)->first()->keterangan;
+                $rollcallObj->lampiran = Userrollcall::where('roll_id', $rollcallObj->id)->first()->file_path;
             } catch (Exception $e) {
             }
 
             array_push($userrollcalls, $rollcallObj);
         }
-        //dd($userrollcalls);
+        // dd($userrollcalls);
         //userekedatangan
         foreach ($userrollcalls as $pgs) {
             $userekedatangan = Ekedatangan::where('staffno', $customerid)
