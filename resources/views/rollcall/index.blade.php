@@ -984,7 +984,7 @@
                                                                                     </td>
 
                                                                                     <td>
-                                                                                        @if ($rollcallsbaru->keterangan !== null)
+                                                                                        {{-- @if ($rollcallsbaru->keterangan !== null)
                                                                                             <span
                                                                                                 class="badge badge-pill badge-danger">Tidak
                                                                                                 Hadir</span>
@@ -994,7 +994,21 @@
                                                                                                 Proses</span>
                                                                                         @else
                                                                                             {{ $rollcallsbaru['masuk'] }}
-                                                                                        @endif
+                                                                                        @endif --}}
+
+                                                                                        @isset($rollcallsbaru->masuk)
+                                                                                            {{ $rollcallsbaru->masuk }}
+                                                                                        @else
+                                                                                            @if ($rollcallsbaru->keterangan === null)
+                                                                                                <span
+                                                                                                    class="badge badge-pill badge-primary">Dalam
+                                                                                                    Proses</span>
+                                                                                            @else
+                                                                                                <span
+                                                                                                    class="badge badge-pill badge-danger">Tidak
+                                                                                                    Hadir</span>
+                                                                                            @endif
+                                                                                        @endisset
                                                                                     </td>
 
                                                                                     <td>

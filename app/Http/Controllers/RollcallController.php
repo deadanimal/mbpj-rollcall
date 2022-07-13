@@ -151,10 +151,8 @@ class RollcallController extends Controller
 
         // dd($rollcallsnew);
         //get waktu masuk keluar dari phone
-        $rollcall_id = Userrollcall::where('penguatkuasa_id', Auth::user()->id)->get();
-
+        $rollcall_id = Userrollcall::where('penguatkuasa_id', auth()->id())->get();
         $userrollcalls = [];
-
         // dd($rollcallObj);
         foreach ($rollcall_id as $rid) {
             //array_push($userrollcalls, RollCall::where('id', $rid->roll_id)->first());
@@ -177,8 +175,8 @@ class RollcallController extends Controller
 
             //  keterangan
             try {
-                $rollcallObj->keterangan = Userrollcall::where('roll_id', $rollcallObj->id)->first()->keterangan;
-                $rollcallObj->lampiran = Userrollcall::where('roll_id', $rollcallObj->id)->first()->file_path;
+                $rollcallObj->keterangan = Userrollcall::where('roll_id', $rollcallObj->id)->where('penguatkuasa_id', auth()->id())->first()->keterangan;
+                $rollcallObj->lampiran = Userrollcall::where('roll_id', $rollcallObj->id)->where('penguatkuasa_id', auth()->id())->first()->file_path;
             } catch (Exception $e) {
             }
 

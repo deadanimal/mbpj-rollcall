@@ -77,8 +77,6 @@ Route::post('PegawaiLulusAll', [RollcallController::class, 'LulusAll']);
 
 Route::post('/scanQr', [QrcodeController::class, 'scanQr']);
 
-Route::post('/testscanQr', [QrcodeController::class, 'scanQr']);
-
 Route::get('qrcode/{id}', [RollcallController::class, 'generate'])->name('generate');
 
 Route::view('/pengurusan_pengguna', 'pengurusanPengguna', [
