@@ -27,12 +27,7 @@
                                 data-target="#lihatqrcode" onclick="runQR()"> Imbas QRCODE
                                 <i class="ni ni-square-pin"></i>
                             </button>
-                            <form action="/testscanQr" method="POST">
-                                @csrf
-                                <input type="hidden" name="rollcall_id" value="{{ $rollcall->id }}">
-                                <input type="hidden" name="nric" value="951210085123">
-                                <button class="btn btn-primary" type="submit">Test </button>
-                            </form>
+
                             <!-- Modal -->
                             <div class="modal fade" id="lihatqrcode" tabindex="-1" role="dialog"
                                 aria-labelledby="lihatqrcodeLabel" aria-hidden="true">
